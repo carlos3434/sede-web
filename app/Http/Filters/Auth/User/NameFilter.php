@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Filters\User;
+namespace App\Http\Filters\Auth\User;
 
 class NameFilter
 {
