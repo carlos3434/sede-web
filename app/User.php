@@ -9,7 +9,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Filters\Auth\UserFilter;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable //implements MustVerifyEmail
 {
     use HasApiTokens;
     use Notifiable;
@@ -51,5 +51,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeFilter(Builder $builder, $request)
     {
         return (new UserFilter($request))->filter($builder);
+    }
+    
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\VerifyEmailQueued);
+    }
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new \App\Notifications\ResetPasswordQueued($token));
     }
 }
