@@ -62,7 +62,7 @@
             "@php artisan key:generate --ansi"
         ],
          "compile": [
-            "@php artisan optimize",
+            "php artisan optimize",
             "echo \"$OAUTH_PUBLIC_KEY\" > storage/oauth-public.key",
             "echo \"$OAUTH_PRIVATE_KEY\" > storage/oauth-private.key"
         ]
