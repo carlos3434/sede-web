@@ -19,3 +19,9 @@ php artisan migrate:fresh --seed
 
 
 php artisan serve
+
+chown www-data:www-data storage/oauth-*.key
+chmod 600 storage/oauth-*.key 
+
+cd storage && chown www-data:www-data  oauth-*.key
+cd storage && chmod 600  oauth-*.key 
