@@ -1,0 +1,21 @@
+install wiki
+
+composer create-project laravel/laravel sede-web "7.24"
+
+composer require laravel/passport "~9.0"
+
+composer require spatie/laravel-permission
+
+php artisan migrate
+
+php artisan ui vue --auth
+
+npm install && npm run dev
+
+php artisan migrate:fresh --seed
+
+
+
+
+
+php artisan serve
