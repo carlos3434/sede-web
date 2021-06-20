@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function(){
     Route::get('/unauthorized', 'Api\Auth\AuthController@unauthorized');
+    Route::post('register', 'Api\Auth\AuthController@register');
     Route::post('login', 'Api\Auth\AuthController@login');
 
     Route::group(['middleware' => 'auth_passport:api'], function(){

@@ -2,10 +2,10 @@
 namespace App\Repositories\Auth;
 
 use App\Repositories\AbstractRepository;
-use App\User;
-use App\Http\Resources\Auth\User\UserCollection;
-use App\Http\Resources\Auth\User\UserResource;
-use App\Http\Resources\Auth\User\UserForLogin;
+//use App\User;
+//use App\Http\Resources\Auth\User\UserCollection;
+//use App\Http\Resources\Auth\User\UserResource;
+//use App\Http\Resources\Auth\User\UserForLogin;
 
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
 /**
@@ -15,7 +15,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 {
 
     protected $modelClassName = 'User';
-    protected $modelClassNamePath = "App\User";
+    protected $modelClassNamePath = "App\Models\Auth\User";
     protected $collectionNamePath = "App\Http\Resources\Auth\User\UserCollection";
     protected $resourceNamePath = "App\Http\Resources\Auth\User\UserResource";
     

@@ -25,8 +25,32 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha_num_spaces',
-            'email'        => 'required|unique:users,email,'. (isset($this->user->id) ? $this->user->id : 0),
+            'nombres'                   => 'required|string',
+            'email'                     => 'required|unique:users,email,'. (isset($this->user->id) ? $this->user->id : 0),
+
+            'apellido_paterno'          => 'required|string',
+            'apellido_materno'          => 'required|string',
+            'pais_id'                   => 'required|exists:paises,id',
+            'sexo'                      => 'required|boolean',
+            'estado_civil_id'           => 'required|exists:estado_civil,id',
+            'tipo_documento_id'         => 'required|exists:tipos_documentos,id',
+            'numero_documento'          => 'required|unique:users,numero_documento,'. (isset($this->user->id) ? $this->user->id : 0),
+            'direccion'                 => 'required|string',
+            'distrito_id'               => 'required|exists:distritos,id',
+            'telefono_fijo'             => 'required|string',
+            'celular'                   => 'required|string',
+            'password'                  => 'required|confirmed|min:6',
+            'colegio_profesional'       => 'string',
+            'numero_colegiatura'        => 'string',
+            'esta_habilitado'           => 'boolean',
+            'constancia_habilidad'      => 'string',
+            'declaracion_jurada'        => 'string',
+            'copia_dni'                 => 'string',
+            'rj_itse'                   => 'string',
+            'rj_verificador'            => 'string',
+            'anexo_1'                   => 'string',
+            'foto'                      => 'string',
+
             //'password' => 'required|min:8',
             //'roles' => 'exists:roles,id',
             //'permissions' => 'exists:permissions,id'

@@ -25,3 +25,10 @@ chmod 600 storage/oauth-*.key
 
 cd storage && chown www-data:www-data  oauth-*.key
 cd storage && chmod 600  oauth-*.key 
+
+el problema se solucionno con esto correidnolo desde la consola de heroku 
+php artisan passport:keys
+
+login to heroku
+
+heroku ps:exec -a sede-web

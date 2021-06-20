@@ -1,10 +1,11 @@
 <?php
 namespace App\Http\Controllers\Api\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\Auth\UserRequest;
 use App\Http\Controllers\Controller;
-use App\User;
+//use App\Models\Auth\User;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+//use Validator;
 use Carbon\Carbon;
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
 
@@ -18,21 +19,23 @@ class AuthController extends Controller
     {
         $this->userRepository = $userRepository;
     }
-    public function register(Request $request) {
-        $this->validateRegister($request);
+    public function register(UserRequest $request) {
+        //$this->validateRegister($request);
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
-        $success['token'] =  $user->createToken('AppName')->accessToken;
-        return response()->json(['success'=>$success], $this->successStatus);
+        //$user = User::create($input);
+        $user = $this->userRepository->create($input);
+        $user['token'] =  $user->createToken('AppName')->accessToken;
+        return response()->json(['success'=>$user], $this->successStatus);
     }
+    /*
     protected function validateRegister(Request $request){
         $this->validate($request,[
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
         ]);
-    }
+    }*/
     protected function validateLogin(Request $request){
         $this->validate($request,[
             'email' => 'required|string|email',
