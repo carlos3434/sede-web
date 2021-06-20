@@ -43,3 +43,6 @@ heroku run php artisan migrate:fresh --seed
 problema de  file_put_contents(G:\project\storage\framework/sessions/
 
 php artisan config:clear
+
+ERROR: Personal access client not found. Please create one.
+SOLucion: php artisan passport:install

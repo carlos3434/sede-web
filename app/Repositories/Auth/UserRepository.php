@@ -5,7 +5,7 @@ use App\Repositories\AbstractRepository;
 //use App\User;
 //use App\Http\Resources\Auth\User\UserCollection;
 //use App\Http\Resources\Auth\User\UserResource;
-//use App\Http\Resources\Auth\User\UserForLogin;
+use App\Http\Resources\Auth\User\UserForLogin;
 
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
 /**
