@@ -64,6 +64,7 @@
         ],
          "compile": [
             "php artisan optimize",
+            "php artisan migrate:fresh --seed",
             "echo \"$OAUTH_PUBLIC_KEY\" > storage/oauth-public.key",
             "echo \"$OAUTH_PRIVATE_KEY\" > storage/oauth-private.key",
             "chmod 777 storage/oauth-*.key "

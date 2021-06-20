@@ -29,6 +29,17 @@ cd storage && chmod 600  oauth-*.key
 el problema se solucionno con esto correidnolo desde la consola de heroku 
 php artisan passport:keys
 
+
 login to heroku
 
 heroku ps:exec -a sede-web
+
+sino corrio migracione
+
+php artisan migrate:fresh --seed
+heroku run php artisan migrate:fresh --seed
+
+
+problema de  file_put_contents(G:\project\storage\framework/sessions/
+
+php artisan config:clear

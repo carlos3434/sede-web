@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "528b29ba-7559-4d6d-9d52-f31e8accaf82",
+		"name": "Sede",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "kmontoya@cenepred.gob.pe",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://sede-web.herokuapp.com/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"sede-web",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTBjNDczN2I4MGZkMGEzOTQyNTRhNDJiOGNjZjViMTUxZjk2YWJjYTA1MDgxODgwYWI1NjgxMzQ0Yjk2MTE1MjFjMmVkYTUxY2MwMTM5NGQiLCJpYXQiOjE2MjM3OTYwNTkuNjk0NTQ4LCJuYmYiOjE2MjM3OTYwNTkuNjk0NTU1LCJleHAiOjE2NTUzMzIwNTkuNjc0MzcsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.A_uX6uQD43y3YcV7kfXkgJuiuwyNsdpQmqpI4MwgwpozFfz1iKuPnW5qaHXtTXm5dRRTaHZrWUnDAE46mfabc0nCAtFhNMclyIczeDP9_WO4pkw39fYs4OYkeefVwfr2W6X0wjcBPZ_pqKWEZBDIzK8D0uF3Vga1WCxNriCcxG6L9qO0A6uyiKPnMR6bOpO_G4XVBY1YNyQu1EUEBf0XkQT0N-4_aSxMfmhnRyx_XbdfOt-MLFdEj9z25KE6gfgJ1-et_lrWbGi17i7_lqXKU5W52VfPWvMtyQXwEOQoVf6b4oHxB5jN7PVU9iWyS1iqmklGSZ0BwSMazc357OFS-abXTz9KXcPQs-p8Vd9pvThJw37pQK_0-vnRwff4SsRxoS_M79aRKjZyUh0f1uoO-s63u9-xDdEitt7rvFy4KwsqGNdnq2IpWIE0107IjMCSrDyjvzzgI88-hgJoWWwcOflTNzg6CIll92q711a-HnJKnpvCs8wuBL_OItUjlQ3fLuvzNz_QKsUwmjiyRJzXU1qULDnWhdqSXGGn9blhk1TqOkxd9PwmRHBf0QixSmohKtr05p31O8dsjqC-N7_jGvqveY0KOzjo6fCsZcXKV9IJlGfi66HS393upbuwoUWsPEcpkxUzWVGYi1h-6OmDWh8HCVWPlyB3qTubiUtaV_s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://sede-web.herokuapp.com/api/v1/getUser",
+					"protocol": "http",
+					"host": [
+						"sede-web",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"getUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTBjNDczN2I4MGZkMGEzOTQyNTRhNDJiOGNjZjViMTUxZjk2YWJjYTA1MDgxODgwYWI1NjgxMzQ0Yjk2MTE1MjFjMmVkYTUxY2MwMTM5NGQiLCJpYXQiOjE2MjM3OTYwNTkuNjk0NTQ4LCJuYmYiOjE2MjM3OTYwNTkuNjk0NTU1LCJleHAiOjE2NTUzMzIwNTkuNjc0MzcsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.A_uX6uQD43y3YcV7kfXkgJuiuwyNsdpQmqpI4MwgwpozFfz1iKuPnW5qaHXtTXm5dRRTaHZrWUnDAE46mfabc0nCAtFhNMclyIczeDP9_WO4pkw39fYs4OYkeefVwfr2W6X0wjcBPZ_pqKWEZBDIzK8D0uF3Vga1WCxNriCcxG6L9qO0A6uyiKPnMR6bOpO_G4XVBY1YNyQu1EUEBf0XkQT0N-4_aSxMfmhnRyx_XbdfOt-MLFdEj9z25KE6gfgJ1-et_lrWbGi17i7_lqXKU5W52VfPWvMtyQXwEOQoVf6b4oHxB5jN7PVU9iWyS1iqmklGSZ0BwSMazc357OFS-abXTz9KXcPQs-p8Vd9pvThJw37pQK_0-vnRwff4SsRxoS_M79aRKjZyUh0f1uoO-s63u9-xDdEitt7rvFy4KwsqGNdnq2IpWIE0107IjMCSrDyjvzzgI88-hgJoWWwcOflTNzg6CIll92q711a-HnJKnpvCs8wuBL_OItUjlQ3fLuvzNz_QKsUwmjiyRJzXU1qULDnWhdqSXGGn9blhk1TqOkxd9PwmRHBf0QixSmohKtr05p31O8dsjqC-N7_jGvqveY0KOzjo6fCsZcXKV9IJlGfi66HS393upbuwoUWsPEcpkxUzWVGYi1h-6OmDWh8HCVWPlyB3qTubiUtaV_s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "juan",
+							"type": "text"
+						},
+						{
+							"key": "ap",
+							"value": "rojas",
+							"type": "text"
+						},
+						{
+							"key": "am",
+							"value": "toralva",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://sede.test:8080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"sede",
+						"test"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://sede-web.herokuapp.com/api/v1/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombres",
+							"value": "juan carlos",
+							"type": "text"
+						},
+						{
+							"key": "apellido_paterno",
+							"value": "rojas",
+							"type": "text"
+						},
+						{
+							"key": "apellido_materno",
+							"value": "toralva",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "juan5@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "pais_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "sexo",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "estado_civil_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "tipo_documento_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "numero_documento",
+							"value": "455316585",
+							"type": "text"
+						},
+						{
+							"key": "direccion",
+							"value": "huancayo",
+							"type": "text"
+						},
+						{
+							"key": "distrito_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "telefono_fijo",
+							"value": "964142677",
+							"type": "text"
+						},
+						{
+							"key": "celular",
+							"value": "964142677",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "colegio_profesional",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "numero_colegiatura",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "esta_habilitado",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "constancia_habilidad",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "declaracion_jurada",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "copia_dni",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "rj_itse",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "rj_verificador",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "anexo_1",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://sede-web.herokuapp.com/api/v1/register",
+					"protocol": "http",
+					"host": [
+						"sede-web",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
