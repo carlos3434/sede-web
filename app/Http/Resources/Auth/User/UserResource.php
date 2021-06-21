@@ -3,8 +3,6 @@
 namespace App\Http\Resources\Auth\User;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-//use App\Http\Resources\User\RoleCollection as RolesByUserCollection;
-//use App\Http\Resources\User\PermissionCollection as PermissionsByUserCollection;
 
 class UserResource extends JsonResource
 {
@@ -19,11 +17,27 @@ class UserResource extends JsonResource
         //return parent::toArray($request);
         return [
             'id' => $this->id,
-            'name' => $this->name,
+
+            'nombres' => $this->nombres,
             'email' => $this->email,
+            'numero_documento' => $this->numero_documento,
+            'apellido_paterno' => $this->apellido_paterno,
+            'apellido_materno' => $this->apellido_materno,
+            'sexo' => $this->sexo,
+            'telefono_fijo' => $this->telefono_fijo,
+            'celular' => $this->celular,
+            'direccion' => $this->direccion,
+            'colegio_profesional' => $this->colegio_profesional,
+            'numero_colegiatura' => $this->numero_colegiatura,
+            'esta_habilitado' => $this->esta_habilitado,
+            'tipo_documento_id' => $this->tipo_documento_id,
+            'estado_civil_id' => $this->estado_civil_id,
+            'pais_id' => $this->pais_id,
+            'distrito_id' => $this->distrito_id,
+
             'created_at' => $this->created_at->toDateTimeString(),
-            //'roles' => new RolesByUserCollection($this->roles),
-            //'permissions' => new PermissionsByUserCollection($this->permissions)
+            'roles' => $this->getRoleNames(),
+            'permissions' => $this->getAllPermissions()->pluck('name'),
         ];
     }
 }

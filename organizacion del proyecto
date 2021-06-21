@@ -1,0 +1,104 @@
+//MODULOS
+	Registro_ADHOC
+	1 Registro y postulación Adhoc 					USUARIO_ADHOC
+		Curriculum Vitae
+			formaciones
+			capacitaciones
+			experiencias_generales
+			experiencias_inspectores
+			verificacion_realizadas
+			documentos
+
+	Seleccion_Adhoc
+	2 Selección verificadores Adhoc 				ADMINISTRADOR|USUARIO_CENEPRED
+		calificaciones.index
+		calificaciones.pendientes
+		calificaciones.resultados
+		acreditaciones.index
+
+	Expediente ADHOC
+	3 Registro de expediente Adhoc 					USUARIO_ADMINISTRADO
+		registrar-expediente
+		solicitar-hoja-tramite
+		solicitar-verificacion-adhoc
+
+	4 Revisión de expediente Adhoc 					ADMINISTRADOR|USUARIO_CENEPRED
+		expediente-pendientes
+
+	5 Diligencia y formulación del informe Adhoc 	USUARIO_ADHOC
+		recibir-expedientes
+
+	//pendiente
+	6 Notificación del informe Adhoc 				ADMINISTRADOR|USUARIO_CENEPRED
+		Verificar informe
+
+	7 Recepcion y descarga del informe Adhoc 		ADMINISTRADOR|USUARIO_CENEPRED
+		Verificar expediente
+
+	8 Reportes 										ADMINISTRADOR|USUARIO_CENEPRED
+		Cuadro de méritos
+		Calificación
+		Resultados
+	// fin pendientes
+	
+	9 Mantenimiento									ADMINISTRADOR
+		configuraciones
+		convocatorias
+		grados
+		instituciones
+		tipos-instituciones
+		tipos-documentos
+		tipos-capacitaciones
+
+
+//ya ubicados
+capacitaciones						//1
+experiencias_generales				//1
+experiencias_inspectores			//1
+formaciones							//1
+entregas_expedientes				//1 documentos
+verificacion_realizadas				//1
+diligencias							//1 relacion con entrega
+
+acreditaciones						//2
+calificaciones						//2
+items								//2
+puntajes							//2
+
+expediente_archivos					//3
+expedientes_adhocs					//3
+observaciones						//3
+
+municipalidades_distritales			//9
+municipalidades_provinciales		//9
+permissions							//9
+distritos							//9
+estado_civil						//9
+departamentos						//9
+grados								//9
+instituciones						//9
+paises								//9
+provincias							//9
+roles								//9
+sedes_registrales					//9
+tipo_niveles						//9
+tipos_capacitaciones				//9
+tipos_documentos					//9
+tipos_instituciones					//9
+users								//9
+configuraciones		        		//9
+convocatorias	            		//9
+
+
+role_has_permissions			
+model_has_permissions						
+model_has_roles		
+
+password_resets	
+migrations	
+failed_jobs	
+oauth_access_tokens						
+oauth_auth_codes						
+oauth_clients						
+oauth_personal_access_clients						
+oauth_refresh_tokens	

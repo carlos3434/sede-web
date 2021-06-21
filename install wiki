@@ -27,7 +27,7 @@ cd storage && chown www-data:www-data  oauth-*.key
 cd storage && chmod 600  oauth-*.key 
 
 el problema se solucionno con esto correidnolo desde la consola de heroku 
-php artisan passport:keys
+https://blog.marco-marassi.com/posts/laravel-passport-heroku-oauth-private-key-does-not-exist-or-is-not-readable
 
 
 login to heroku

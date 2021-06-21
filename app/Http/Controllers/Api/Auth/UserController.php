@@ -14,13 +14,18 @@ class UserController extends Controller
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
-        /*
-        $this->middleware('can:CREATE_USER')->only(['create','store']);
-        $this->middleware('can:READ_USER')->only('index');
-        $this->middleware('can:UPDATE_USER')->only(['edit','update']);
-        $this->middleware('can:DETAIL_USER')->only('show');
-        $this->middleware('can:DELETE_USER')->only('destroy');
-        */
+
+       // $this->middleware(['can:ACREDITACION_SHOW'])->only('show');
+       // $this->middleware('permission:ACREDITACION_SHOW|ACREDITACION_SHOW')->only('show');
+       // $this->middleware('role:ADMINISTRADOR')->only('show');
+        $this->middleware(['role_or_permission:ADMINISTRADOR|USER_CREATE'])->only(['create','store']);
+        $this->middleware(['role_or_permission:ADMINISTRADOR|USER_INDEX'])->only('index');
+        $this->middleware(['role_or_permission:ADMINISTRADOR|USER_EDIT'])->only(['edit','update']);
+        $this->middleware(['role_or_permission:ADMINISTRADOR|USER_SHOW'])->only('show');
+        $this->middleware(['role_or_permission:ADMINISTRADOR|USER_DESTROY'])->only('destroy');
+
+        //USER_INDEX_DATA  
+
     }
 
     /**
@@ -42,7 +47,7 @@ class UserController extends Controller
     {
         $request->merge(['password' => bcrypt(12345678)]);
         $user = $this->userRepository->create($request->all());
-        //$this->syncRolesAndPermissions($request, $user);
+        $this->userRepository->syncRolesAndPermissions($request, $user);
         return response()->json($user, 201);
     }
     /**
@@ -65,7 +70,7 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user)
     {
         $user = $this->userRepository->updateOne($request, $user);
-        //$this->syncRolesAndPermissions($request, $user);
+        $this->userRepository->syncRolesAndPermissions($request, $user);
         return response()->json($user, 200);
     }
     /**

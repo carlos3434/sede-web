@@ -29,6 +29,8 @@ Route::prefix('v1')->group(function(){
         Route::post('logout', 'Api\Auth\AuthController@logout');
         //apis
         Route::apiResource('users','Api\Auth\UserController');
+        Route::apiResource('roles','Api\Auth\RoleController');
+        Route::apiResource('permissions','Api\Auth\PermissionController');
         //others
         //listas
     });

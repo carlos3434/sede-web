@@ -3,6 +3,7 @@
 use App\Models\Auth\Permiso;
 use Illuminate\Database\Seeder;
 
+use Spatie\Permission\Models\Role;
 class PermisoSeeder extends Seeder
 {
     /**
@@ -206,9 +207,12 @@ class PermisoSeeder extends Seeder
 
             ];
 
+        $role = Role::find(2);
+
         foreach ($items as $item)
         {
             Permiso::updateOrCreate(['name' => $item['name']], $item);
+            $role->givePermissionTo($item['name']);
         }
     }
 }

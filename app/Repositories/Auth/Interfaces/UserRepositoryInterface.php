@@ -9,4 +9,5 @@ interface UserRepositoryInterface extends RepositoryInterface
 
     public function findByUsername($username);
     public function getOneForLogin($user);
+    public function syncRolesAndPermissions($request, &$user);
 }

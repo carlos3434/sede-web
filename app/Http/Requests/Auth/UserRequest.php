@@ -51,9 +51,8 @@ class UserRequest extends FormRequest
             'anexo_1'                   => 'string',
             'foto'                      => 'string',
 
-            //'password' => 'required|min:8',
-            //'roles' => 'exists:roles,id',
-            //'permissions' => 'exists:permissions,id'
+            'roles'                     => 'string|exists:roles,name',
+            'permissions'               => 'string|exists:permissions,name'
         ];
     }
     public function messages()
@@ -66,8 +65,8 @@ class UserRequest extends FormRequest
             'email.unique' => ':attribute ya se a registrado',
             'password.required' => 'El :attribute es un campo requerido',
             'password.min' => 'El :attribute debe contener al menos 8 caracteres',
-            //'roles.exists' => 'El :attribute seleccionado es invalido',
-            //'permissions.exists' => 'El :attribute seleccionado es invalido'
+            'roles.exists' => 'El :attribute seleccionado es invalido',
+            'permissions.exists' => 'El :attribute seleccionado es invalido'
             // ..
         ];
     }

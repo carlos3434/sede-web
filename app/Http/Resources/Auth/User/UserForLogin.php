@@ -3,8 +3,6 @@
 namespace App\Http\Resources\Auth\User;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-//use App\Http\Resources\User\RoleCollection as RolesByUserCollection;
-//use App\Http\Resources\User\PermissionCollection as PermissionsByUserCollection;
 
 class UserForLogin extends JsonResource
 {
@@ -16,18 +14,32 @@ class UserForLogin extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
         return [
             'id' => $this->id,
-            'name' => $this->name,
+
+            'nombres' => $this->nombres,
             'email' => $this->email,
-            //'departamento_id' => $this->departamento_id,
+            'numero_documento' => $this->numero_documento,
+            'apellido_paterno' => $this->apellido_paterno,
+            'apellido_materno' => $this->apellido_materno,
+            'sexo' => $this->sexo,
+            'telefono_fijo' => $this->telefono_fijo,
+            'celular' => $this->celular,
+            'direccion' => $this->direccion,
+            'colegio_profesional' => $this->colegio_profesional,
+            'numero_colegiatura' => $this->numero_colegiatura,
+            'esta_habilitado' => $this->esta_habilitado,
+            'tipo_documento_id' => $this->tipo_documento_id,
+            'estado_civil_id' => $this->estado_civil_id,
+            'pais_id' => $this->pais_id,
+            'distrito_id' => $this->distrito_id,
+
             'token' => isset( $this->token) ? $this->token : null,
             'token_type' => isset( $this->token_type) ? $this->token_type : null,
             'expires_at' => isset( $this->expires_at) ? $this->expires_at : null,
             'created_at' => $this->created_at->toDateTimeString(),
-            //'roles' => new RolesByUserCollection($this->roles),
-            //'permissions' => new PermissionsByUserCollection($this->permissions)
+            'roles' => $this->getRoleNames(),
+            'permissions' => $this->getAllPermissions()->pluck('name'),
         ];
     }
 }

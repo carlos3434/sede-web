@@ -2,9 +2,6 @@
 namespace App\Repositories\Auth;
 
 use App\Repositories\AbstractRepository;
-//use App\User;
-//use App\Http\Resources\Auth\User\UserCollection;
-//use App\Http\Resources\Auth\User\UserResource;
 use App\Http\Resources\Auth\User\UserForLogin;
 
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
@@ -28,5 +25,14 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     public function getOneForLogin($user)
     {
         return new UserForLogin($user);
+    }
+    public function syncRolesAndPermissions($request, &$user)
+    {
+        if ($request->has('roles')) {//string
+            $user->assignRole( $request->get('roles') );
+        }
+        if ($request->has('permissions')) {
+            $user->getPermissionsViaRoles( $request->get('permissions') );
+        }
     }
 }

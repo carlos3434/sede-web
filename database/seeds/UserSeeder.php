@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use App\Models\Auth\User;
+use Spatie\Permission\Models\Role;
 class UserSeeder extends Seeder
 {
     /**
@@ -79,8 +80,10 @@ class UserSeeder extends Seeder
 
         ];
 
+        $role = Role::find(2);
         foreach ($items as $item) {
-            User::updateOrCreate(['email' => $item['email']], $item);
+            $user = User::updateOrCreate(['email' => $item['email']], $item);
+            $user->assignRole($role);
         }
 
     }
