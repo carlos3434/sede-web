@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('pais_id');
             $table->boolean('sexo');
             //$table->string('estado_civil')->nullable();
-            $table->foreignId('estado_civil_id');
+            $table->foreignId('estado_civil_id')->nullable();
             $table->foreignId('tipo_documento_id');
             $table->string('numero_documento');
             $table->string('direccion')->nullable();
