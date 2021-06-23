@@ -56,7 +56,7 @@ class AuthController extends Controller
         $user['expires_at'] = Carbon::parse($tokenResult->token->expires_at)
                                 ->toDateTimeString();
         $success = $this->userRepository->getOneForLogin($user);
-
+        activity()->log('Look, I logged something');
         return response()->json(['success' => $success], $this->successStatus);
     }
 

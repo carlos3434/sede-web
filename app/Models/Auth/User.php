@@ -10,11 +10,14 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Http\Filters\Auth\UserFilter;
 use Spatie\Permission\Traits\HasRoles;
 
+use Spatie\Activitylog\Traits\LogsActivity;
+
 class User extends Authenticatable //implements MustVerifyEmail
 {
     use HasApiTokens;
     use Notifiable;
     use HasRoles;
+    use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +44,9 @@ class User extends Authenticatable //implements MustVerifyEmail
         'numero_colegiatura',
         'esta_habilitado',
     ];
+
+    protected static $logFillable = true;
+    //protected static $logUnguarded  = true; $guarded
 
     /**
      * The attributes that should be hidden for arrays.

@@ -46,3 +46,37 @@ php artisan config:clear
 
 ERROR: Personal access client not found. Please create one.
 SOLucion: php artisan passport:install
+
+
+
+
+
+
+
+jan carlos
+
+ing juan carlos montero      inge
+ing jose                     revision de sede
+ing eduardo paes         se inicio la sede electronica
+
+arq kelly                parte tecnica
+
+reunion 1
+
+administracion de informes de verificacion adhoc, edificaciones ya consolidadas segn ley, registros publicos
+
+indeci, implementacion de servicio, 
+
+administrados en linea
+
+Observaciones:
+
+- restriccion de cargas pdf
+- pado de usuario adhoc
+  - cuando usuario de cenepred haga la validacion del , pasar informacion del pdf o imagen, a un formario, monto fecha, entidad bancaria y numero de operacion, 
+
+- http://200.1.180.50/expediente/8/edit#/ 
+- ver un resumen del totld e pendientes y completados
+
+- del flujo: proceso como esta concevido el sistema, la arquitectura
+- casos de uso: , 

@@ -69,6 +69,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        $request->merge(['password' => bcrypt(12345678)]);
         $user = $this->userRepository->updateOne($request, $user);
         $this->userRepository->syncRolesAndPermissions($request, $user);
         return response()->json($user, 200);
