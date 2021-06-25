@@ -13,7 +13,10 @@ class Configuracion extends Model
     use LogsActivity;
     //
     protected $table="configuraciones";
-
+    protected $fillable = [
+        'nombre',
+        'valor'
+    ];
     public function scopeFilter(Builder $builder, $request)
     {
         return (new ConfiguracionFilter($request))->filter($builder);

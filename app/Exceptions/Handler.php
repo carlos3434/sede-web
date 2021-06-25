@@ -51,13 +51,22 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
-            return response()->json(['message' => 'Not Found!'], 404);
+            return response()->json(['message' => 'Recurso no encontrado!'], 404);
+        }
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return response()->json(['message' => 'Ruta no encontrada!'], 404);
         }
         if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
             return response()->json([
-                'responseMessage' => 'You do not have the required authorization.',
+                'responseMessage' => 'No tienes la autorización requerida.',
                 'responseStatus'  => 403,
             ]);
+        }
+        if ($exception instanceof \Illuminate\Validation\ValidationException) {
+            return response()->json([
+                'message' => 'Los datos proporcionados no son válidos',
+                'errors' => $exception->validator->getMessageBag()
+            ], 422);
         }
         return parent::render($request, $exception);
     }

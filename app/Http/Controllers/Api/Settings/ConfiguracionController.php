@@ -3,8 +3,8 @@ namespace App\Http\Controllers\Api\Settings;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Setting\Configuracion;
-use App\Http\Requests\Setting\ConfiguracionRequest;
+use App\Models\Settings\Configuracion;
+use App\Http\Requests\Settings\ConfiguracionRequest;
 use App\Repositories\Settings\Interfaces\ConfiguracionRepositoryInterface;
 
 class ConfiguracionController extends Controller
