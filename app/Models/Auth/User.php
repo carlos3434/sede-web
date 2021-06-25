@@ -112,14 +112,14 @@ class User extends Authenticatable //implements MustVerifyEmail
 
     public function estaPostulando()
     {
-        $convocatoriaActual = Configuracion::convocatoriaActual();
-        $calificacionInicial= Calificacion::where('usuario_id',$this->id)->where('convocatoria_id',$convocatoriaActual)->count();
+        $convocatoriaActual = App\Models\Configuracion::convocatoriaActual();
+        $calificacionInicial= App\Models\Calificacion::where('usuario_id',$this->id)->where('convocatoria_id',$convocatoriaActual)->count();
         return ($calificacionInicial >0);
     }
 
     public function estaAcreditado()
     {
-        $calificacion = Calificacion::where('usuario_id',$this->id)->get()[0];
+        $calificacion = App\Models\Calificacion::where('usuario_id',$this->id)->get()[0];
 
         //var_dump($calificacion);
         //die();
@@ -128,27 +128,27 @@ class User extends Authenticatable //implements MustVerifyEmail
 
     public function capacitaciones()
     {
-        return $this->hasMany('App\Capacitacion','usuario_id');
+        return $this->hasMany('App\Models\RegistroAdhoc\Capacitacion','usuario_id');
     }
 
     public function formaciones()
     {
-        return $this->hasMany('App\Formacion','usuario_id');
+        return $this->hasMany('App\Models\RegistroAdhoc\Formacion','usuario_id');
     }
 
     public function experienciasGenerales()
     {
-        return $this->hasMany('App\ExperienciaGeneral','usuario_id');
+        return $this->hasMany('App\Models\RegistroAdhoc\ExperienciaGeneral','usuario_id');
     }
 
     public function experienciasInspector()
     {
-        return $this->hasMany('App\ExperienciaInspector','usuario_id');
+        return $this->hasMany('App\Models\RegistroAdhoc\ExperienciaInspector','usuario_id');
     }
 
     public function verificacionesRealizadas()
     {
-        return $this->hasMany('App\VerificacionRealizada','usuario_id');
+        return $this->hasMany('App\Models\RegistroAdhoc\VerificacionRealizada','usuario_id');
     }
 
     public function sendEmailVerificationNotification()

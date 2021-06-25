@@ -15,7 +15,7 @@ class Departamento extends Model
      */
     public function provincias()
     {
-        return $this->hasMany('App\Provincia','departamento_id');
+        return $this->hasMany('App\Models\Settings\Provincia','departamento_id');
     }
 
 }

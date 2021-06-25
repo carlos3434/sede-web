@@ -14,7 +14,7 @@ class Pais extends Model
      */
     public function usuarios()
     {
-        return $this->hasMany('App\User','pais_id');
+        return $this->hasMany('App\Models\Auth\User','pais_id');
     }
 
     /**
@@ -22,6 +22,6 @@ class Pais extends Model
      */
     public function instituciones()
     {
-        return $this->hasMany('App\Institucion','pais_id');
+        return $this->hasMany('App\Models\Settings\Institucion','pais_id');
     }
 }

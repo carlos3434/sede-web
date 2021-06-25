@@ -13,6 +13,6 @@ class TipoDocumento extends Model
      */
     public function usuarios()
     {
-        return $this->hasMany('App\User','tipo_documento_id');
+        return $this->hasMany('App\Models\Auth\User','tipo_documento_id');
     }
 }

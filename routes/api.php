@@ -27,11 +27,28 @@ Route::prefix('v1')->group(function(){
 
         Route::get('getUser', 'Api\Auth\AuthController@getUser');
         Route::post('logout', 'Api\Auth\AuthController@logout');
-        //apis
+        //auth
         Route::apiResource('users','Api\Auth\UserController');
         Route::apiResource('roles','Api\Auth\RoleController');
         Route::apiResource('permissions','Api\Auth\PermissionController');
-        //others
-        //listas
+        //ExpedienteAdhoc
+        //RegistroAdhoc
+        //SeleccionAdhoc
+        //Settings
+
+        Route::apiResource('configuraciones','Api\Settings\ConfiguracionController');
+        Route::apiResource('convocatorias','Api\Settings\ConvocatoriaController');
+        //Route::apiResource('','Api\Settings\Controller');
+        //Route::apiResource('','Api\Settings\Controller');
+        Route::apiResource('estadocivil','Api\Settings\EstadoCivilController');
+        Route::apiResource('grados','Api\Settings\GradosController');
+        Route::apiResource('instituciones','Api\Settings\InstitucionController');
+        Route::apiResource('paises','Api\Settings\PaisController');
+        //Route::apiResource('','Api\Settings\Controller');
+        Route::apiResource('sederegistral','Api\Settings\SedeRegistralController');
+        Route::apiResource('tipocapacitacion','Api\Settings\TipoCapacitacionController');
+        Route::apiResource('tipodocumento','Api\Settings\TipoDocumentoController');
+        Route::apiResource('tipoInstitucion','Api\Settings\TipoInstitucionController');
+        Route::apiResource('tiponiveles','Api\Settings\TipoNivelesController');
     });
 });

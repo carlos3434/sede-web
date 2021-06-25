@@ -1,0 +1,33 @@
+
+kmontoya@cenepred.gob.pe
+jmontero@cenepred.gob.pe
+epaez@cenepred.gob.pe
+jcodarlupo@cenepred.gob.pe
+
+Buenos dias:
+
+El presente es para informar las coordinaciones que se estuvieron realizando esta semana:
+
+1 .- Modulo de Reportes
+se solicito el listado de reportes que se desarrollara en el sistema "Sede Electronica".
+Este listado con sus respectivos formatos son necesarios para continuar el avance del modulo de reportes, por tal motivo 
+por favor gestione este requerimiento a la brevedad posible.
+
+2 .- Actividad de usuarios del sistema
+conversando con el Eng. Miguel Sanches, menciono que se deberia añadir un almacenamiento (tabla) para las
+acciones que realicen los usuarios dentro del sistema. en tal sentido se presenta a continuacion los datos a guardar:
+
+    - fecha y hora
+    - usuario: nombres completos
+    - descripcion de la accion
+    - en caso se actualice informacion, se guardara la informacion antigua y la nueva
+
+En caso se necesite algun dato adicional estare atento a sus comentarios
+
+3 .- Funcionalidad y Observaciones del sistema
+Se solicito al Ing. Jose Codarlupo la revision de las funcionalidades del sistema tal cual se encuentra desarrollado 
+actualmente en la IP compartida con el objetivo de levantar observaciones que pudieran surgir
+
+4 .- Dominio del sistema:
+Confirmar el dominio e ip donde trabajara el sistema, actualmente no se brindo un dominio e ip ni los accesos a este
+para los trabajos de instalacion del sistema "sede electronica" en produccion

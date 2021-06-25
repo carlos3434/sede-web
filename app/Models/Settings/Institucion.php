@@ -14,7 +14,7 @@ class Institucion extends Model
      */
     public function tipoDeInstitucion()
     {
-        return $this->belongsTo('App\TipoInstitucion', 'tipo_institucion_id');
+        return $this->belongsTo('App\Models\Settings\TipoInstitucion', 'tipo_institucion_id');
     }
 
     public function pais()

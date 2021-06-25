@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 
 use App\Repositories\Auth\UserRepository;
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
+use App\Repositories\Settings\ConfiguracionRepository;
+use App\Repositories\Settings\Interfaces\ConfiguracionRepositoryInterface;
 
 use App\Repositories\AbstractRepository;
 use App\Repositories\RepositoryInterface;
@@ -19,8 +21,9 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind( UserRepositoryInterface::class, UserRepository::class );
-        $this->app->bind( AbstractRepository::class, RepositoryInterface::class );
+        $this->app->bind( ConfiguracionRepositoryInterface::class ,ConfiguracionRepository::class );
+        $this->app->bind( UserRepositoryInterface::class , UserRepository::class   );
+        $this->app->bind( RepositoryInterface::class, AbstractRepository::class );
 
     }
 

@@ -12,7 +12,7 @@ class Distrito extends Model
      */
     public function usuarios()
     {
-        return $this->hasMany('App\User','distrito_id');
+        return $this->hasMany('App\Models\Auth\User','distrito_id');
     }
 
     /**
@@ -20,6 +20,6 @@ class Distrito extends Model
      */
     public function provincia()
     {
-        return $this->belongsTo('App\Provincia', 'provincia_id');
+        return $this->belongsTo('App\Models\Auth\Provincia', 'provincia_id');
     }
 }

@@ -11,6 +11,6 @@ class TipoInstitucion extends Model
 
     public function instituciones()
     {
-        return $this->hasMany('App\Institucion','tipo_institucion_id');
+        return $this->hasMany('App\Models\Settings\Institucion','tipo_institucion_id');
     }
 }

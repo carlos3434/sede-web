@@ -11,6 +11,6 @@ class TipoNiveles extends Model
 
     public function expediente_arhivos()
     {
-        return $this->hasMany('App\ExpedienteArchivos','tipo_niveles_id');
+        return $this->hasMany('App\Models\ExpedienteAdhoc\ExpedienteArchivos','tipo_niveles_id');
     }
 }

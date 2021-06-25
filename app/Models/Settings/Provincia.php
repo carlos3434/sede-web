@@ -11,7 +11,7 @@ class Provincia extends Model
 
     public function distritos()
     {
-        return $this->hasMany('App\Distrito','provincia_id');
+        return $this->hasMany('App\Models\Settings\Distrito','provincia_id');
     }
 
     /**
@@ -19,7 +19,7 @@ class Provincia extends Model
      */
     public function departamento()
     {
-        return $this->belongsTo('App\Departamento', 'departamento_id');
+        return $this->belongsTo('App\Models\Settings\Departamento', 'departamento_id');
     }
 
 }
