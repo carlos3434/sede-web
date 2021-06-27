@@ -29,10 +29,10 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     public function syncRolesAndPermissions($request, &$user)
     {
         if ($request->has('roles')) {//string
-            $user->assignRole( $request->get('roles') );
+            $user->syncRoles( $request->get('roles') );
         }
         if ($request->has('permissions')) {
-            $user->getPermissionsViaRoles( $request->get('permissions') );
+            $user->givePermissionTo( $request->get('permissions') );
         }
     }
 }
