@@ -7,7 +7,7 @@ use App\Models\Settings\TipoInstitucion;
 use App\Http\Requests\Settings\TipoInstitucionRequest;
 use App\Repositories\Settings\Interfaces\TipoInstitucionRepositoryInterface;
 
-class TipoTipoInstitucionController extends Controller
+class TipoInstitucionController extends Controller
 {
     private $repository;
 

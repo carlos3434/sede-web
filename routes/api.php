@@ -52,7 +52,7 @@ Route::prefix('v1')->group(function(){
         //Route::apiResource('sederegistral','Api\Settings\SedeRegistralController');
         Route::apiResource('tipocapacitacion','Api\Settings\TipoCapacitacionController');
         Route::apiResource('tipodocumento','Api\Settings\TipoDocumentoController');
-        Route::apiResource('tipoInstitucion','Api\Settings\TipoInstitucionController');
+        Route::apiResource('tipoinstitucion','Api\Settings\TipoInstitucionController');
         //Route::apiResource('tiponivel','Api\Settings\TipoNivelController');
 
         //listas

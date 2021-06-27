@@ -9,49 +9,53 @@ use App\Repositories\RepositoryInterface;
  */
 
 abstract class AbstractRepository implements RepositoryInterface {
-	
-	protected $modelClassName;
-	protected $modelClassNamePath;
-	protected $collectionNamePath;
-	protected $resourceNamePath;
+    
+    protected $modelClassName;
+    protected $modelClassNamePath;
+    protected $collectionNamePath;
+    protected $resourceNamePath;
 
     //wiki
-	public function find($id)
-	{
-		return call_user_func_array("{$this->modelClassNamePath}::find", array($id));
-	}
-	public function create(array $attributes)
-	{
-		return call_user_func_array("{$this->modelClassNamePath}::create", array($attributes));
-	}
-	public function destroy($ids)
-	{
-		return call_user_func_array("{$this->modelClassNamePath}::destroy", array($ids));
-	}
-	//custom
+    public function find($id)
+    {
+        return call_user_func_array("{$this->modelClassNamePath}::find", array($id));
+    }
+    public function create(array $attributes)
+    {
+        return $this->getOne(
+            call_user_func_array(
+                "{$this->modelClassNamePath}::create", array($attributes)
+            )
+        );
+    }
+    public function destroy($ids)
+    {
+        return call_user_func_array("{$this->modelClassNamePath}::destroy", array($ids));
+    }
+    //custom
 
     public function all($request)
-	{
-		return new $this->collectionNamePath(
+    {
+        return new $this->collectionNamePath(
             call_user_func_array("{$this->modelClassNamePath}::filter", array($request))
             ->sort()
             ->paginate()
         );
-	}
+    }
 
     public function getOne($model)
-	{
-		return new $this->resourceNamePath($model);
-	}
+    {
+        return new $this->resourceNamePath($model);
+    }
 
     public function updateOne($request, $model)
-	{
+    {
         $model->update( $request->all() );
-        return $model;
-	}
+        return $this->getOne($model);
+    }
     public function deleteOne( $model )
-	{
+    {
         $model->delete();
-	}
+    }
 
 }

@@ -3,15 +3,15 @@ namespace App\Http\Controllers\Api\Settings;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\TipoDocumento;
-use App\Http\Requests\Settings\TipoDocumentoRequest;
-use App\Repositories\Settings\Interfaces\TipoDocumentoRepositoryInterface;
+use App\Models\Settings\TipoCapacitacion;
+use App\Http\Requests\Settings\TipoCapacitacionRequest;
+use App\Repositories\Settings\Interfaces\TipoCapacitacionRepositoryInterface;
 
-class TipoDocumentoController extends Controller
+class TipoCapacitacionController extends Controller
 {
     private $repository;
 
-    public function __construct(TipoDocumentoRepositoryInterface $repository)
+    public function __construct(TipoCapacitacionRepositoryInterface $repository)
     {
         $this->repository = $repository;
         
@@ -38,10 +38,10 @@ class TipoDocumentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TipoDocumentoRequest $request)
+    public function store(TipoCapacitacionRequest $request)
     {
-        $tipoDocumento = $this->repository->create($request->all());
-        return response()->json($tipoDocumento, 201);
+        $tipoCapacitacion = $this->repository->create($request->all());
+        return response()->json($tipoCapacitacion, 201);
     }
     /**
      * Display the specified resource.
@@ -49,31 +49,31 @@ class TipoDocumentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TipoDocumento $tipoDocumento)
+    public function show(TipoCapacitacion $tipoCapacitacion)
     {
-        return $this->repository->getOne($tipoDocumento);
+        return $this->repository->getOne($tipoCapacitacion);
     }
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TipoDocumento  $tipoDocumento
+     * @param  \App\TipoCapacitacion  $tipoCapacitacion
      * @return \Illuminate\Http\Response
      */
-    public function update(TipoDocumentoRequest $request, TipoDocumento $tipoDocumento)
+    public function update(TipoCapacitacionRequest $request, TipoCapacitacion $tipoCapacitacion)
     {
-        $tipoDocumento = $this->repository->updateOne($request, $tipoDocumento);
-        return response()->json($tipoDocumento, 200);
+        $tipoCapacitacion = $this->repository->updateOne($request, $tipoCapacitacion);
+        return response()->json($tipoCapacitacion, 200);
     }
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\TipoDocumento  $tipoDocumento
+     * @param  \App\TipoCapacitacion  $tipoCapacitacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoDocumento $tipoDocumento)
+    public function destroy(TipoCapacitacion $tipoCapacitacion)
     {
-        $this->repository->deleteOne($tipoDocumento);
+        $this->repository->deleteOne($tipoCapacitacion);
         return response()->json(null, 204);
     }
 }

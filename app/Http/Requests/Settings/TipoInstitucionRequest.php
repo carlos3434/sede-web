@@ -4,7 +4,7 @@ namespace App\Http\Requests\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TipoDocumentoRequest extends FormRequest
+class TipoInstitucionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

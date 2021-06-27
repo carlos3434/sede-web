@@ -28,7 +28,7 @@ class InstitucionRequest extends FormRequest
             'nombre' => 'required|alpha_num_spaces',
             'etiqueta' => 'required|alpha_num_spaces',
             'tipo_institucion_id' => 'required|exists:tipos_instituciones,id',
-            'pais' => 'required||exists:paises,id'
+            'pais_id' => 'required|exists:paises,id'
         ];
     }
 

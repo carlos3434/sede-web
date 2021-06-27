@@ -32,6 +32,14 @@ class RouteServiceProvider extends ServiceProvider
     {
         //
 
+        Route::model('configuracione', \App\Models\Settings\Configuracion::class);
+        Route::model('convocatoria', \App\Models\Settings\Convocatoria::class);
+        Route::model('grado', \App\Models\Settings\Grado::class);
+        Route::model('institucione', \App\Models\Settings\Institucion::class);
+        Route::model('tipocapacitacion', \App\Models\Settings\TipoCapacitacion::class);
+        Route::model('tipodocumento', \App\Models\Settings\TipoDocumento::class);
+        Route::model('tipoInstitucion', \App\Models\Settings\TipoInstitucion::class);
+        
         parent::boot();
     }
 
