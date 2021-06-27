@@ -48,7 +48,8 @@ ERROR: Personal access client not found. Please create one.
 SOLucion: php artisan passport:install
 
 
-
+Docker
+docker exec -it id bash
 
 
 
