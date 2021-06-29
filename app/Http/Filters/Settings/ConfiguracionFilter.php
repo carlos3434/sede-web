@@ -3,11 +3,12 @@ namespace App\Http\Filters\Settings;
 
 
 use App\Http\Filters\AbstractFilter;
+use App\Http\Filters\Commons\NombreFilter;
 
 class ConfiguracionFilter extends AbstractFilter
 {
     protected $filters = [
-        'nombre' => Common\NombreFilter::class,
+        'nombre' => NombreFilter::class,
         'valor' => Configuracion\ValorFilter::class,
     ];
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Settings\Configuracion;
 use App\Http\Requests\Settings\ConfiguracionRequest;
 use App\Repositories\Settings\Interfaces\ConfiguracionRepositoryInterface;
-
+use App\Http\Resources\Settings\Configuracion\ConfiguracionExcelCollection;
 class ConfiguracionController extends Controller
 {
     private $repository;
@@ -30,7 +30,18 @@ class ConfiguracionController extends Controller
      */
     public function index(Request $filters)
     {
-        return  $this->repository->all($filters);
+        if ( !empty($request->excel) || !empty($request->pdf) ){
+            $query = $this->repository->all($filters);
+            if ($query->count() > 0) {
+                $result = new ConfiguracionExcelCollection( $query->get() );
+                return $result->downloadExcel(
+                    'configuracion_'.date('m-d-Y_hia').'.xlsx',
+                    $writerType = null,
+                    $headings = true
+                );
+            }
+        }
+        return $this->repository->all($filters);;
     }
     /**
      * Store a newly created resource in storage.

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Filters\Settings\Commons;
+namespace App\Http\Filters\Commons;
 
 class NombreFilter
 {

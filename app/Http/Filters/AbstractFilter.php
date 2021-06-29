@@ -73,7 +73,12 @@ abstract class AbstractFilter
     }
     public function paginate()
     {
-        return $this->builder->paginate( $this->request->input('per_page',25) );
+        return $this->builder->paginate( 
+            $this->request->input(
+                'per_page',
+                config('sede.items_per_page')
+            )
+        );
     }
     public function first()
     {
