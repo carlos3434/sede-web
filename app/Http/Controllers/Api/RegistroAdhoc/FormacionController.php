@@ -7,6 +7,7 @@ use App\Models\RegistroAdhoc\Formacion;
 use App\Http\Requests\RegistroAdhoc\FormacionRequest;
 use App\Repositories\RegistroAdhoc\Interfaces\FormacionRepositoryInterface;
 use App\Helpers\FileUploader;
+use Illuminate\Support\Facades\Auth;
 
 class FormacionController extends Controller
 {
@@ -43,6 +44,9 @@ class FormacionController extends Controller
                 $headings = true
             );
         }
+        //$request['user_id'] = Auth::id();
+        $request->request->add(['usuario_id' => Auth::id() ]);
+        //$request->merge(["usuario_id" => Auth::id()]);
         return $this->repository->all($request);
     }
 
