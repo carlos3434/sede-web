@@ -39,7 +39,7 @@ abstract class AbstractRepository implements RepositoryInterface {
         return new $this->collectionNamePath(
             call_user_func_array("{$this->modelClassNamePath}::filter", array($request))
             ->sort()
-            ->paginate()
+            ->paginate(config('sede.items_per_page'))
         );
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Settings\Configuracion;
 
 class ConfiguracionSeeder extends Seeder
 {
@@ -11,6 +12,22 @@ class ConfiguracionSeeder extends Seeder
      */
     public function run()
     {
-        //
+
+        Configuracion::create([
+            'nombre'      => 'CONVOCATORIA_ACTUAL',
+            'valor'     => '1',
+        ]);
+        Configuracion::create([
+            'nombre'      => 'CONVOCATORIA_ACTUAL',
+            'valor'     => '2',
+        ]);
+        Configuracion::create([
+            'nombre'      => 'CONVOCATORIA_ACTUAL',
+            'valor'     => '3',
+        ]);
+        Configuracion::create([
+            'nombre'      => 'CONVOCATORIA_ACTUAL',
+            'valor'     => '4',
+        ]);
     }
 }

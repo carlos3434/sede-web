@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Settings\Convocatoria;
 
 class ConvocatoriaSeeder extends Seeder
 {
@@ -11,6 +12,25 @@ class ConvocatoriaSeeder extends Seeder
      */
     public function run()
     {
-
+        Convocatoria::create([
+            'nombre'      => 'CONVOCATORIA_2020',
+            'fecha_inicio'     => '2020-12-01',
+            'fecha_final'     => '2020-12-30',
+        ]);
+        Convocatoria::create([
+            'nombre'      => 'CONVOCATORIA_2021',
+            'fecha_inicio'     => '2021-12-01',
+            'fecha_final'     => '2021-12-30',
+        ]);
+        Convocatoria::create([
+            'nombre'      => 'CONVOCATORIA_2022',
+            'fecha_inicio'     => '2022-12-01',
+            'fecha_final'     => '2022-12-30',
+        ]);
+        Convocatoria::create([
+            'nombre'      => 'CONVOCATORIA_2023',
+            'fecha_inicio'     => '2023-12-01',
+            'fecha_final'     => '2023-12-30',
+        ]);
     }
 }
