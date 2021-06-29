@@ -43,16 +43,7 @@ abstract class AbstractRepository implements RepositoryInterface {
         );
     }
 
-    public function allToExport($request)
-    {
-        return new $this->collectionNamePath(
-            $this->getFilter($request)
-            ->sort()
-            ->paginate()
-        );
-    }
-
-    private function getFilter($request)
+    protected function getFilter($request)
     {
         return call_user_func_array(
             "{$this->modelClassNamePath}::filter",

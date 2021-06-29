@@ -1,8 +1,4 @@
-<?php
-
-// AbstractFilter.php
-
-namespace App\Http\Filters;
+<?php namespace App\Http\Filters;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,7 +22,6 @@ abstract class AbstractFilter
         }
         $this->setBuilder($builder);
         return $this;
-        //return $builder;
     }
 
     protected function setBuilder($builder)

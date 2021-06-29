@@ -10,6 +10,10 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Institucion extends Model
 {
+    const INSTITUCION_ACADEMICA = 1;
+    const GOBIERNO_LOCAL = 2;
+    const GOBIERNO_DEPARTAMENTAL = 3;
+
     use LogsActivity;
     //
     protected $table="instituciones";

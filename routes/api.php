@@ -35,6 +35,7 @@ Route::prefix('v1')->group(function(){
         //ExpedienteAdhoc
 
         //RegistroAdhoc
+        Route::apiResource('permissions','Api\RegistroAdhoc\FormacionController');
 
         //SeleccionAdhoc
 
@@ -56,6 +57,7 @@ Route::prefix('v1')->group(function(){
         //Route::apiResource('tiponivel','Api\Settings\TipoNivelController');
 
         //listas
+        Route::get('listasParaFormacion','Api\Listas\ParaFormacionController@index');
 
         //documentos 
         // http://{{domain}}/api/v1/files/cv/1624854166.pdf

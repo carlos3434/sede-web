@@ -20,7 +20,7 @@ class ConfiguracionController extends Controller
         $this->middleware(['role_or_permission:ADMINISTRADOR|CONFIGURACION_EDIT'])->only(['edit','update']);
         $this->middleware(['role_or_permission:ADMINISTRADOR|CONFIGURACION_SHOW'])->only('show');
         $this->middleware(['role_or_permission:ADMINISTRADOR|CONFIGURACION_DESTROY'])->only('destroy');
-        
+
     }
 
     /**
@@ -28,21 +28,19 @@ class ConfiguracionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $filters)
+    public function index(Request $request)
     {
-        if ( !empty($request->excel) || !empty($request->pdf) ){
-            $query = $this->repository->all($filters);
-            if ($query->count() > 0) {
-                $result = new ConfiguracionExcelCollection( $query->get() );
-                return $result->downloadExcel(
-                    'configuracion_'.date('m-d-Y_hia').'.xlsx',
-                    $writerType = null,
-                    $headings = true
-                );
-            }
+        if ( !empty($request->excel) ){
+            return $this->repository->allToExport($request)
+            ->downloadExcel(
+                'configuracion_'.date('m-d-Y_hia').'.xlsx',
+                $writerType = null,
+                $headings = true
+            );
         }
-        return $this->repository->all($filters);;
+        return $this->repository->all($request);
     }
+
     /**
      * Store a newly created resource in storage.
      *
