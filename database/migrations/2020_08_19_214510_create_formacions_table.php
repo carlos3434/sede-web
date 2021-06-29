@@ -19,7 +19,7 @@ class CreateFormacionsTable extends Migration
             $table->date('fecha_expedicion');
             $table->string('ciudad');
             $table->string('archivo_titulo');
-            $table->unsignedDouble('archivo_tamano');
+            $table->unsignedDouble('archivo_tamano')->nullable();
             $table->foreignId('grado_id');
             $table->foreignId('institucion_id');
             $table->foreignId('usuario_id');

@@ -35,9 +35,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $filters)
+    public function index(Request $request)
     {
-        return  $this->userRepository->all($filters);
+        return  $this->userRepository->all($request);
     }
     /**
      * Store a newly created resource in storage.
@@ -47,15 +47,16 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $this->storeFile($request, 'constancias', 'constancia_habilidad');
-        $this->storeFile($request, 'declaraciones', 'declaracion_jurada');
-        $this->storeFile($request, 'dni', 'copia_dni');
-        $this->storeFile($request, 'rj_itse', 'rj_itse');
-        $this->storeFile($request, 'rj_verificador', 'rj_verificador');
-        $this->storeFile($request, 'anexo_1', 'anexo_1');
-        $this->storeFile($request, 'fotos', 'foto');
-        $request->merge(['password' => bcrypt( $request->get('password') )]);
-        $user = $this->userRepository->create($request->all());
+        $all = $request->all();
+        $all = $this->storeFile($request, $all, 'constancias', 'constancia_habilidad');
+        $all = $this->storeFile($request, $all, 'declaraciones', 'declaracion_jurada');
+        $all = $this->storeFile($request, $all, 'dni', 'copia_dni');
+        $all = $this->storeFile($request, $all, 'rj_itse', 'rj_itse');
+        $all = $this->storeFile($request, $all, 'rj_verificador', 'rj_verificador');
+        $all = $this->storeFile($request, $all, 'anexo_1', 'anexo_1');
+        $all = $this->storeFile($request, $all, 'fotos', 'foto');
+        $all['password'] = bcrypt( $request->get('password') );
+        $user = $this->userRepository->create( $all );
         $this->userRepository->syncRolesAndPermissions($request, $user);
         return response()->json($user, 201);
     }
@@ -78,15 +79,16 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user )
     {
-        $this->storeFile($request, 'constancias', 'constancia_habilidad');
-        $this->storeFile($request, 'declaraciones', 'declaracion_jurada');
-        $this->storeFile($request, 'dni', 'copia_dni');
-        $this->storeFile($request, 'rj_itse', 'rj_itse');
-        $this->storeFile($request, 'rj_verificador', 'rj_verificador');
-        $this->storeFile($request, 'anexo_1', 'anexo_1');
-        $this->storeFile($request, 'fotos', 'foto');
-        $request->merge(['password' => bcrypt( $request->get('password') )]);
-        $user = $this->userRepository->updateOne($request, $user);
+        $all = $request->all();
+        $all = $this->storeFile($request, $all, 'constancias', 'constancia_habilidad');
+        $all = $this->storeFile($request, $all, 'declaraciones', 'declaracion_jurada');
+        $all = $this->storeFile($request, $all, 'dni', 'copia_dni');
+        $all = $this->storeFile($request, $all, 'rj_itse', 'rj_itse');
+        $all = $this->storeFile($request, $all, 'rj_verificador', 'rj_verificador');
+        $all = $this->storeFile($request, $all, 'anexo_1', 'anexo_1');
+        $all = $this->storeFile($request, $all, 'fotos', 'foto');
+        $all['password'] = bcrypt( $request->get('password') );
+        $user = $this->userRepository->updateOne($all, $user);
         $this->userRepository->syncRolesAndPermissions($request, $user);
         return response()->json($user, 200);
     }
@@ -101,15 +103,15 @@ class UserController extends Controller
         $this->userRepository->deleteOne($user);
         return response()->json(null, 204);
     }
-    private function storeFile( &$request , $folder, $fieldName ){
+
+    private function storeFile( $request , $all , $folder, $fieldName ){
         if ( $request->hasFile($fieldName) ) {
             $fileValue = $this->fileUploader->upload(
                 $request->file($fieldName),
                 'files/'.$folder
             );
-            $request->merge([
-                $fieldName => $fileValue,
-            ]);
+            $all[$fieldName] = $fileValue;
         }
+        return $all;
     }
 }

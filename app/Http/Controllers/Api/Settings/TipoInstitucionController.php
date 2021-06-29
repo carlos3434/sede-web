@@ -62,7 +62,7 @@ class TipoInstitucionController extends Controller
      */
     public function update(TipoInstitucionRequest $request, TipoInstitucion $tipoInstitucion)
     {
-        $tipoInstitucion = $this->repository->updateOne($request, $tipoInstitucion);
+        $tipoInstitucion = $this->repository->updateOne($request->all(), $tipoInstitucion);
         return response()->json($tipoInstitucion, 200);
     }
     /**

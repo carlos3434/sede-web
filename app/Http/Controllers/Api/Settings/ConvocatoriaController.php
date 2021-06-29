@@ -62,7 +62,7 @@ class ConvocatoriaController extends Controller
      */
     public function update(ConvocatoriaRequest $request, Convocatoria $convocatoria)
     {
-        $convocatoria = $this->repository->updateOne($request, $convocatoria);
+        $convocatoria = $this->repository->updateOne($request->all(), $convocatoria);
         return response()->json($convocatoria, 200);
     }
     /**

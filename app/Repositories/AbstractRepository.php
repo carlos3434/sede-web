@@ -58,7 +58,7 @@ abstract class AbstractRepository implements RepositoryInterface {
 
     public function updateOne($request, $model)
     {
-        $model->update( $request->all() );
+        $model->update( $request );
         return $this->getOne($model);
     }
     public function deleteOne( $model )

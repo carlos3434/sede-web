@@ -1,20 +1,22 @@
 <?php
-namespace App\Http\Controllers\Api\Settings;
+namespace App\Http\Controllers\Api\RegistroAdhoc;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Settings\Formacion;
-use App\Http\Requests\Settings\FormacionRequest;
-use App\Repositories\Settings\Interfaces\FormacionRepositoryInterface;
-use App\Http\Resources\Settings\Formacion\FormacionExcelCollection;
+use App\Models\RegistroAdhoc\Formacion;
+use App\Http\Requests\RegistroAdhoc\FormacionRequest;
+use App\Repositories\RegistroAdhoc\Interfaces\FormacionRepositoryInterface;
+use App\Helpers\FileUploader;
 
 class FormacionController extends Controller
 {
     private $repository;
+    private $fileUploader;
 
-    public function __construct(FormacionRepositoryInterface $repository)
+    public function __construct(FormacionRepositoryInterface $repository, FileUploader $fileUploader)
     {
         $this->repository = $repository;
+        $this->fileUploader = $fileUploader;
         
         $this->middleware(['role_or_permission:ADMINISTRADOR|FORMACION_CREATE'])->only(['create','store']);
         $this->middleware(['role_or_permission:ADMINISTRADOR|FORMACION_INDEX'])->only('index');
@@ -22,7 +24,7 @@ class FormacionController extends Controller
         $this->middleware(['role_or_permission:ADMINISTRADOR|FORMACION_SHOW'])->only('show');
         $this->middleware(['role_or_permission:ADMINISTRADOR|FORMACION_DESTROY'])->only('destroy');
         //mostrarFormacionesUsuarioActual
-        
+
 
     }
 
@@ -52,7 +54,9 @@ class FormacionController extends Controller
      */
     public function store(FormacionRequest $request)
     {
-        $formacion = $this->repository->create($request->all());
+        $all = $request->all();
+        $all = $this->storeFile($request, $all, 'formacion', 'archivo_titulo');
+        $formacion = $this->repository->create( $all );
         return response()->json($formacion, 201);
     }
     /**
@@ -74,7 +78,9 @@ class FormacionController extends Controller
      */
     public function update(FormacionRequest $request, Formacion $formacion)
     {
-        $formacion = $this->repository->updateOne($request, $formacion);
+        $all = $request->all();
+        $all = $this->storeFile($request, $all, 'formacion', 'archivo_titulo');
+        $formacion = $this->repository->updateOne($all, $formacion);
         return response()->json($formacion, 200);
     }
     /**
@@ -107,4 +113,15 @@ class FormacionController extends Controller
         
     }
 
+
+    private function storeFile( $request , $all , $folder, $fieldName ){
+        if ( $request->hasFile($fieldName) ) {
+            $fileValue = $this->fileUploader->upload(
+                $request->file($fieldName),
+                'files/'.$folder
+            );
+            $all[$fieldName] = $fileValue;
+        }
+        return $all;
+    }
 }

@@ -35,7 +35,7 @@ Route::prefix('v1')->group(function(){
         //ExpedienteAdhoc
 
         //RegistroAdhoc
-        Route::apiResource('permissions','Api\RegistroAdhoc\FormacionController');
+        Route::apiResource('formaciones','Api\RegistroAdhoc\FormacionController');
 
         //SeleccionAdhoc
 
@@ -87,6 +87,10 @@ Route::prefix('v1')->group(function(){
         });
         Route::get('files/fotos/{path}', function ($path) {
             $pathToFile = storage_path('app/uploads/files/fotos/'.$path);
+            return response()->file($pathToFile);
+        });
+        Route::get('files/formacion/{path}', function ($path) {
+            $pathToFile = storage_path('app/uploads/files/formacion/'.$path);
             return response()->file($pathToFile);
         });
 

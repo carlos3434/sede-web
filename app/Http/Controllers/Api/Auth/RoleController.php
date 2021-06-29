@@ -13,7 +13,7 @@ class RoleController extends Controller
 
     public function __construct(RoleRepositoryInterface $roleRepository)
     {
-        $this->RoleRepository = $roleRepository;
+        $this->roleRepository = $roleRepository;
         /*
         $this->middleware('can:CREATE_Role')->only(['create','store']);
         $this->middleware('can:READ_Role')->only('index');
@@ -28,9 +28,9 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $filters)
+    public function index(Request $request)
     {
-        return  $this->RoleRepository->all($filters);
+        return  $this->roleRepository->all($request);
     }
     /**
      * Store a newly created resource in storage.
@@ -40,9 +40,8 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
-        $request->merge(['password' => bcrypt(12345678)]);
-        $role = $this->RoleRepository->create($request->all());
-        $this->RoleRepository->syncRolesAndPermissions($request, $role);
+        $role = $this->roleRepository->create($request->all());
+        $this->roleRepository->syncRolesAndPermissions($request, $role);
         return response()->json($role, 201);
     }
     /**
@@ -53,7 +52,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        return $this->RoleRepository->getOne($role);
+        return $this->roleRepository->getOne($role);
     }
     /**
      * Update the specified resource in storage.
@@ -64,8 +63,8 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, Role $role)
     {
-        $role = $this->RoleRepository->updateOne($request, $role);
-        $this->RoleRepository->syncRolesAndPermissions($request, $role);
+        $role = $this->roleRepository->updateOne( $request->all(), $role);
+        $this->roleRepository->syncRolesAndPermissions($request, $role);
         return response()->json($role, 200);
     }
     /**
@@ -76,7 +75,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $this->RoleRepository->deleteOne($role);
+        $this->roleRepository->deleteOne($role);
         return response()->json(null, 204);
     }
 }

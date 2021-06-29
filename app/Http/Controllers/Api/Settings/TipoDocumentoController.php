@@ -62,7 +62,7 @@ class TipoDocumentoController extends Controller
      */
     public function update(TipoDocumentoRequest $request, TipoDocumento $tipoDocumento)
     {
-        $tipoDocumento = $this->repository->updateOne($request, $tipoDocumento);
+        $tipoDocumento = $this->repository->updateOne($request->all(), $tipoDocumento);
         return response()->json($tipoDocumento, 200);
     }
     /**

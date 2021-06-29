@@ -35,6 +35,14 @@ class UserResource extends JsonResource
             'pais_id' => $this->pais_id,
             'distrito_id' => $this->distrito_id,
 
+            'constancia_habilidad' => $this->constancia_habilidad,
+            'declaracion_jurada' => $this->declaracion_jurada,
+            'copia_dni' => $this->copia_dni,
+            'rj_itse' => $this->rj_itse,
+            'rj_verificador' => $this->rj_verificador,
+            'anexo_1' => $this->anexo_1,
+            'foto' => $this->foto,
+
             'created_at' => $this->created_at->toDateTimeString(),
             'roles' => $this->getRoleNames(),
             'permissions' => $this->getAllPermissions()->pluck('name'),

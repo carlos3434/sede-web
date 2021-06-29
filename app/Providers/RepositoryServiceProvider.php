@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+//Settings
 use App\Repositories\Auth\UserRepository;
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
 use App\Repositories\Settings\ConfiguracionRepository;
@@ -20,6 +21,10 @@ use App\Repositories\Settings\TipoDocumentoRepository;
 use App\Repositories\Settings\Interfaces\TipoDocumentoRepositoryInterface;
 use App\Repositories\Settings\TipoInstitucionRepository;
 use App\Repositories\Settings\Interfaces\TipoInstitucionRepositoryInterface;
+
+//RegistroAdhoc
+use App\Repositories\RegistroAdhoc\FormacionRepository;
+use App\Repositories\RegistroAdhoc\Interfaces\FormacionRepositoryInterface;
 
 use App\Repositories\AbstractRepository;
 use App\Repositories\RepositoryInterface;
@@ -44,6 +49,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind( TipoDocumentoRepositoryInterface::class, TipoDocumentoRepository::class );
         $this->app->bind( TipoInstitucionRepositoryInterface::class, TipoInstitucionRepository::class );
 
+        $this->app->bind( FormacionRepositoryInterface::class, FormacionRepository::class );
     }
 
     /**

@@ -28,9 +28,9 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $filters)
+    public function index(Request $request)
     {
-        return  $this->permissionRepository->all($filters);
+        return  $this->permissionRepository->all($request);
     }
     /**
      * Store a newly created resource in storage.
@@ -40,8 +40,7 @@ class PermissionController extends Controller
      */
     public function store(PermissionRequest $request)
     {
-        $request->merge(['password' => bcrypt(12345678)]);
-        $permission = $this->permissionRepository->create($request->all());
+        $permission = $this->permissionRepository->create( $request->all() );
         $this->permissionRepository->syncRolesAndPermissions($request, $permission);
         return response()->json($permission, 201);
     }
@@ -64,7 +63,7 @@ class PermissionController extends Controller
      */
     public function update(PermissionRequest $request, Permission $permission)
     {
-        $permission = $this->permissionRepository->updateOne($request, $permission);
+        $permission = $this->permissionRepository->updateOne($request->all(), $permission);
         $this->permissionRepository->syncRolesAndPermissions($request, $permission);
         return response()->json($permission, 200);
     }

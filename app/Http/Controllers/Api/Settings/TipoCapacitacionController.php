@@ -62,7 +62,7 @@ class TipoCapacitacionController extends Controller
      */
     public function update(TipoCapacitacionRequest $request, TipoCapacitacion $tipoCapacitacion)
     {
-        $tipoCapacitacion = $this->repository->updateOne($request, $tipoCapacitacion);
+        $tipoCapacitacion = $this->repository->updateOne($request->all(), $tipoCapacitacion);
         return response()->json($tipoCapacitacion, 200);
     }
     /**

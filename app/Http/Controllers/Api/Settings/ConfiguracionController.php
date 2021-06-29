@@ -71,7 +71,7 @@ class ConfiguracionController extends Controller
      */
     public function update(ConfiguracionRequest $request, Configuracion $configuracion)
     {
-        $configuracion = $this->repository->updateOne($request, $configuracion);
+        $configuracion = $this->repository->updateOne($request->all(), $configuracion);
         return response()->json($configuracion, 200);
     }
     /**

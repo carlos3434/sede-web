@@ -62,7 +62,7 @@ class GradoController extends Controller
      */
     public function update(GradoRequest $request, Grado $grado)
     {
-        $grado = $this->repository->updateOne($request, $grado);
+        $grado = $this->repository->updateOne($request->all(), $grado);
         return response()->json($grado, 200);
     }
     /**
