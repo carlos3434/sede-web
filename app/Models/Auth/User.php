@@ -43,6 +43,14 @@ class User extends Authenticatable //implements MustVerifyEmail
         'colegio_profesional',
         'numero_colegiatura',
         'esta_habilitado',
+
+        'constancia_habilidad',
+        'declaracion_jurada',
+        'copia_dni',
+        'rj_itse',
+        'rj_verificador',
+        'anexo_1',
+        'foto',
     ];
 
     protected static $logFillable = true;

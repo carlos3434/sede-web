@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
 use App\Http\Requests\Auth\UserRequest;
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
-
+use App\Helpers\FileUploader;
 class UserController extends Controller
 {
     private $userRepository;
+    private $fileUploader;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository, FileUploader $fileUploader)
     {
+        $this->fileUploader = $fileUploader;
         $this->userRepository = $userRepository;
 
        // $this->middleware(['can:ACREDITACION_SHOW'])->only('show');
@@ -45,7 +47,14 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $request->merge(['password' => bcrypt(12345678)]);
+        $this->storeFile($request, 'constancias', 'constancia_habilidad');
+        $this->storeFile($request, 'declaraciones', 'declaracion_jurada');
+        $this->storeFile($request, 'dni', 'copia_dni');
+        $this->storeFile($request, 'rj_itse', 'rj_itse');
+        $this->storeFile($request, 'rj_verificador', 'rj_verificador');
+        $this->storeFile($request, 'anexo_1', 'anexo_1');
+        $this->storeFile($request, 'fotos', 'foto');
+        $request->merge(['password' => bcrypt( $request->get('password') )]);
         $user = $this->userRepository->create($request->all());
         $this->userRepository->syncRolesAndPermissions($request, $user);
         return response()->json($user, 201);
@@ -67,9 +76,16 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(UserRequest $request, User $user )
     {
-        $request->merge(['password' => bcrypt(12345678)]);
+        $this->storeFile($request, 'constancias', 'constancia_habilidad');
+        $this->storeFile($request, 'declaraciones', 'declaracion_jurada');
+        $this->storeFile($request, 'dni', 'copia_dni');
+        $this->storeFile($request, 'rj_itse', 'rj_itse');
+        $this->storeFile($request, 'rj_verificador', 'rj_verificador');
+        $this->storeFile($request, 'anexo_1', 'anexo_1');
+        $this->storeFile($request, 'fotos', 'foto');
+        $request->merge(['password' => bcrypt( $request->get('password') )]);
         $user = $this->userRepository->updateOne($request, $user);
         $this->userRepository->syncRolesAndPermissions($request, $user);
         return response()->json($user, 200);
@@ -84,5 +100,16 @@ class UserController extends Controller
     {
         $this->userRepository->deleteOne($user);
         return response()->json(null, 204);
+    }
+    private function storeFile( &$request , $folder, $fieldName ){
+        if ( $request->hasFile($fieldName) ) {
+            $fileValue = $this->fileUploader->upload(
+                $request->file($fieldName),
+                'files/'.$folder
+            );
+            $request->merge([
+                $fieldName => $fileValue,
+            ]);
+        }
     }
 }

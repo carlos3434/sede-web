@@ -43,13 +43,13 @@ class UserRequest extends FormRequest
             'colegio_profesional'       => 'string',
             'numero_colegiatura'        => 'string',
             'esta_habilitado'           => 'boolean',
-            'constancia_habilidad'      => 'string',
-            'declaracion_jurada'        => 'string',
-            'copia_dni'                 => 'string',
-            'rj_itse'                   => 'string',
-            'rj_verificador'            => 'string',
-            'anexo_1'                   => 'string',
-            'foto'                      => 'string',
+            'constancia_habilidad'      => 'file|max:3072',//2048
+            'declaracion_jurada'        => 'file|max:3072',
+            'copia_dni'                 => 'file|max:3072',
+            'rj_itse'                   => 'file|max:3072',
+            'rj_verificador'            => 'file|max:3072',
+            'anexo_1'                   => 'file|max:3072',
+            'foto'                      => 'file|max:3072',
 
             'roles'                     => 'string|exists:roles,name',
             'permissions'               => 'string|exists:permissions,name'

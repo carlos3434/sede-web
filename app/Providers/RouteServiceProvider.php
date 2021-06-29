@@ -38,8 +38,8 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('institucione', \App\Models\Settings\Institucion::class);
         Route::model('tipocapacitacion', \App\Models\Settings\TipoCapacitacion::class);
         Route::model('tipodocumento', \App\Models\Settings\TipoDocumento::class);
-        Route::model('tipoInstitucion', \App\Models\Settings\TipoInstitucion::class);
-        
+        Route::model('tipoinstitucion', \App\Models\Settings\TipoInstitucion::class);
+
         parent::boot();
     }
 
