@@ -205,6 +205,13 @@ class PermisoSeeder extends Seeder
             ['name' => 'VERIFICACION_REALIZADA_SHOW','guard_name' =>'web'],
             ['name' => 'VERIFICACION_REALIZADA_INDEX_DATA','guard_name' =>'web'],
 
+            ['name' => 'USUARIO_DOCUMENTO_INDEX','guard_name' =>'web'],
+            ['name' => 'USUARIO_DOCUMENTO_CREATE','guard_name' =>'web'],
+            ['name' => 'USUARIO_DOCUMENTO_EDIT','guard_name' =>'web'],
+            ['name' => 'USUARIO_DOCUMENTO_DESTROY','guard_name' =>'web'],
+            ['name' => 'USUARIO_DOCUMENTO_SHOW','guard_name' =>'web'],
+            ['name' => 'USUARIO_DOCUMENTO_INDEX_DATA','guard_name' =>'web'],
+
 
             ];
 
@@ -381,7 +388,14 @@ class PermisoSeeder extends Seeder
                     'VERIFICACION_REALIZADA_EDIT',
                     'VERIFICACION_REALIZADA_INDEX',
                     'VERIFICACION_REALIZADA_INDEX_DATA',
-                    'VERIFICACION_REALIZADA_SHOW'
+                    'VERIFICACION_REALIZADA_SHOW',
+
+                    'USUARIO_DOCUMENTO_CREATE',
+                    'USUARIO_DOCUMENTO_DESTROY',
+                    'USUARIO_DOCUMENTO_EDIT',
+                    'USUARIO_DOCUMENTO_INDEX',
+                    'USUARIO_DOCUMENTO_INDEX_DATA',
+                    'USUARIO_DOCUMENTO_SHOW'
                 ]
             )->get() 
         );
@@ -438,6 +452,39 @@ class PermisoSeeder extends Seeder
                     'FORMACION_INDEX_DATA',
                     'FORMACION_SHOW',
 
+                    'CAPACITACION_CREATE',
+                    'CAPACITACION_DESTROY',
+                    'CAPACITACION_EDIT',
+                    'CAPACITACION_INDEX',
+                    'CAPACITACION_INDEX_DATA',
+                    'CAPACITACION_SHOW',
+
+                    'EXPERIENCIA_CREATE',
+                    'EXPERIENCIA_DESTROY',
+                    'EXPERIENCIA_EDIT',
+                    'EXPERIENCIA_INDEX',
+                    'EXPERIENCIA_INDEX_DATA',
+                    'EXPERIENCIA_INSPECTOR_CREATE',
+                    'EXPERIENCIA_INSPECTOR_DESTROY',
+                    'EXPERIENCIA_INSPECTOR_EDIT',
+                    'EXPERIENCIA_INSPECTOR_INDEX',
+                    'EXPERIENCIA_INSPECTOR_INDEX_DATA',
+                    'EXPERIENCIA_INSPECTOR_SHOW',
+                    'EXPERIENCIA_SHOW',
+
+                    'VERIFICACION_REALIZADA_CREATE',
+                    'VERIFICACION_REALIZADA_DESTROY',
+                    'VERIFICACION_REALIZADA_EDIT',
+                    'VERIFICACION_REALIZADA_INDEX',
+                    'VERIFICACION_REALIZADA_INDEX_DATA',
+                    'VERIFICACION_REALIZADA_SHOW',
+
+                    'USUARIO_DOCUMENTO_CREATE',
+                    'USUARIO_DOCUMENTO_DESTROY',
+                    'USUARIO_DOCUMENTO_EDIT',
+                    'USUARIO_DOCUMENTO_INDEX',
+                    'USUARIO_DOCUMENTO_INDEX_DATA',
+                    'USUARIO_DOCUMENTO_SHOW'
                 ]
             )->get() 
         );
