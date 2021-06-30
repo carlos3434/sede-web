@@ -27,7 +27,7 @@ class FormacionRequest extends FormRequest
         return [
 
             'especialidad' => 'required|alpha_num_spaces',
-            'fecha_expedicion' => 'required|date_format:Y-m-d',
+            'fecha_expedicion' => 'required|date_format:Y-m-d|before:'.date('Y-m-d'),
             'ciudad' => 'required|alpha_num_spaces',
             'archivo_titulo' => 'required|file|max:3072',
             //'archivo_tamano' => 'required|alpha_num_spaces'

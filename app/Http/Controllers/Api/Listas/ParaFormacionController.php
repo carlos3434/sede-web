@@ -21,6 +21,7 @@ class ParaFormacionController extends Controller
     public function index()
     {
         $response = [
+            'esta_postulando' => false,
             'grado_academicos' => new GradoCollection(Grado::all()),
             'institutiones' => new InstitucionCollection(
                 Institucion::where('tipo_institucion_id', Institucion::INSTITUCION_ACADEMICA )
@@ -30,3 +31,7 @@ class ParaFormacionController extends Controller
         return response()->json($response, 200);
     }
 }
+/*
+        $convocatoriaActual = Configuracion::where('nombre', 'CONVOCATORIA_ACTUAL')->take(1)->get()[0]->valor;
+        $calificacionInicial= Calificacion::where('usuario_id',$this->id)->where('convocatoria_id',$convocatoriaActual)->count();
+        return ($calificacionInicial >0);*/

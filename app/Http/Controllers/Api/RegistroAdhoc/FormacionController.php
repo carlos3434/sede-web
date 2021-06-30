@@ -124,7 +124,7 @@ class FormacionController extends Controller
                 $request->file($fieldName),
                 'files/'.$folder
             );
-            $all[$fieldName] = $fileValue;
+            $all[$fieldName] = $folder.'/'.$fileValue;
         }
         return $all;
     }
