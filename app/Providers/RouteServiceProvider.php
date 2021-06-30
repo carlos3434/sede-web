@@ -40,6 +40,8 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('tipodocumento', \App\Models\Settings\TipoDocumento::class);
         Route::model('tipoinstitucion', \App\Models\Settings\TipoInstitucion::class);
 
+        Route::model('formacione', \App\Models\RegistroAdhoc\Formacion::class);
+
         parent::boot();
     }
 
