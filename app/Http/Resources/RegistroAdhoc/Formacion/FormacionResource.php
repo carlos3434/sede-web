@@ -22,9 +22,9 @@ class FormacionResource extends JsonResource
             'ciudad'           => $this->ciudad,
             'archivo_titulo'   => $this->archivo_titulo,
             //'archivo_tamano'   => $this->archivo_tamano,
-            'grado_id'         => $this->grado->nombre,
-            'institucion_id'   => $this->institucion->nombre,
-            'usuario_id'       => $this->usuario_id,
+            'grado'            => $this->grado->nombre,
+            'institucion'      => $this->institucion->nombre,
+            'usuario'          => $this->usuario_id,
 
             'created_at'       => $this->created_at->toDateTimeString(),
             'updated_at'       => $this->updated_at->toDateTimeString(),

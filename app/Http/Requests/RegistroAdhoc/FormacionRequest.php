@@ -3,6 +3,7 @@
 namespace App\Http\Requests\RegistroAdhoc;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class FormacionRequest extends FormRequest
 {
@@ -26,14 +27,14 @@ class FormacionRequest extends FormRequest
     {
         return [
 
-            'especialidad' => 'required|alpha_num_spaces',
-            'fecha_expedicion' => 'required|date_format:Y-m-d|before:'.date('Y-m-d'),
-            'ciudad' => 'required|alpha_num_spaces',
-            'archivo_titulo' => 'required|file|max:3072',
+            'especialidad'      => 'required|alpha_num_spaces',
+            'fecha_expedicion'  => 'required|date_format:Y-m-d|before:'.date('Y-m-d'),
+            'ciudad'            => 'required|alpha_num_spaces',
+            'archivo_titulo'    => 'required|file|max:3072',
             //'archivo_tamano' => 'required|alpha_num_spaces'
-            'grado'           => 'exists:grados,id',
-            'institucion'           => 'exists:instituciones,id',
-            'usuario'           => 'exists:users,id',
+            'grado_id'          => 'required|exists:grados,id',
+            'institucion_id'    => 'required|exists:instituciones,id',
+            //'usuario_id'        => 'exists:users,id'
         ];
     }
 

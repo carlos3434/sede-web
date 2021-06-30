@@ -59,6 +59,7 @@ class FormacionController extends Controller
     public function store(FormacionRequest $request)
     {
         $all = $request->all();
+        $all['usuario_id'] = Auth::id();
         $all = $this->storeFile($request, $all, 'formacion', 'archivo_titulo');
         $formacion = $this->repository->create( $all );
         return response()->json($formacion, 201);
