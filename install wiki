@@ -81,3 +81,10 @@ Observaciones:
 
 - del flujo: proceso como esta concevido el sistema, la arquitectura
 - casos de uso: , 
+
+Como saber s un usuario adhoc esta postulando a una convocatoria actual?
+
+segun Miguel, si el sistema tiene registros en la tabla calificaciones del usuario en question
+de la presente convocatoria, 
+En ese caso se peude decir que esta postulando.
+pero se debe cambiar la forma de obtener la convocatoria actual, lo mas exacto seria por fechas
