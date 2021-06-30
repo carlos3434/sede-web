@@ -431,6 +431,13 @@ class PermisoSeeder extends Seeder
                     'INSTITUCION_CREATE',
                     'INSTITUCION_SHOW',
 
+                    'FORMACION_CREATE',
+                    'FORMACION_DESTROY',
+                    'FORMACION_EDIT',
+                    'FORMACION_INDEX',
+                    'FORMACION_INDEX_DATA',
+                    'FORMACION_SHOW',
+
                 ]
             )->get() 
         );
