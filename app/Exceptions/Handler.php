@@ -57,10 +57,7 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => 'Ruta no encontrada!'], 404);
         }
         if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
-            return response()->json([
-                'responseMessage' => 'No tienes la autorización requerida.',
-                'responseStatus'  => 403,
-            ]);
+            return response()->json(['message' => 'No tienes la autorización requerida.', 403]);
         }
         if ($exception instanceof \Illuminate\Validation\ValidationException) {
             return response()->json([
