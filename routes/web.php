@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', 'WelcomeController@index');
+Route::any('{catchall}', function() {
+    return redirect('/');
+})->where('catchall', '.*');
+
+//Route::get('/{any}', 'WelcomeController@index')->where('any', '.*');
+//Route::get('/', 'WelcomeController@index');
 /*
 Route::get('email', function() {
     Mail::send('auth.verify', [], function ($message) {
@@ -20,7 +26,7 @@ Route::get('email', function() {
                 ->subject('Welcome!');
     });
 });*/
-Auth::routes(['verify' => false]);
+//Auth::routes(['verify' => false]);
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');

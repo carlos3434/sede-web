@@ -65,7 +65,6 @@
             "@php artisan key:generate --ansi"
         ],
          "compile": [
-            "php artisan migrate:fresh --seed",
             "php artisan passport:install",
             "echo \"$OAUTH_PUBLIC_KEY\" > storage/oauth-public.key",
             "echo \"$OAUTH_PRIVATE_KEY\" > storage/oauth-private.key",
