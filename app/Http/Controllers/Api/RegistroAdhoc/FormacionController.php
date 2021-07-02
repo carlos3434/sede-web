@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api\RegistroAdhoc;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\RegistroAdhoc\Formacion;
-use App\Http\Requests\RegistroAdhoc\FormacionRequest;
+use App\Http\Requests\RegistroAdhoc\FormacionAddRequest;
+use App\Http\Requests\RegistroAdhoc\FormacionUpdateRequest;
 use App\Repositories\RegistroAdhoc\Interfaces\FormacionRepositoryInterface;
 use App\Helpers\FileUploader;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,7 @@ class FormacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(FormacionRequest $request)
+    public function store(FormacionAddRequest $request)
     {
         $all = $request->all();
         $all['usuario_id'] = Auth::id();
@@ -81,7 +82,7 @@ class FormacionController extends Controller
      * @param  \App\Formacion  $formacion
      * @return \Illuminate\Http\Response
      */
-    public function update(FormacionRequest $request, Formacion $formacion)
+    public function update(FormacionUpdateRequest $request, Formacion $formacion)
     {
         $all = $request->all();
         $all = $this->storeFile($request, $all, 'formacion', 'archivo_titulo');
