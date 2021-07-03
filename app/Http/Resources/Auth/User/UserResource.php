@@ -42,7 +42,7 @@ class UserResource extends JsonResource
             'rj_verificador' => $this->rj_verificador,
             'anexo_1' => $this->anexo_1,
             'foto' => $this->foto,
-            'esta_postulando' => false,
+            'esta_postulando' => $this->estaPostulando(),
 
             'created_at' => $this->created_at->toDateTimeString(),
             'roles' => $this->getRoleNames(),

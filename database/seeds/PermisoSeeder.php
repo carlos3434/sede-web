@@ -72,6 +72,8 @@ class PermisoSeeder extends Seeder
             ['name' => 'DISTRITO_SHOW','guard_name' =>'web'],
             ['name' => 'DISTRITO_INDEX_DATA','guard_name' =>'web'],            
 
+            ['name' => 'USUARIO_DOCUMENTO_SHOW','guard_name' =>'web'],            
+
             ['name' => 'ENTREGA_EXPEDIENTE_INDEX','guard_name' =>'web'],
             ['name' => 'ENTREGA_EXPEDIENTE_CREATE','guard_name' =>'web'],
             ['name' => 'ENTREGA_EXPEDIENTE_EDIT','guard_name' =>'web'],
@@ -205,12 +207,7 @@ class PermisoSeeder extends Seeder
             ['name' => 'VERIFICACION_REALIZADA_SHOW','guard_name' =>'web'],
             ['name' => 'VERIFICACION_REALIZADA_INDEX_DATA','guard_name' =>'web'],
 
-            ['name' => 'USUARIO_DOCUMENTO_INDEX','guard_name' =>'web'],
-            ['name' => 'USUARIO_DOCUMENTO_CREATE','guard_name' =>'web'],
-            ['name' => 'USUARIO_DOCUMENTO_EDIT','guard_name' =>'web'],
-            ['name' => 'USUARIO_DOCUMENTO_DESTROY','guard_name' =>'web'],
             ['name' => 'USUARIO_DOCUMENTO_SHOW','guard_name' =>'web'],
-            ['name' => 'USUARIO_DOCUMENTO_INDEX_DATA','guard_name' =>'web'],
 
 
             ];
@@ -464,13 +461,14 @@ class PermisoSeeder extends Seeder
                     'EXPERIENCIA_EDIT',
                     'EXPERIENCIA_INDEX',
                     'EXPERIENCIA_INDEX_DATA',
+                    'EXPERIENCIA_SHOW',
+
                     'EXPERIENCIA_INSPECTOR_CREATE',
                     'EXPERIENCIA_INSPECTOR_DESTROY',
                     'EXPERIENCIA_INSPECTOR_EDIT',
                     'EXPERIENCIA_INSPECTOR_INDEX',
                     'EXPERIENCIA_INSPECTOR_INDEX_DATA',
                     'EXPERIENCIA_INSPECTOR_SHOW',
-                    'EXPERIENCIA_SHOW',
 
                     'VERIFICACION_REALIZADA_CREATE',
                     'VERIFICACION_REALIZADA_DESTROY',

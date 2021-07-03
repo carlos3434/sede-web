@@ -4,6 +4,7 @@ namespace App\Models\SeleccionAdhoc;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\SeleccionAdhoc\Acreditacion;
 
 class Calificacion extends Model
 {
@@ -28,6 +29,13 @@ class Calificacion extends Model
     public function puntajes()
     {
         return $this->hasMany('App\Models\SeleccionAdhoc\Puntaje','calificacion_id');
+    }
+    /**
+     * determina si una calificacion esta acreditada
+     */
+    public function scopeEstaAcreditado()
+    {
+        return (bool) Acreditacion::where('calificacion_id',$this->id)->count();
     }
 
     public function puntajeTotal()

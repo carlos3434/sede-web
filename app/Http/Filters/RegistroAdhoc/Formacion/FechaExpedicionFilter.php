@@ -9,12 +9,12 @@ class FechaExpedicionFilter
             $builder->where(function ($builder) use ( $value ) {
                 foreach ( $value as $fecha) {
                     if (validateDate($fecha)) {
-                        $builder->orWhere('fecha_final', date("Y-m-d", strtotime($fecha)) );
+                        $builder->orWhere('fecha_expedicion', date("Y-m-d", strtotime($fecha)) );
                     }
                 }
             });
         } elseif (validateDate($value)) {
-            $builder->where('fecha_final', $value);
+            $builder->where('fecha_expedicion', $value);
         }
         return $builder;
     }

@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Settings\Institucion;
-use App\Models\Settings\Grado;
-use App\Http\Resources\Listas\ParaFormacion\GradoCollection;
-use App\Http\Resources\Listas\ParaFormacion\InstitucionCollection;
+use App\Models\Settings\TipoCapacitacion;
+use App\Http\Resources\Listas\ParaCapacitacion\TipoCapacitacionCollection;
+use App\Http\Resources\Listas\ParaCapacitacion\InstitucionCollection;
 
 
-class ParaFormacionController extends Controller
+class ParaCapacitacionController extends Controller
 {
     public function __construct()
     {
@@ -21,7 +21,7 @@ class ParaFormacionController extends Controller
     public function index()
     {
         $response = [
-            'grado_academicos' => new GradoCollection(Grado::all()),
+            'tipo_capacitacion' => new TipoCapacitacionCollection(TipoCapacitacion::all()),
             'institutiones' => new InstitucionCollection(
                 Institucion::where('tipo_institucion_id', Institucion::INSTITUCION_ACADEMICA )
                 ->orderBy('nombre', 'asc')

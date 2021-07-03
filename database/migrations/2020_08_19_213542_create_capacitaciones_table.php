@@ -21,7 +21,7 @@ class CreateCapacitacionesTable extends Migration
             $table->unsignedInteger('horas_lectivas');
             $table->string('ciudad');
             $table->string('certificado');
-            $table->unsignedDouble('archivo_tamano');
+            $table->unsignedDouble('archivo_tamano')->nullable();
             $table->foreignId('usuario_id');
             $table->foreignId('institucion_id');
             $table->foreignId('tipo_capacitacion_id');

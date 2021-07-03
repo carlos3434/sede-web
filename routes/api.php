@@ -36,8 +36,25 @@ Route::prefix('v1')->group(function(){
 
         //RegistroAdhoc
         Route::apiResource('formaciones','Api\RegistroAdhoc\FormacionController');
+        Route::apiResource('capacitaciones','Api\RegistroAdhoc\CapacitacionController');
+        Route::apiResource('experiencias-generales','Api\RegistroAdhoc\ExperienciaGeneralController');
+        Route::apiResource('experiencias-inspectores','Api\RegistroAdhoc\ExperienciaInspectorController');
+        Route::apiResource('verificaciones-realizadas','Api\RegistroAdhoc\VerificacionRealizadaController');
+        Route::apiResource('documentos','Api\RegistroAdhoc\DocumentoController');
 
-        //SeleccionAdhoc
+        //Selección verificadores Adhoc
+
+        //Registro de expediente Adhoc
+
+        //Revisión de expediente Adhoc
+
+        //Diligencia y formulación del informe Adhoc
+
+        //Notificación del informe Adhoc
+
+        //Recepcion y descarga del informe Adhoc
+
+        //Reportes
 
         //Settings
 
@@ -58,6 +75,7 @@ Route::prefix('v1')->group(function(){
 
         //listas
         Route::get('listasParaFormacion','Api\Listas\ParaFormacionController@index');
+        Route::get('listasParaCapacitacion','Api\Listas\ParaCapacitacionController@index');
 
         //documentos 
         // http://{{domain}}/api/v1/files/cv/1624854166.pdf
@@ -91,6 +109,11 @@ Route::prefix('v1')->group(function(){
         });
         Route::get('files/formacion/{path}', function ($path) {
             $pathToFile = storage_path('app/uploads/files/formacion/'.$path);
+            return response()->file($pathToFile);
+        });
+        //capacitaciones
+        Route::get('files/capacitacion/{path}', function ($path) {
+            $pathToFile = storage_path('app/uploads/files/capacitacion/'.$path);
             return response()->file($pathToFile);
         });
 

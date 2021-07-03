@@ -9,7 +9,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Filters\Auth\UserFilter;
 use Spatie\Permission\Traits\HasRoles;
-
+use App\Models\SeleccionAdhoc\Calificacion;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable //implements MustVerifyEmail
@@ -117,21 +117,23 @@ class User extends Authenticatable //implements MustVerifyEmail
     {
         return $this->belongsTo('App\Models\Settings\Distrito', 'distrito_id');
     }
-
-    public function estaPostulando()
+    /**
+     * Determina si un verificador adhoc esta postulando a una convocatoria 
+     * dicha convocatoria esta vigente
+     */
+    public function scopeEstaPostulando()
     {
-        $convocatoriaActual = App\Models\Configuracion::convocatoriaActual();
-        $calificacionInicial= App\Models\Calificacion::where('usuario_id',$this->id)->where('convocatoria_id',$convocatoriaActual)->count();
-        return ($calificacionInicial >0);
+        return (bool) Calificacion::from('calificaciones as ca')
+        ->join('convocatorias as c', 'ca.convocatoria_id', '=', 'c.id')
+        ->where('c.fecha_inicio', '<=', date("Y-m-d") )
+        ->where('c.fecha_final', '>=', date("Y-m-d") )
+        ->where('usuario_id',$this->id)
+        ->count();
     }
 
-    public function estaAcreditado()
+    public function calificaciones()
     {
-        $calificacion = App\Models\Calificacion::where('usuario_id',$this->id)->get()[0];
-
-        //var_dump($calificacion);
-        //die();
-        return $calificacion->acreditacion;
+        return $this->hasMany('App\Models\SeleccionAdhoc\Calificacion','usuario_id');
     }
 
     public function capacitaciones()

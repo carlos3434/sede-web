@@ -5,7 +5,7 @@ namespace App\Http\Requests\RegistroAdhoc;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class FormacionUpdateRequest extends FormRequest
+class ExperienciaGeneralUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

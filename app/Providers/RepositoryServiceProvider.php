@@ -6,7 +6,12 @@ use Illuminate\Support\ServiceProvider;
 
 //Settings
 use App\Repositories\Auth\UserRepository;
+use App\Repositories\Auth\RoleRepository;
+use App\Repositories\Auth\PermissionRepository;
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
+use App\Repositories\Auth\Interfaces\RoleRepositoryInterface;
+use App\Repositories\Auth\Interfaces\PermissionRepositoryInterface;
+
 use App\Repositories\Settings\ConfiguracionRepository;
 use App\Repositories\Settings\Interfaces\ConfiguracionRepositoryInterface;
 use App\Repositories\Settings\ConvocatoriaRepository;
@@ -25,6 +30,14 @@ use App\Repositories\Settings\Interfaces\TipoInstitucionRepositoryInterface;
 //RegistroAdhoc
 use App\Repositories\RegistroAdhoc\FormacionRepository;
 use App\Repositories\RegistroAdhoc\Interfaces\FormacionRepositoryInterface;
+use App\Repositories\RegistroAdhoc\CapacitacionRepository;
+use App\Repositories\RegistroAdhoc\Interfaces\CapacitacionRepositoryInterface;
+use App\Repositories\RegistroAdhoc\ExperienciaGeneralRepository;
+use App\Repositories\RegistroAdhoc\Interfaces\ExperienciaGeneralRepositoryInterface;
+use App\Repositories\RegistroAdhoc\ExperienciaInspectorRepository;
+use App\Repositories\RegistroAdhoc\Interfaces\ExperienciaInspectorRepositoryInterface;
+use App\Repositories\RegistroAdhoc\VerificacionRealizadaRepository;
+use App\Repositories\RegistroAdhoc\Interfaces\VerificacionRealizadaRepositoryInterface;
 
 use App\Repositories\AbstractRepository;
 use App\Repositories\RepositoryInterface;
@@ -38,18 +51,43 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        //Auth
+        $this->app->bind( UserRepositoryInterface::class , UserRepository::class );
+        $this->app->bind( RoleRepositoryInterface::class , RoleRepository::class );
+        $this->app->bind( PermissionRepositoryInterface::class , PermissionRepository::class );
+
+
+        //Settings
         $this->app->bind( ConfiguracionRepositoryInterface::class ,ConfiguracionRepository::class );
-        $this->app->bind( UserRepositoryInterface::class , UserRepository::class   );
-        $this->app->bind( RepositoryInterface::class, AbstractRepository::class );
-        
         $this->app->bind( ConvocatoriaRepositoryInterface::class, ConvocatoriaRepository::class );
         $this->app->bind( GradoRepositoryInterface::class, GradoRepository::class );
         $this->app->bind( InstitucionRepositoryInterface::class, InstitucionRepository::class );
         $this->app->bind( TipoCapacitacionRepositoryInterface::class, TipoCapacitacionRepository::class );
         $this->app->bind( TipoDocumentoRepositoryInterface::class, TipoDocumentoRepository::class );
         $this->app->bind( TipoInstitucionRepositoryInterface::class, TipoInstitucionRepository::class );
-
+        //RegistroAdhoc
         $this->app->bind( FormacionRepositoryInterface::class, FormacionRepository::class );
+        $this->app->bind( CapacitacionRepositoryInterface::class, CapacitacionRepository::class );
+        $this->app->bind( ExperienciaGeneralRepositoryInterface::class, ExperienciaGeneralRepository::class );
+        $this->app->bind( ExperienciaInspectorRepositoryInterface::class, ExperienciaInspectorRepository::class );
+        $this->app->bind( VerificacionRealizadaRepositoryInterface::class, VerificacionRealizadaRepository::class );
+
+        //Selección verificadores Adhoc
+        
+        //Registro de expediente Adhoc
+
+        //Revisión de expediente Adhoc
+
+        //Diligencia y formulación del informe Adhoc
+
+        //Notificación del informe Adhoc
+
+        //Recepcion y descarga del informe Adhoc
+
+        //Reportes
+
+        //abstract
+        $this->app->bind( RepositoryInterface::class, AbstractRepository::class );
     }
 
     /**

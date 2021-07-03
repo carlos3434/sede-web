@@ -41,6 +41,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('tipoinstitucion', \App\Models\Settings\TipoInstitucion::class);
 
         Route::model('formacione', \App\Models\RegistroAdhoc\Formacion::class);
+        Route::model('capacitacione', \App\Models\RegistroAdhoc\Capacitacion::class);
+        Route::model('experiencias-generale', \App\Models\RegistroAdhoc\ExperienciaGeneral::class);
+        Route::model('experiencias-inspectore', \App\Models\RegistroAdhoc\ExperienciaInspector::class);
+        Route::model('verificaciones-realizada', \App\Models\RegistroAdhoc\VerificacionRealizada::class);
+        Route::model('documento', \App\Models\RegistroAdhoc\User::class);
 
         parent::boot();
     }

@@ -33,7 +33,7 @@ class UserForLogin extends JsonResource
             'estado_civil_id' => $this->estado_civil_id,
             'pais_id' => $this->pais_id,
             'distrito_id' => $this->distrito_id,
-            'esta_postulando' => false,
+            'esta_postulando' => $this->estaPostulando(),
 
             'token' => isset( $this->token) ? $this->token : null,
             'token_type' => isset( $this->token_type) ? $this->token_type : null,
