@@ -3,6 +3,7 @@ namespace App\Repositories\Auth;
 
 use App\Repositories\AbstractRepository;
 use App\Http\Resources\Auth\User\UserForLogin;
+use App\Http\Resources\Auth\User\UserForDocumento;
 
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
 /**
@@ -25,6 +26,10 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     public function getOneForLogin($user)
     {
         return new UserForLogin($user);
+    }
+    public function getOneForDocumento($user)
+    {
+        return new UserForDocumento($user);
     }
     public function syncRolesAndPermissions($request, &$user)
     {
