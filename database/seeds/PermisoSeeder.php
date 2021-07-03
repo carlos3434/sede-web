@@ -72,8 +72,6 @@ class PermisoSeeder extends Seeder
             ['name' => 'DISTRITO_SHOW','guard_name' =>'web'],
             ['name' => 'DISTRITO_INDEX_DATA','guard_name' =>'web'],            
 
-            ['name' => 'USUARIO_DOCUMENTO_SHOW','guard_name' =>'web'],            
-
             ['name' => 'ENTREGA_EXPEDIENTE_INDEX','guard_name' =>'web'],
             ['name' => 'ENTREGA_EXPEDIENTE_CREATE','guard_name' =>'web'],
             ['name' => 'ENTREGA_EXPEDIENTE_EDIT','guard_name' =>'web'],
