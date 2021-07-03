@@ -15,15 +15,13 @@ class ExperienciaGeneralResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id'               => $this->id,
 
-            'especialidad'     => $this->especialidad,
-            'fecha_expedicion' => $this->fecha_expedicion,
-            'ciudad'           => $this->ciudad,
-            'archivo_titulo'   => $this->archivo_titulo,
-            //'archivo_tamano'   => $this->archivo_tamano,
-            'grado'            => $this->grado->nombre,
-            'grado_id'         => $this->grado_id,
+            'cargo'            => $this->cargo,
+            'fecha_inicio'     => $this->fecha_inicio,
+            'fecha_fin'        => $this->fecha_fin,
+            'tiempo_total'     => $this->tiempo_total,
+            'archivo_constancia' => $this->archivo_constancia,
             'institucion'      => $this->institucion->nombre,
             'institucion_id'   => $this->institucion_id,
             'usuario_id'       => $this->usuario_id,

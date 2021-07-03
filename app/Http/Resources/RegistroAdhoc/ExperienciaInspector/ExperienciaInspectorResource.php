@@ -17,13 +17,10 @@ class ExperienciaInspectorResource extends JsonResource
         return [
             'id' => $this->id,
 
-            'especialidad'     => $this->especialidad,
-            'fecha_expedicion' => $this->fecha_expedicion,
+            'fecha_fin'        => $this->fecha_fin,
+            'fecha_inicio'     => $this->fecha_inicio,
             'ciudad'           => $this->ciudad,
-            'archivo_titulo'   => $this->archivo_titulo,
-            //'archivo_tamano'   => $this->archivo_tamano,
-            'grado'            => $this->grado->nombre,
-            'grado_id'         => $this->grado_id,
+            'archivo_constancia' => $this->archivo_constancia,
             'institucion'      => $this->institucion->nombre,
             'institucion_id'   => $this->institucion_id,
             'usuario_id'       => $this->usuario_id,

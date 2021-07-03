@@ -6,24 +6,21 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Settings\Institucion;
-use App\Models\Settings\Grado;
-use App\Http\Resources\Listas\ParaFormacion\GradoCollection;
 use App\Http\Resources\Listas\Commons\InstitucionCollection;
 
 
-class ParaFormacionController extends Controller
+class ParaVerificacionRealizadaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role_or_permission:ADMINISTRADOR|FORMACION_INDEX'])->only('index');
+        $this->middleware(['role_or_permission:ADMINISTRADOR|VERIFICACION_REALIZADA_INDEX'])->only('index');
     }
 
     public function index()
     {
         $response = [
-            'grado_academicos' => new GradoCollection(Grado::all()),
             'institutiones' => new InstitucionCollection(
-                Institucion::where('tipo_institucion_id', Institucion::INSTITUCION_ACADEMICA )
+                Institucion::where('tipo_institucion_id', Institucion::GOBIERNO_LOCAL )
                 ->orderBy('nombre', 'asc')
                 ->get()
             )

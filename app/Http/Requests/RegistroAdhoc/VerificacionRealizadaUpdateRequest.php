@@ -27,12 +27,11 @@ class VerificacionRealizadaUpdateRequest extends FormRequest
     {
         return [
 
-            'especialidad'      => 'required|alpha_num_spaces',
-            'fecha_expedicion'  => 'required|date_format:Y-m-d|before:'.date('Y-m-d'),
-            'ciudad'            => 'required|alpha_num_spaces',
-            'archivo_titulo'    => 'file|max:3072',
-            'grado_id'          => 'required|exists:grados,id',
+            'nro_expediente'    => 'required|alpha_num_spaces',
+            'fecha'             => 'required|date_format:Y-m-d',
+            'nro_informe'       => 'required|alpha_num_spaces',
             'institucion_id'    => 'required|exists:instituciones,id',
+
         ];
     }
 

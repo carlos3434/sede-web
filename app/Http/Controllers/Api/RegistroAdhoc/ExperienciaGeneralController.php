@@ -61,7 +61,7 @@ class ExperienciaGeneralController extends Controller
     {
         $all = $request->all();
         $all['usuario_id'] = Auth::id();
-        $all = $this->storeFile($request, $all, 'ExperienciaGeneral', 'archivo_titulo');
+        $all = $this->storeFile($request, $all, 'experienciaGeneral', 'archivo_constancia');
         $experienciaGeneral = $this->repository->create( $all );
         return response()->json($experienciaGeneral, 201);
     }
@@ -85,7 +85,7 @@ class ExperienciaGeneralController extends Controller
     public function update(ExperienciaGeneralUpdateRequest $request, ExperienciaGeneral $experienciaGeneral)
     {
         $all = $request->all();
-        $all = $this->storeFile($request, $all, 'ExperienciaGeneral', 'archivo_titulo');
+        $all = $this->storeFile($request, $all, 'experienciaGeneral', 'archivo_constancia');
         $experienciaGeneral = $this->repository->updateOne($all, $experienciaGeneral);
         return response()->json($experienciaGeneral, 200);
     }

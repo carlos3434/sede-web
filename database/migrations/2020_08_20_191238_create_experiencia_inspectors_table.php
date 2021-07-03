@@ -20,7 +20,7 @@ class CreateExperienciaInspectorsTable extends Migration
             $table->foreignId('institucion_id');
             $table->foreignId('usuario_id');
             $table->string('archivo_constancia');
-            $table->unsignedDouble('archivo_tamano');
+            $table->unsignedDouble('archivo_tamano')->nullable();
 
             $table->foreign('institucion_id')->references('id')->on('instituciones');
             $table->foreign('usuario_id')->references('id')->on('users');

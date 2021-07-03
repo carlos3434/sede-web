@@ -7,18 +7,15 @@ use App\Models\RegistroAdhoc\VerificacionRealizada;
 use App\Http\Requests\RegistroAdhoc\VerificacionRealizadaAddRequest;
 use App\Http\Requests\RegistroAdhoc\VerificacionRealizadaUpdateRequest;
 use App\Repositories\RegistroAdhoc\Interfaces\VerificacionRealizadaRepositoryInterface;
-use App\Helpers\FileUploader;
 use Illuminate\Support\Facades\Auth;
 
 class VerificacionRealizadaController extends Controller
 {
     private $repository;
-    private $fileUploader;
 
-    public function __construct(VerificacionRealizadaRepositoryInterface $repository, FileUploader $fileUploader)
+    public function __construct(VerificacionRealizadaRepositoryInterface $repository )
     {
         $this->repository = $repository;
-        $this->fileUploader = $fileUploader;
         
         $this->middleware(['role_or_permission:ADMINISTRADOR|VERIFICACION_REALIZADA_CREATE'])->only(['create','store']);
         $this->middleware(['role_or_permission:ADMINISTRADOR|VERIFICACION_REALIZADA_INDEX'])->only('index');
@@ -61,7 +58,6 @@ class VerificacionRealizadaController extends Controller
     {
         $all = $request->all();
         $all['usuario_id'] = Auth::id();
-        $all = $this->storeFile($request, $all, 'VerificacionRealizada', 'archivo_titulo');
         $verificacionRealizada = $this->repository->create( $all );
         return response()->json($verificacionRealizada, 201);
     }
@@ -85,7 +81,6 @@ class VerificacionRealizadaController extends Controller
     public function update(VerificacionRealizadaUpdateRequest $request, VerificacionRealizada $verificacionRealizada)
     {
         $all = $request->all();
-        $all = $this->storeFile($request, $all, 'VerificacionRealizada', 'archivo_titulo');
         $verificacionRealizada = $this->repository->updateOne($all, $verificacionRealizada);
         return response()->json($verificacionRealizada, 200);
     }
@@ -101,14 +96,4 @@ class VerificacionRealizadaController extends Controller
         return response()->json(null, 204);
     }
 
-    private function storeFile( $request , $all , $folder, $fieldName ){
-        if ( $request->hasFile($fieldName) ) {
-            $fileValue = $this->fileUploader->upload(
-                $request->file($fieldName),
-                'files/'.$folder
-            );
-            $all[$fieldName] = $folder.'/'.$fileValue;
-        }
-        return $all;
-    }
 }

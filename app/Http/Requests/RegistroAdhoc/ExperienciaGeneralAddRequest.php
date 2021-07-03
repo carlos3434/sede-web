@@ -27,12 +27,12 @@ class ExperienciaGeneralAddRequest extends FormRequest
     {
         return [
 
-            'especialidad'      => 'required|alpha_num_spaces|max:120',
-            'fecha_expedicion'  => 'required|date_format:Y-m-d|before:'.date('Y-m-d'),
-            'ciudad'            => 'required|alpha_num_spaces|max:80',
-            'archivo_titulo'    => 'required|file|max:3072',
-            'grado_id'          => 'required|exists:grados,id',
-            'institucion_id'    => 'required|exists:instituciones,id',
+            'cargo'                => 'required|alpha_num_spaces',
+            'fecha_inicio'         => 'required|date_format:Y-m-d|before_or_equal:fecha_fin',
+            'fecha_fin'            => 'required|date_format:Y-m-d|before:' . date('Y-m-d'),
+            'tiempo_total'         => 'required|integer',
+            'archivo_constancia'   => 'required|file|max:3072',
+            'institucion_id'       => 'required|exists:instituciones,id',
         ];
     }
 

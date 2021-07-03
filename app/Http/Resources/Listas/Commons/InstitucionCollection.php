@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Listas\ParaFormacion;
+namespace App\Http\Resources\Listas\Commons;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

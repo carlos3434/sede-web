@@ -17,13 +17,10 @@ class VerificacionRealizadaResource extends JsonResource
         return [
             'id' => $this->id,
 
-            'especialidad'     => $this->especialidad,
-            'fecha_expedicion' => $this->fecha_expedicion,
-            'ciudad'           => $this->ciudad,
-            'archivo_titulo'   => $this->archivo_titulo,
-            //'archivo_tamano'   => $this->archivo_tamano,
-            'grado'            => $this->grado->nombre,
-            'grado_id'         => $this->grado_id,
+            'nro_informe'     => $this->nro_informe,
+            'fecha' => $this->fecha,
+            'nro_expediente'           => $this->nro_expediente,
+
             'institucion'      => $this->institucion->nombre,
             'institucion_id'   => $this->institucion_id,
             'usuario_id'       => $this->usuario_id,

@@ -20,7 +20,7 @@ class CreateExperienciasTable extends Migration
             $table->date('fecha_fin');
             $table->unsignedInteger('tiempo_total');
             $table->string('archivo_constancia');
-            $table->unsignedDouble('archivo_tamano');
+            $table->unsignedDouble('archivo_tamano')->nullable();
 
             $table->foreignId('usuario_id');
             $table->foreignId('institucion_id');

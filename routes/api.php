@@ -76,6 +76,9 @@ Route::prefix('v1')->group(function(){
         //listas
         Route::get('listasParaFormacion','Api\Listas\ParaFormacionController@index');
         Route::get('listasParaCapacitacion','Api\Listas\ParaCapacitacionController@index');
+        Route::get('listasParaExperienciaGeneral','Api\Listas\ParaExperienciaGeneralController@index');
+        Route::get('listasParaExperienciaInspector','Api\Listas\ParaExperienciaInspectorController@index');
+        Route::get('listasParaVerificacionRealizada','Api\Listas\ParaVerificacionRealizadaController@index');
 
         //documentos 
         // http://{{domain}}/api/v1/files/cv/1624854166.pdf
@@ -116,7 +119,16 @@ Route::prefix('v1')->group(function(){
             $pathToFile = storage_path('app/uploads/files/capacitacion/'.$path);
             return response()->file($pathToFile);
         });
+        //experienciaGeneral
+        Route::get('files/experienciaGeneral/{path}', function ($path) {
+            $pathToFile = storage_path('app/uploads/files/experienciaGeneral/'.$path);
+            return response()->file($pathToFile);
+        });
+        //experienciaInspector
+        Route::get('files/experienciaInspector/{path}', function ($path) {
+            $pathToFile = storage_path('app/uploads/files/experienciaInspector/'.$path);
+            return response()->file($pathToFile);
+        });
 
-        
     });
 });
