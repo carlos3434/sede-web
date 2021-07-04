@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Settings\Institucion;
 use App\Http\Resources\Listas\Commons\InstitucionCollection;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class ParaExperienciaGeneralController extends Controller
@@ -19,6 +21,7 @@ class ParaExperienciaGeneralController extends Controller
     public function index()
     {
         $response = [
+            'esta_postulando' => Auth::user()->estaPostulando(),
             'institutiones' => new InstitucionCollection(
                 Institucion::where('tipo_institucion_id', Institucion::GOBIERNO_LOCAL )
                 ->orderBy('nombre', 'asc')

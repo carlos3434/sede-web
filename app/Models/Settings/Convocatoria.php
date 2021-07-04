@@ -25,6 +25,14 @@ class Convocatoria extends Model
         return (new ConvocatoriaFilter($request))->filter($builder);
     }
 
+    public function scopeGetActual()
+    {
+        $convocatoria = $this->where('fecha_inicio', '<=', date("Y-m-d") )
+        ->where('fecha_final', '>=', date("Y-m-d") )
+        ->first('id');
+        return ($convocatoria) ? $convocatoria->id : false;
+    }
+
     public function items()
     {
         return $this->hasMany('App\Models\SeleccionAdhoc\Item','convocatoria_id');

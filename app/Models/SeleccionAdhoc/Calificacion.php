@@ -5,11 +5,27 @@ namespace App\Models\SeleccionAdhoc;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\SeleccionAdhoc\Acreditacion;
+use App\Http\Filters\SeleccionAdhoc\CalificacionFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Calificacion extends Model
 {
+    use LogsActivity;
     //
     protected $table="calificaciones";
+
+    protected $fillable = [
+        'usuario_id',
+        'convocatoria_id',
+        'sede_registral_id',
+        'fecha',
+    ];
+
+    public function scopeFilter(Builder $builder, $request)
+    {
+        return (new CalificacionFilter($request))->filter($builder);
+    }
 
     public function user()
     {

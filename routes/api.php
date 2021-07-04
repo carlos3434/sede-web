@@ -41,6 +41,7 @@ Route::prefix('v1')->group(function(){
         Route::apiResource('experiencias-inspectores','Api\RegistroAdhoc\ExperienciaInspectorController');
         Route::apiResource('verificaciones-realizadas','Api\RegistroAdhoc\VerificacionRealizadaController');
         Route::apiResource('documentos','Api\RegistroAdhoc\DocumentoController');
+        Route::apiResource('postulacion','Api\RegistroAdhoc\PostulacionController');
 
         //Selección verificadores Adhoc
 
@@ -79,6 +80,7 @@ Route::prefix('v1')->group(function(){
         Route::get('listasParaExperienciaGeneral','Api\Listas\ParaExperienciaGeneralController@index');
         Route::get('listasParaExperienciaInspector','Api\Listas\ParaExperienciaInspectorController@index');
         Route::get('listasParaVerificacionRealizada','Api\Listas\ParaVerificacionRealizadaController@index');
+        Route::get('listasParaPostulacion','Api\Listas\ParaPostulacionController@index');
 
         //documentos 
         // http://{{domain}}/api/v1/files/cv/1624854166.pdf

@@ -9,6 +9,7 @@ use App\Models\Settings\Institucion;
 use App\Models\Settings\Grado;
 use App\Http\Resources\Listas\ParaFormacion\GradoCollection;
 use App\Http\Resources\Listas\Commons\InstitucionCollection;
+use Illuminate\Support\Facades\Auth;
 
 
 class ParaFormacionController extends Controller
@@ -21,6 +22,7 @@ class ParaFormacionController extends Controller
     public function index()
     {
         $response = [
+            'esta_postulando' => Auth::user()->estaPostulando(),
             'grado_academicos' => new GradoCollection(Grado::all()),
             'institutiones' => new InstitucionCollection(
                 Institucion::where('tipo_institucion_id', Institucion::INSTITUCION_ACADEMICA )

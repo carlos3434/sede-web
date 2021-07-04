@@ -206,6 +206,10 @@ class PermisoSeeder extends Seeder
             ['name' => 'VERIFICACION_REALIZADA_INDEX_DATA','guard_name' =>'web'],
 
             ['name' => 'USUARIO_DOCUMENTO_SHOW','guard_name' =>'web'],
+            
+            ['name' => 'POSTULACION_INDEX','guard_name' =>'web'],
+            ['name' => 'POSTULACION_CREATE','guard_name' =>'web'],
+            ['name' => 'POSTULACION_SHOW','guard_name' =>'web'],
 
 
             ];
@@ -390,7 +394,11 @@ class PermisoSeeder extends Seeder
                     'USUARIO_DOCUMENTO_EDIT',
                     'USUARIO_DOCUMENTO_INDEX',
                     'USUARIO_DOCUMENTO_INDEX_DATA',
-                    'USUARIO_DOCUMENTO_SHOW'
+                    'USUARIO_DOCUMENTO_SHOW',
+
+                    'POSTULACION_INDEX',
+                    'POSTULACION_CREATE',
+                    'POSTULACION_SHOW',
                 ]
             )->get() 
         );
@@ -480,7 +488,13 @@ class PermisoSeeder extends Seeder
                     'USUARIO_DOCUMENTO_EDIT',
                     'USUARIO_DOCUMENTO_INDEX',
                     'USUARIO_DOCUMENTO_INDEX_DATA',
-                    'USUARIO_DOCUMENTO_SHOW'
+                    'USUARIO_DOCUMENTO_SHOW',
+
+                    'POSTULACION_INDEX',
+                    'POSTULACION_CREATE',
+                    'POSTULACION_SHOW',
+
+
                 ]
             )->get() 
         );

@@ -39,6 +39,9 @@ use App\Repositories\RegistroAdhoc\Interfaces\ExperienciaInspectorRepositoryInte
 use App\Repositories\RegistroAdhoc\VerificacionRealizadaRepository;
 use App\Repositories\RegistroAdhoc\Interfaces\VerificacionRealizadaRepositoryInterface;
 
+use App\Repositories\SeleccionAdhoc\CalificacionRepository;
+use App\Repositories\SeleccionAdhoc\Interfaces\CalificacionRepositoryInterface;
+
 use App\Repositories\AbstractRepository;
 use App\Repositories\RepositoryInterface;
 
@@ -71,6 +74,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind( ExperienciaGeneralRepositoryInterface::class, ExperienciaGeneralRepository::class );
         $this->app->bind( ExperienciaInspectorRepositoryInterface::class, ExperienciaInspectorRepository::class );
         $this->app->bind( VerificacionRealizadaRepositoryInterface::class, VerificacionRealizadaRepository::class );
+        $this->app->bind( CalificacionRepositoryInterface::class, CalificacionRepository::class );
 
         //Selección verificadores Adhoc
         

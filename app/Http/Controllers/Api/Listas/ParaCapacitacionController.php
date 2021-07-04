@@ -9,6 +9,7 @@ use App\Models\Settings\Institucion;
 use App\Models\Settings\TipoCapacitacion;
 use App\Http\Resources\Listas\ParaCapacitacion\TipoCapacitacionCollection;
 use App\Http\Resources\Listas\Commons\InstitucionCollection;
+use Illuminate\Support\Facades\Auth;
 
 
 class ParaCapacitacionController extends Controller
@@ -21,6 +22,7 @@ class ParaCapacitacionController extends Controller
     public function index()
     {
         $response = [
+            'esta_postulando' => Auth::user()->estaPostulando(),
             'tipo_capacitacion' => new TipoCapacitacionCollection(TipoCapacitacion::all()),
             'institutiones' => new InstitucionCollection(
                 Institucion::where('tipo_institucion_id', Institucion::INSTITUCION_ACADEMICA )
