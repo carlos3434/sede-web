@@ -7,7 +7,9 @@ use App\Repositories\SeleccionAdhoc\Interfaces\CalificacionRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegistroAdhoc\PostulacionRequest;
 use App\Models\Auth\User;
-use \App\Models\Settings\Convocatoria;
+use App\Models\Settings\Convocatoria;
+use App\Rules\ConvocatoriaActual as ConvocatoriaActualRule;
+
 class PostulacionController extends Controller
 {
     private $repository;
@@ -38,11 +40,15 @@ class PostulacionController extends Controller
     public function store(PostulacionRequest $request)
     {
         $all = $request->all();
-        $all['usuario_id'] = Auth::id();
         $all['convocatoria_id'] = Convocatoria::GetActual();
-        //$all['convocatoria_id'] = false;
-        $all['fecha'] = date('Ymd');
-        //dd($all);
+
+        $validator = \Validator::make(
+            $all,['convocatoria_id' => [new ConvocatoriaActualRule ]]
+        )->validate();
+
+        $all['usuario_id'] = Auth::id();
+        $all['fecha'] = date("Y-m-d");
+
         $calificacion = $this->repository->create( $all );
         return response()->json($calificacion, 201);
     }
