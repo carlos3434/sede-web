@@ -56,6 +56,8 @@ Route::prefix('v1')->group(function(){
         //Recepcion y descarga del informe Adhoc
 
         //Reportes
+        Route::get('listasParaPostulantesAdhoc','Api\Reportes\PostulantesAdhocController@listas');
+        Route::get('reporte/postulantesadhoc','Api\Reportes\PostulantesAdhocController@reporte');
 
         //Settings
 
