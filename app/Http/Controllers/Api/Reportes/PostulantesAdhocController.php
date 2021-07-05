@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Reportes;
 
 use App\Http\Controllers\Controller;
-use App\TipoOperacion;
+use App\Models\Settings\SedeRegistral;
 use Illuminate\Http\Request;
 
 
@@ -84,7 +84,7 @@ class PostulantesAdhocController extends Controller
                 return Excel::download($export, $name. $type);
             }
         }
-        return new TipoOperacionCollection($query->sort()->paginate());
+        //return new TipoOperacionCollection($query->sort()->paginate());
     }
 
 
@@ -96,7 +96,9 @@ class PostulantesAdhocController extends Controller
      */
     public function listas( Request $request)
     {
-        $tipoOperacion = TipoOperacion::create($request->all());
-        return response()->json($tipoOperacion, 201);
+        $response = [
+            'sedes_registrales' => SedeRegistral::all()
+        ];
+        return response()->json($response, 200);
     }
 }
