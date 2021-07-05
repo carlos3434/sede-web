@@ -94,7 +94,8 @@ pero se debe cambiar la forma de obtener la convocatoria actual, lo mas exacto s
 FRONTEND: pasos para desplegar frontend
 1 Editar variables de entorno
     frontend\.env
-2 ubicarse en la carpeta app/frontend y ejecutar
+2 generar archivos estaticos y copiarlos en la carpeta public
+    cd frontend
     yarn generate
     cp -R dist/*  ../public
 3 desplegar con git a heroku
