@@ -101,3 +101,12 @@ FRONTEND: pasos para desplegar frontend
 3 desplegar con git a heroku
     git push origin dev
     
+restore branch to origin 
+    git checkout mybranch
+    git reset --hard origin/mybranch
+
+
+web heroku
+
+http://sede-web.herokuapp.com/admin/dashboard
+

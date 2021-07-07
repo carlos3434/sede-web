@@ -77,6 +77,7 @@ Route::prefix('v1')->group(function(){
         //Route::apiResource('tiponivel','Api\Settings\TipoNivelController');
 
         //listas
+        Route::get('listasParaInstitucion','Api\Listas\ParaInstitucionController@index');
         Route::get('listasParaFormacion','Api\Listas\ParaFormacionController@index');
         Route::get('listasParaCapacitacion','Api\Listas\ParaCapacitacionController@index');
         Route::get('listasParaExperienciaGeneral','Api\Listas\ParaExperienciaGeneralController@index');

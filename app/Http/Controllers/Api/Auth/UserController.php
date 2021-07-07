@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
-use App\Http\Requests\Auth\UserDocumentoRequest;
+use App\Http\Requests\Auth\UserRequest;
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
 use App\Helpers\FileUploader;
 class UserController extends Controller
@@ -45,7 +45,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserDocumentoRequest $request)
+    public function store(UserRequest $request)
     {
         $all = $request->all();
         $all = $this->storeFile($request, $all, 'constancias', 'constancia_habilidad');
