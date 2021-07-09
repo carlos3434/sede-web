@@ -193,7 +193,7 @@ class UserSeeder extends Seeder
         ];
 
         $administrador = Role::where('name','ADMINISTRADOR')->first();
-        $cenepred = Role::where('name','')->first();
+        $cenepred = Role::where('name','USUARIO_CENEPRED')->first();
         $adhoc = Role::where('name','USUARIO_ADHOC')->first();
         $administrado = Role::where('name','USUARIO_ADMINISTRADO')->first();
 
