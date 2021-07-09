@@ -19,6 +19,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });*/
 
 Route::prefix('v1')->group(function(){
+    // en el front tienes que crear dos rutas
+    //1 ruta para ingresar el email: GET password/reset
+    // esta ruta enviara el email a "password/email" y este enviara un email a la persona
+
+    //2 ruta para ingresar el nuevo password password/reset/{token}
+    // esta ruta es para digitar dos password iguales y este debe enviar el token a la ruta "password/reset"
+    //el servidor redireccionara a la ruta redirecTo del controlador ResetPasswordController
+    //si algo fue mal esto redireccionara ala ruta actual pero con errores, esto se debera modificar
+    Route::post('password/email', 'Api\Auth\ForgotPasswordController@sendResetLinkEmail');
+    Route::post('password/reset', 'Api\Auth\ResetPasswordController@reset');
+
     Route::get('/unauthorized', 'Api\Auth\AuthController@unauthorized');
     Route::post('register', 'Api\Auth\AuthController@register');
     Route::post('login', 'Api\Auth\AuthController@login');
