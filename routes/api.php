@@ -52,10 +52,13 @@ Route::prefix('v1')->group(function(){
         Route::apiResource('experiencias-inspectores','Api\RegistroAdhoc\ExperienciaInspectorController');
         Route::apiResource('verificaciones-realizadas','Api\RegistroAdhoc\VerificacionRealizadaController');
         Route::apiResource('documentos','Api\RegistroAdhoc\DocumentoController');
-        Route::apiResource('postulacion','Api\RegistroAdhoc\PostulacionController');
+        Route::get('postulacion','Api\RegistroAdhoc\PostulacionController@index');
+        //guarda en la tabla calificaciones cuando el usuario adhoc postula a una convocatoria
+        Route::post('postulacion','Api\RegistroAdhoc\PostulacionController@store');
 
         //Selección verificadores Adhoc
         Route::apiResource('calificacion','Api\SeleccionAdhoc\CalificacionController');
+        //Route::apiResource('puntaje','Api\SeleccionAdhoc\PuntajeController');
         //Registro de expediente Adhoc
 
         //Revisión de expediente Adhoc
@@ -95,6 +98,8 @@ Route::prefix('v1')->group(function(){
         Route::get('listasParaExperienciaInspector','Api\Listas\ParaExperienciaInspectorController@index');
         Route::get('listasParaVerificacionRealizada','Api\Listas\ParaVerificacionRealizadaController@index');
         Route::get('listasParaPostulacion','Api\Listas\ParaPostulacionController@index');
+
+        Route::get('listasParaPuntaje','Api\Listas\ParaPuntajeController@index');
 
         //documentos 
         // http://{{domain}}/api/v1/files/cv/1624854166.pdf

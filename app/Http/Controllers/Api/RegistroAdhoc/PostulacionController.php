@@ -29,7 +29,7 @@ class PostulacionController extends Controller
      */
     public function index()
     {
-        return $this->repository->getOneForDocumento(Auth::id());
+        return $this->repository->getByUserId(Auth::id());
     }
     /**
      * Store a newly created resource in storage.
@@ -40,7 +40,7 @@ class PostulacionController extends Controller
     public function store(PostulacionRequest $request)
     {
         $all = $request->all();
-        $all['convocatoria_id'] = Convocatoria::GetActual();
+        $all['convocatoria_id'] = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
 
         $validator = \Validator::make(
             $all,['convocatoria_id' => [new ConvocatoriaActualRule ]]

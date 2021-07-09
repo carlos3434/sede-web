@@ -5,7 +5,7 @@ namespace App\Http\Resources\SeleccionAdhoc\Calificacion;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 
-class CalificacionResource extends JsonResource
+class CalificacionWithDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,6 +19,11 @@ class CalificacionResource extends JsonResource
             'id'                     => $this->id,
             'fecha'                  => Carbon::parse($this->fecha)->toDateString(),
             'usuario_id'             => $this->usuario_id,
+            'formaciones'            => $this->user->formaciones,
+            'capacitaciones'         => $this->user->capacitaciones,
+            'experiencias_generales'        => $this->user->experienciasGenerales,
+            'experiencias_inspector'        => $this->user->experienciasInspector,
+            'verificaciones_realizadas'     => $this->user->verificacionesRealizadas,
             'convocatoria_id'        => $this->convocatoria_id,
             'convocatoria_nombre'    => $this->convocatoria->nombre,
             'sede_registral_id'      => $this->sede_registral_id,

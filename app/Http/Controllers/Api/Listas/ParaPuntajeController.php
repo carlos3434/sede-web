@@ -10,8 +10,9 @@ use App\Http\Resources\Listas\ParaPostulacion\SedeRegistralCollection;
 use App\Models\Settings\SedeRegistral;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
+use App\Models\SeleccionAdhoc\Categoria;
 
-class ParaPostulacionController extends Controller
+class ParaPuntajeController extends Controller
 {
     public function __construct()
     {
@@ -20,10 +21,15 @@ class ParaPostulacionController extends Controller
 
     public function index()
     {
+        $convocatoriaActualId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
+
         $response = [
             'hay_convocatoria_actual' =>  (isset( Convocatoria::GetActual()->id )) ? true : false,
             'esta_postulando' => Auth::user()->estaPostulando(),
-            'sedes_registrales' => new SedeRegistralCollection(SedeRegistral::all())
+            'categorias_items' => 
+            Categoria::with(['items' => function($q) use($convocatoriaActualId) {
+                $q->where('convocatoria_id', $convocatoriaActualId);
+            }])->get()
         ];
         return response()->json($response, 200);
     }

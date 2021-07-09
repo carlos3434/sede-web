@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\SeleccionAdhoc\Calificacion;
+namespace App\Http\Resources\RegistroAdhoc\Postulacion;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 
-class CalificacionResource extends JsonResource
+class PostulacionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -8,6 +8,7 @@ use App\Http\Requests\SeleccionAdhoc\CalificacionAddRequest;
 use App\Http\Requests\SeleccionAdhoc\CalificacionUpdateRequest;
 use App\Repositories\SeleccionAdhoc\Interfaces\CalificacionRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Settings\Convocatoria;
 
 class CalificacionController extends Controller
 {
@@ -42,9 +43,8 @@ class CalificacionController extends Controller
                 $headings = true
             );
         }
-        //$request['user_id'] = Auth::id();
-        $request->request->add(['usuario_id' => Auth::id() ]);
-        //$request->merge(["usuario_id" => Auth::id()]);
+        //solo de la convocatoria actual
+        $request->request->add(['convocatoria_id' => (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false ]);
         return $this->repository->all($request);
     }
 
@@ -54,14 +54,14 @@ class CalificacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CalificacionAddRequest $request)
+    /*public function store(CalificacionAddRequest $request)
     {
         $all = $request->all();
         $all['usuario_id'] = Auth::id();
         $all = $this->storeFile($request, $all, 'Calificacion', 'archivo_titulo');
         $calificacion = $this->repository->create( $all );
         return response()->json($calificacion, 201);
-    }
+    }*/
     /**
      * Display the specified resource.
      *
@@ -79,23 +79,23 @@ class CalificacionController extends Controller
      * @param  \App\Calificacion  $calificacion
      * @return \Illuminate\Http\Response
      */
-    public function update(CalificacionUpdateRequest $request, Calificacion $calificacion)
+    /*public function update(CalificacionUpdateRequest $request, Calificacion $calificacion)
     {
         $all = $request->all();
         $all = $this->storeFile($request, $all, 'Calificacion', 'archivo_titulo');
         $calificacion = $this->repository->updateOne($all, $calificacion);
         return response()->json($calificacion, 200);
-    }
+    }*/
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Calificacion  $calificacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Calificacion $calificacion)
+    /*public function destroy(Calificacion $calificacion)
     {
         $this->repository->deleteOne($calificacion);
         return response()->json(null, 204);
-    }
+    }*/
 
 }
