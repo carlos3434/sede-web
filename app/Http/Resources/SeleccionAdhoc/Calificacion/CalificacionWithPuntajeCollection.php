@@ -21,11 +21,12 @@ class CalificacionWithPuntajeCollection extends ResourceCollection
                 'id'                     => $calificacion->id,
                 'fecha'                  => Carbon::parse($calificacion->fecha)->toDateString(),
                 'usuario_id'             => $calificacion->usuario_id,
+                'usuario_numero_documento'    => $calificacion->user->numero_documento,
                 'usuario_nombres'             => $calificacion->user->nombres,
                 'usuario_apellido_paterno'    => $calificacion->user->apellido_materno,
                 'usuario_apellido_materno'    => $calificacion->user->apellido_paterno,
                 'convocatoria_id'        => $calificacion->convocatoria_id,
-                'convocatoria_nombre'    => $calificacion->convocatoria->nombre,
+                //'convocatoria_nombre'    => $calificacion->convocatoria->nombre,
                 'sede_registral_id'      => $calificacion->sede_registral_id,
                 'sede_registral_nombre'  => $calificacion->sedeRegistral->nombre,
 
