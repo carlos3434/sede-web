@@ -18,8 +18,6 @@ class CalificacionCategoriesController extends Controller
     public function __construct( CalificacionRepositoryInterface $repository)
     {
         $this->repository = $repository;
-        //$this->middleware(['role_or_permission:ADMINISTRADOR|POSTULACION_SHOW'])->only('index');
-        //$this->middleware(['role_or_permission:ADMINISTRADOR|POSTULACION_CREATE'])->only('index');
     }
 
     /**

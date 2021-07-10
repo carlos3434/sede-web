@@ -16,7 +16,6 @@ class ParaPuntajeController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware(['role_or_permission:ADMINISTRADOR|POSTULACION_INDEX'])->only('index');
     }
 
     public function index()

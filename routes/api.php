@@ -65,7 +65,8 @@ Route::prefix('v1')->group(function(){
         Route::get('calificacion/{calificacion}/experiencias-generales','Api\SeleccionAdhoc\CalificacionCategoriesController@experienciasGenerales');
         Route::get('calificacion/{calificacion}/experiencias-inspectores','Api\SeleccionAdhoc\CalificacionCategoriesController@experienciasInspectores');
         Route::get('calificacion/{calificacion}/verificaciones-realizadas','Api\SeleccionAdhoc\CalificacionCategoriesController@verificacionesRealizadas');
-
+        //registro de acreditacion
+        Route::post('acreditaciones','Api\SeleccionAdhoc\AcreditacionController@store');
         //Registro de expediente Adhoc
 
         //Revisión de expediente Adhoc
