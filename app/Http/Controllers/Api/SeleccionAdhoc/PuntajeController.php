@@ -61,8 +61,14 @@ class PuntajeController extends Controller
         $puntajeSaved =[];
         foreach($puntajes as $puntaje){
             $puntaje['calificacion_id'] = $calificacion_id;
-            $puntajeSaved[] = $this->repository->create( $puntaje );
+            //validar si el puntaje ya se registro en el itemId y calificacion
+            $cantidad = $this->repository->countByCalificacionAndItem($calificacion_id , $puntaje['item_id']);
+            if ($cantidad==0)
+            {
+                $puntajeSaved[] = $this->repository->create( $puntaje );
+            }
         }
+            
         return response()->json($puntajeSaved, 201);
     }
     /**

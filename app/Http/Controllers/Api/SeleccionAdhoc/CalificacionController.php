@@ -29,7 +29,7 @@ class CalificacionController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * muestra el listado de posstulaciones de la convocatoria actual
      *
      * @return \Illuminate\Http\Response
      */
@@ -43,9 +43,12 @@ class CalificacionController extends Controller
                 $headings = true
             );
         }
+        //por defecto traer todos las calificaciones con puntajes mayor a cero
+        $request->request->add( ['puntaje' => $request->input('puntaje', 0) ]);
+        $request->request->add( ['filtro'  => $request->input('filtro', '>=') ]);
         //solo de la convocatoria actual
         $request->request->add(['convocatoria_id' => (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false ]);
-        return $this->repository->all($request);
+        return $this->repository->allWithPuntajes($request);
     }
 
     /**

@@ -22,7 +22,7 @@ class PostulacionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * retorna la postulacion del usuario logueado
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -32,7 +32,7 @@ class PostulacionController extends Controller
         return $this->repository->getByUserId(Auth::id());
     }
     /**
-     * Store a newly created resource in storage.
+     * guarda en la tabla calificaciones cuando el usuario adhoc postula a una convocatoria
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

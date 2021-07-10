@@ -5,6 +5,7 @@ use App\Repositories\AbstractRepository;
 use App\Repositories\SeleccionAdhoc\Interfaces\CalificacionRepositoryInterface;
 use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionExcelCollection;
 use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionWithDetailCollection;
+use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionWithPuntajeCollection;
 use App\Http\Resources\RegistroAdhoc\Postulacion\PostulacionCollection;
 use App\Models\SeleccionAdhoc\Calificacion;
 /**
@@ -24,11 +25,18 @@ class CalificacionRepository extends AbstractRepository implements CalificacionR
             ->get()
         );
     }
-    public function getOneForDocumento( $userId ) {
-        return new CalificacionWithDetailCollection(
-            Calificacion::where('usuario_id',$userId)
-            ->get()
-        );
+
+    public function allWithPuntajes( $request ) {
+        return new CalificacionWithPuntajeCollection(
+            Calificacion::from('calificaciones as c')
+            ->select('c.*', \DB::raw('coalesce(sum(p.puntaje),0)') )
+            ->leftJoin('puntajes as p','c.id','=','p.calificacion_id')
+            ->where('c.convocatoria_id',$request->convocatoria_id)
+            ->having( \DB::raw('coalesce(sum(p.puntaje),0)'), $request->filtro, $request->puntaje )
+            ->groupBy('c.id')
+            ->paginate()
+        )
+        ;
     }
 
     public function allToExport($request)

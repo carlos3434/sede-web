@@ -17,17 +17,12 @@ class PuntajeRepository extends AbstractRepository implements PuntajeRepositoryI
     protected $collectionNamePath = "App\Http\Resources\SeleccionAdhoc\Puntaje\PuntajeCollection";
     protected $resourceNamePath = "App\Http\Resources\SeleccionAdhoc\Puntaje\PuntajeResource";
 
-    public function getByUserId( $userId ) {
-        return new PostulacionCollection(
-            Puntaje::where('usuario_id',$userId)
-            ->get()
-        );
-    }
-    public function getOneForDocumento( $userId ) {
-        return new PuntajeCollection(
-            Puntaje::where('usuario_id',$userId)
-            ->get()
-        );
+    public function countByCalificacionAndItem( $calificacion_id , $item_id) {
+        return 
+            Puntaje::where('item_id',$item_id)
+            ->where('calificacion_id',$calificacion_id)
+            ->count()
+        ;
     }
 
     public function allToExport($request)

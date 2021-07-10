@@ -54,6 +54,16 @@ class Calificacion extends Model
         return (bool) Acreditacion::where('calificacion_id',$this->id)->count();
     }
 
+    public function scopePuntajeToTal()
+    {
+        $total = 0;
+        foreach ($this->puntajes as $puntaje)
+        {
+            $total = $total + $puntaje->puntaje;
+        }
+        return $total;
+    }
+
     public function puntajeTotal()
     {
         $total = 0;
