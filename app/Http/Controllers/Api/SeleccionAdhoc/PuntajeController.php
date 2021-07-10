@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api\SeleccionAdhoc;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\SeleccionAdhoc\Puntaje;
-use App\Http\Requests\SeleccionAdhoc\PuntajeAddRequest;
-use App\Http\Requests\SeleccionAdhoc\PuntajeUpdateRequest;
+use App\Http\Requests\SeleccionAdhoc\PuntajeRequest;
 use App\Repositories\SeleccionAdhoc\Interfaces\PuntajeRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
@@ -33,7 +32,7 @@ class PuntajeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    /*public function index(Request $request)
     {
         if ( !empty($request->excel) ){
             return $this->repository->allToExport($request)
@@ -46,7 +45,7 @@ class PuntajeController extends Controller
         //solo de la convocatoria actual
         $request->request->add(['convocatoria_id' => (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false ]);
         return $this->repository->all($request);
-    }
+    }*/
 
     /**
      * Store a newly created resource in storage.
@@ -54,24 +53,28 @@ class PuntajeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    /*public function store(PuntajeAddRequest $request)
+    public function store(PuntajeRequest $request)
     {
-        $all = $request->all();
-        $all['usuario_id'] = Auth::id();
-        $all = $this->storeFile($request, $all, 'Puntaje', 'archivo_titulo');
-        $puntaje = $this->repository->create( $all );
-        return response()->json($puntaje, 201);
-    }*/
+        $calificacion_id = $request->calificacion_id;
+        $puntajes = $request->puntajes;
+
+        $puntajeSaved =[];
+        foreach($puntajes as $puntaje){
+            $puntaje['calificacion_id'] = $calificacion_id;
+            $puntajeSaved[] = $this->repository->create( $puntaje );
+        }
+        return response()->json($puntajeSaved, 201);
+    }
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Puntaje $puntaje)
+    /*public function show(Puntaje $puntaje)
     {
         return $this->repository->getOne($puntaje);
-    }
+    }*/
     /**
      * Update the specified resource in storage.
      *

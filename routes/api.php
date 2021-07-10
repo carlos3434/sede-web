@@ -58,7 +58,7 @@ Route::prefix('v1')->group(function(){
 
         //Selección verificadores Adhoc
         Route::apiResource('calificacion','Api\SeleccionAdhoc\CalificacionController');
-        //Route::apiResource('puntaje','Api\SeleccionAdhoc\PuntajeController');
+        Route::apiResource('puntaje','Api\SeleccionAdhoc\PuntajeController');
         //Registro de expediente Adhoc
 
         //Revisión de expediente Adhoc
