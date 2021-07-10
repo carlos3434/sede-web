@@ -76,6 +76,17 @@ class CalificacionController extends Controller
         return $this->repository->getOne($calificacion);
     }
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function pendientes(Request $request,Convocatoria $convocatoria)
+    {
+        $request->request->add(['convocatoria_id' => $convocatoria->id]);
+        return $this->repository->getPendientes($request);
+    }
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

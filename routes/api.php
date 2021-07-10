@@ -57,7 +57,8 @@ Route::prefix('v1')->group(function(){
         Route::post('postulacion','Api\RegistroAdhoc\PostulacionController@store');
 
         //Selección verificadores Adhoc
-        Route::apiResource('calificacion','Api\SeleccionAdhoc\CalificacionController');
+        Route::get('calificacion','Api\SeleccionAdhoc\CalificacionController@index');
+        Route::get('calificacion/{calificacion}','Api\SeleccionAdhoc\CalificacionController@show');
         Route::apiResource('puntaje','Api\SeleccionAdhoc\PuntajeController');
 
         Route::get('calificacion/{calificacion}/formaciones','Api\SeleccionAdhoc\CalificacionCategoriesController@formaciones');
@@ -67,6 +68,8 @@ Route::prefix('v1')->group(function(){
         Route::get('calificacion/{calificacion}/verificaciones-realizadas','Api\SeleccionAdhoc\CalificacionCategoriesController@verificacionesRealizadas');
         //registro de acreditacion
         Route::post('acreditaciones','Api\SeleccionAdhoc\AcreditacionController@store');
+        //calificaciones pendientes
+        Route::get('calificacion/{convocatoria}/pendientes','Api\SeleccionAdhoc\CalificacionController@pendientes');
         //Registro de expediente Adhoc
 
         //Revisión de expediente Adhoc

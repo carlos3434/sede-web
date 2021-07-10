@@ -39,6 +39,21 @@ class CalificacionRepository extends AbstractRepository implements CalificacionR
         ;
     }
 
+
+    public function getPendientes( $request ) {
+        return new CalificacionWithPuntajeCollection(
+            Calificacion::from('calificaciones as c')
+            ->select('c.*', \DB::raw('coalesce(sum(p.puntaje),0)') )
+            ->leftJoin('puntajes as p','c.id','=','p.calificacion_id')
+            ->where('c.convocatoria_id',$request->convocatoria_id)
+            ->whereNotNull('p.id')
+            //->having( \DB::raw('coalesce(sum(p.puntaje),0)'), $request->filtro, $request->puntaje )
+            ->groupBy('c.id')
+            ->paginate()
+        )
+        ;
+    }
+
     public function allToExport($request)
     {
         return new CalificacionExcelCollection(
