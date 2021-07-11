@@ -4,11 +4,11 @@ namespace App\Http\Resources\SeleccionAdhoc\Calificacion;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
-use App\Http\Resources\RegistroAdhoc\Formacion\FormacionResource;
-use App\Http\Resources\RegistroAdhoc\Capacitacion\CapacitacionResource;
-use App\Http\Resources\RegistroAdhoc\ExperienciaGeneral\ExperienciaGeneralResource;
-use App\Http\Resources\RegistroAdhoc\ExperienciaInspector\ExperienciaInspectorResource;
-use App\Http\Resources\RegistroAdhoc\VerificacionRealizada\VerificacionRealizadaResource;
+use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionFormacionCollection;
+use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionCapacitacionCollection;
+use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionExperienciaGeneralCollection;
+use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionExperienciaInspectorCollection;
+use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionVerificacionRealizadaCollection;
 class CalificacionWithDetailResource extends JsonResource
 {
     /**
@@ -23,11 +23,11 @@ class CalificacionWithDetailResource extends JsonResource
             'id'                     => $this->id,
             'fecha'                  => Carbon::parse($this->fecha)->toDateString(),
             'usuario_id'             => $this->usuario_id,
-            'formaciones'            => new FormacionResource($this->user->formaciones),
-            'capacitaciones'         => new CapacitacionResource($this->user->capacitaciones),
-            'experiencias_generales'        => new ExperienciaGeneralResource($this->user->experienciasGenerales),
-            'experiencias_inspector'        => new ExperienciaInspectorResource($this->user->experienciasInspector),
-            'verificaciones_realizadas'     => new VerificacionRealizadaResource($this->user->verificacionesRealizadas),
+            'formaciones'            => new CalificacionFormacionCollection($this->user->formaciones),
+            'capacitaciones'         => new CalificacionCapacitacionCollection($this->user->capacitaciones),
+            'experiencias_generales'        => new CalificacionExperienciaGeneralCollection($this->user->experienciasGenerales),
+            'experiencias_inspector'        => new CalificacionExperienciaInspectorCollection($this->user->experienciasInspector),
+            'verificaciones_realizadas'     => new CalificacionVerificacionRealizadaCollection($this->user->verificacionesRealizadas),
             'convocatoria_id'        => $this->convocatoria_id,
             'convocatoria_nombre'    => $this->convocatoria->nombre,
             'sede_registral_id'      => $this->sede_registral_id,
