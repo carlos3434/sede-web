@@ -70,6 +70,7 @@ Route::prefix('v1')->group(function(){
         Route::post('acreditaciones','Api\SeleccionAdhoc\AcreditacionController@store');
         //calificaciones pendientes
         Route::get('calificacion/{convocatoria}/pendientes','Api\SeleccionAdhoc\CalificacionController@pendientes');
+        Route::get('calificacion/{convocatoria}/resultados','Api\SeleccionAdhoc\CalificacionController@resultados');
         //Registro de expediente Adhoc
 
         //Revisión de expediente Adhoc

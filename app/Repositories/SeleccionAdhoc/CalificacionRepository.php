@@ -54,6 +54,20 @@ class CalificacionRepository extends AbstractRepository implements CalificacionR
         ;
     }
 
+
+    public function getResultados( $request ) {
+        $query = Calificacion::from('calificaciones as c')
+            ->select('c.*', \DB::raw('coalesce(sum(p.puntaje),0)') )
+            ->join('puntajes as p','c.id','=','p.calificacion_id')
+            ->where('c.convocatoria_id',$request->convocatoria_id)
+            ->groupBy('c.id');
+            
+        if ($request->has('sede_registral_id')) {
+            $query->where('c.sede_registral_id',$request->sede_registral_id);
+        }
+        return new CalificacionWithPuntajeCollection( $query->paginate() );
+    }
+
     public function allToExport($request)
     {
         return new CalificacionExcelCollection(
