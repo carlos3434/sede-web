@@ -68,6 +68,9 @@ class PuntajeController extends Controller
                 $puntajeSaved[] = $this->repository->create( $puntaje );
             }
         }
+        if (count($puntajeSaved)==0) {
+            return response()->json(['message' => "Ya se han registrado puntajes para esos items en esa calificacion" ], 422);
+        }
             
         return response()->json($puntajeSaved, 201);
     }

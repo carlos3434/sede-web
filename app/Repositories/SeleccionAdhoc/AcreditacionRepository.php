@@ -17,7 +17,10 @@ class AcreditacionRepository extends AbstractRepository implements AcreditacionR
     protected $collectionNamePath = "App\Http\Resources\SeleccionAdhoc\Acreditacion\AcreditacionCollection";
     protected $resourceNamePath = "App\Http\Resources\SeleccionAdhoc\Acreditacion\AcreditacionResource";
 
-
+    public function countByCalificacionId($calificacion_id)
+    {
+        return Acreditacion::where('calificacion_id',$calificacion_id)->count();
+    }
     public function allToExport($request)
     {
         return new AcreditacionExcelCollection(

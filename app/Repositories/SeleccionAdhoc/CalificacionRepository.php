@@ -6,6 +6,7 @@ use App\Repositories\SeleccionAdhoc\Interfaces\CalificacionRepositoryInterface;
 use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionExcelCollection;
 use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionWithDetailCollection;
 use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionWithPuntajeCollection;
+use App\Http\Resources\SeleccionAdhoc\Calificacion\CalificacionWithAcreditacionCollection;
 use App\Http\Resources\RegistroAdhoc\Postulacion\PostulacionCollection;
 use App\Models\SeleccionAdhoc\Calificacion;
 /**
@@ -70,15 +71,14 @@ class CalificacionRepository extends AbstractRepository implements CalificacionR
 
     public function getAcreditaciones( $request ) {
         $query = Calificacion::from('calificaciones as c')
-            ->select('c.*', \DB::raw('coalesce(sum(p.puntaje),0)') )
-            ->join('puntajes as p','c.id','=','p.calificacion_id')
-            ->where('c.convocatoria_id',$request->convocatoria_id)
-            ->groupBy('c.id');
+                ->select('c.*')
+                ->join('acreditaciones as a','c.id','=','a.calificacion_id')
+                ->where('c.convocatoria_id', $request->convocatoria_id);
             
         if ($request->has('sede_registral_id')) {
             $query->where('c.sede_registral_id',$request->sede_registral_id);
         }
-        return new CalificacionWithPuntajeCollection( $query->paginate() );
+        return new CalificacionWithAcreditacionCollection( $query->paginate() );
     }
 
     public function allToExport($request)

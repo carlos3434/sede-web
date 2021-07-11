@@ -48,8 +48,14 @@ class AcreditacionController extends Controller
 
         $all['usuario_id'] = Auth::id();
         $all['fecha'] = date("Y-m-d");
-
-        $acreditacion = $this->repository->create( $all );
+        //validar si ya se registro acreditacion
+        $acreditacion = [];
+        $acreditaionDB = $this->repository->countByCalificacionId($request->calificacion_id);
+        if ($acreditaionDB==0) {
+            $acreditacion = $this->repository->create( $all );
+        } else {
+            return response()->json(['message' => "Ya se han registrado acreditacion para esa calificacion" ], 422);
+        }
         return response()->json($acreditacion, 201);
     }
 
