@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 use App\Http\Resources\RegistroAdhoc\Formacion\FormacionResource;
 use App\Http\Resources\RegistroAdhoc\Capacitacion\CapacitacionResource;
-use App\Http\Resources\RegistroAdhoc\ExperienciaGenerales\ExperienciaGeneralesResource;
+use App\Http\Resources\RegistroAdhoc\ExperienciaGeneral\ExperienciaGeneralResource;
 use App\Http\Resources\RegistroAdhoc\ExperienciaInspector\ExperienciaInspectorResource;
 use App\Http\Resources\RegistroAdhoc\VerificacionRealizada\VerificacionRealizadaResource;
 class CalificacionWithDetailResource extends JsonResource
@@ -25,7 +25,7 @@ class CalificacionWithDetailResource extends JsonResource
             'usuario_id'             => $this->usuario_id,
             'formaciones'            => new FormacionResource($this->user->formaciones),
             'capacitaciones'         => new CapacitacionResource($this->user->capacitaciones),
-            'experiencias_generales'        => new ExperienciaGeneralesResource($this->user->experienciasGenerales),
+            'experiencias_generales'        => new ExperienciaGeneralResource($this->user->experienciasGenerales),
             'experiencias_inspector'        => new ExperienciaInspectorResource($this->user->experienciasInspector),
             'verificaciones_realizadas'     => new VerificacionRealizadaResource($this->user->verificacionesRealizadas),
             'convocatoria_id'        => $this->convocatoria_id,
