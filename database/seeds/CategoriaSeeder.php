@@ -13,19 +13,24 @@ class CategoriaSeeder extends Seeder
     public function run()
     {
         Categoria::create([
-            'nombre' => 'Formacion'
+            'nombre' => 'Formacion',
+            'slug' => 'formaciones'
         ]);
         Categoria::create([
-            'nombre' => 'Capacitacion'
+            'nombre' => 'Capacitacion',
+            'slug' => 'capacitaciones'
         ]);
         Categoria::create([
-            'nombre' => 'Experiencia General'
+            'nombre' => 'Experiencia General',
+            'slug' => 'experiencias_generales'
         ]);
         Categoria::create([
-            'nombre' => 'Experiencia Inspector'
+            'nombre' => 'Experiencia Inspector',
+            'slug' => 'experiencias_inspector'
         ]);
         Categoria::create([
-            'nombre' => 'Verificaciones Realizadas'
+            'nombre' => 'Verificaciones Realizadas',
+            'slug' => 'verificaciones_realizadas'
         ]);
 
     }

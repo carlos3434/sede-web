@@ -8,6 +8,8 @@ use App\Http\Requests\SeleccionAdhoc\PuntajeRequest;
 use App\Repositories\SeleccionAdhoc\Interfaces\PuntajeRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
+use App\Models\SeleccionAdhoc\Item;
+use App\Models\SeleccionAdhoc\Categoria;
 
 class PuntajeController extends Controller
 {
@@ -58,9 +60,27 @@ class PuntajeController extends Controller
         $calificacion_id = $request->calificacion_id;
         $puntajes = $request->puntajes;
 
+        //validar que se envie puntaje de todas las categorias
+        $categorias = Categoria::all()->count();
+        foreach($puntajes as $puntaje){
+            $catArray[] = $puntaje['categoria_id'];
+            //validar si algun item no pertenece a esa categoria
+            $item = Item::find($puntaje['item_id']);
+            $item->categoria_id;
+            if ($item->categoria_id <> $puntaje['categoria_id']) {
+                return response()->json(['message' => "El item ".$puntaje['item_id']." No pertenece a la categoria ".$puntaje['categoria_id'] ], 422);
+            }
+        }
+        if ($categorias <> count(array_unique($catArray))) {
+            return response()->json(['message' => "Se tiene que enviar el puntaje de un total de ".$categorias." categorias" ], 422);
+        }
+
+
         $puntajeSaved =[];
         foreach($puntajes as $puntaje){
             $puntaje['calificacion_id'] = $calificacion_id;
+            $puntaje['puntaje'] = Item::find($puntaje['item_id'])->puntaje;
+
             //validar si el puntaje ya se registro en el itemId y calificacion
             $cantidad = $this->repository->countByCalificacionAndItem($calificacion_id , $puntaje['item_id']);
             if ($cantidad==0)

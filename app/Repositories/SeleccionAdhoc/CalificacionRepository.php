@@ -27,6 +27,10 @@ class CalificacionRepository extends AbstractRepository implements CalificacionR
         );
     }
 
+    public function countByUserIdAndConvocatoria( $userId, $convocatoriaId ) {
+        return Calificacion::where('usuario_id',$userId)->where('convocatoria_id',$convocatoriaId)->count();
+    }
+
     public function allWithPuntajes( $request ) {
         return new CalificacionWithPuntajeCollection(
             Calificacion::from('calificaciones as c')

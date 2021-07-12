@@ -40,16 +40,22 @@ class PostulacionController extends Controller
     public function store(PostulacionRequest $request)
     {
         $all = $request->all();
+        $all['usuario_id'] = Auth::id();
         $all['convocatoria_id'] = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
-
+        //validar que exista convocatoria actual en curso
         $validator = \Validator::make(
             $all,['convocatoria_id' => [new ConvocatoriaActualRule ]]
         )->validate();
 
-        $all['usuario_id'] = Auth::id();
-        $all['fecha'] = date("Y-m-d");
+        //validar que un usuario no pueda registrarse mas de dos veces a una convocatoria
+        $calificacionDB = $this->repository->countByUserIdAndConvocatoria($all['usuario_id'],$all['convocatoria_id']);
+        if ($calificacionDB==0) {
+            $all['fecha'] = date("Y-m-d");
+            $calificacion = $this->repository->create( $all );
+        } else {
+            return response()->json(['message' => "Ya se han registrado calificacion para este usuario en la actual convocatoria" ], 422);
+        }
 
-        $calificacion = $this->repository->create( $all );
         return response()->json($calificacion, 201);
     }
 

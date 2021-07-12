@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\SeleccionAdhoc\Puntaje;
+namespace App\Http\Resources\SeleccionAdhoc\Item;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 
-class PuntajeResource extends JsonResource
+class ItemResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,13 +17,10 @@ class PuntajeResource extends JsonResource
     {
         return [
             'id'                   => $this->id,
+            'nombre'               => $this->nombre,
             'puntaje'              => $this->puntaje,
-            'item_id'              => $this->item_id,
-            'item'                 => $this->item->nombre,
             'categoria_id'         => $this->categoria_id,
-            'categoria'            => $this->categoria->nombre,
-            'calificacion'         => $this->calificacion->nombre,
-            'calificacion_id'      => $this->calificacion_id,
+            'convocatoria_id'      => $this->convocatoria_id,
 
             'created_at'           => $this->created_at->toDateTimeString(),
             'updated_at'           => $this->updated_at->toDateTimeString(),

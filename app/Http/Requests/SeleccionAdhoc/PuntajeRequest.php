@@ -32,8 +32,8 @@ class PuntajeRequest extends FormRequest
             foreach($this->request->get('puntajes') as $key => $val)
             {
 
-                $rules['puntajes.'.$key.'.puntaje']     = 'required|integer';
-                $rules['puntajes.'.$key.'.item_id']     = 'required|exists:items,id';
+                $rules['puntajes.'.$key.'.categoria_id']     = 'required|exists:categorias,id';
+                $rules['puntajes.'.$key.'.item_id']          = 'required|exists:items,id';
             }
         }
         return $rules;

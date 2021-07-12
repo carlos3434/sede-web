@@ -17,6 +17,7 @@ class Puntaje extends Model
     protected $fillable = [
         'calificacion_id',
         'item_id',
+        'categoria_id',
         'puntaje'
     ];
 
@@ -27,6 +28,10 @@ class Puntaje extends Model
 
     public function item(){
         return $this->belongsTo('App\Models\SeleccionAdhoc\Item', 'item_id');
+    }
+
+    public function categoria(){
+        return $this->belongsTo('App\Models\SeleccionAdhoc\Categoria', 'categoria_id');
     }
 
     public function calificacion(){

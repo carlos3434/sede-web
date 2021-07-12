@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Filters\Puntaje;
+namespace App\Http\Filters\SeleccionAdhoc\Puntaje;
 
 class CalificacionFilter
 {
