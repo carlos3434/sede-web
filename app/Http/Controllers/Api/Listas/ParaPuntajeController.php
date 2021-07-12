@@ -24,45 +24,31 @@ class ParaPuntajeController extends Controller
     public function index()
     {
         $convocatoriaActualId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
-        $categoria = Categoria::from('categorias as c');//->get();
+        $categoria = Categoria::from('categorias as c')->select('i.*')
+                ->join('items as i','c.id','=','i.categoria_id')->where('convocatoria_id',$convocatoriaActualId);
 
         $response = [
             'hay_convocatoria_actual' =>  (isset( Convocatoria::GetActual()->id )) ? true : false,
             'esta_postulando' => Auth::user()->estaPostulando(),
 
             'formaciones' => new ItemCollection( 
-                $categoria
-                ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
-                ->where('c.id',1)
+                $categoria->where('c.id',1)
                 ->get()
             ),
             'capacitaciones' => new ItemCollection( 
-                $categoria
-                ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
-                ->where('c.id',2)
+                $categoria->where('c.id',2)
                 ->get()
             ),
             'experiencias_generales' => new ItemCollection( 
-                $categoria
-                ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
-                ->where('c.id',3)
+                $categoria->where('c.id',3)
                 ->get()
             ),
             'experiencias_inspector' => new ItemCollection( 
-                $categoria
-                ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
-                ->where('c.id',4)
+                $categoria->where('c.id',4)
                 ->get()
             ),
             'verificaciones_realizadas' => new ItemCollection( 
-                $categoria
-                ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
-                ->where('c.id',5)
+                $categoria->where('c.id',5)
                 ->get()
             ),
 
