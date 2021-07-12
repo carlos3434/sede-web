@@ -24,7 +24,7 @@ class ParaPuntajeController extends Controller
     public function index()
     {
         $convocatoriaActualId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
-        $categoria = Categoria::from('categorias as c')->select('i.*')
+        $categoria1=$categoria2=$categoria3=$categoria4=$categoria5 = Categoria::from('categorias as c')->select('i.*')
                 ->join('items as i','c.id','=','i.categoria_id')->where('convocatoria_id',$convocatoriaActualId);
 
         $response = [
@@ -32,23 +32,23 @@ class ParaPuntajeController extends Controller
             'esta_postulando' => Auth::user()->estaPostulando(),
 
             'formaciones' => new ItemCollection( 
-                $categoria->where('c.id',1)
+                $categoria1->where('c.id',1)
                 ->get()
             ),
             'capacitaciones' => new ItemCollection( 
-                $categoria->where('c.id',2)
+                $categoria2->where('c.id',2)
                 ->get()
             ),
             'experiencias_generales' => new ItemCollection( 
-                $categoria->where('c.id',3)
+                $categoria3->where('c.id',3)
                 ->get()
             ),
             'experiencias_inspector' => new ItemCollection( 
-                $categoria->where('c.id',4)
+                $categoria4->where('c.id',4)
                 ->get()
             ),
             'verificaciones_realizadas' => new ItemCollection( 
-                $categoria->where('c.id',5)
+                $categoria5->where('c.id',5)
                 ->get()
             ),
 
