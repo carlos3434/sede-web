@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Settings\Institucion;
 use App\Http\Resources\Listas\ParaPostulacion\SedeRegistralCollection;
 use App\Http\Resources\Listas\ParaPostulacion\CategoriaItemCollection;
+use App\Http\Resources\SeleccionAdhoc\Item\ItemCollection;
 use App\Models\Settings\SedeRegistral;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
@@ -23,24 +24,48 @@ class ParaPuntajeController extends Controller
     public function index()
     {
         $convocatoriaActualId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
+        $categoria = Categoria::from('categorias as c');//->get();
 
         $response = [
             'hay_convocatoria_actual' =>  (isset( Convocatoria::GetActual()->id )) ? true : false,
             'esta_postulando' => Auth::user()->estaPostulando(),
-            'categorias_items' => new CategoriaItemCollection(
-                Categoria::from('categorias as c')
-                //Item::from('items as i')
-                //->where('i.convocatoria_id', $convocatoriaActualId)
-                //->join('items as i','c.id','=','i.categoria_id')
-                //->where('i.convocatoria_id', $convocatoriaActualId)
-                //->select('c.*')
-                //->groupBy('c.id')
+
+            'formaciones' => new ItemCollection( 
+                $categoria
+                ->join('items as i','c.id','=','i.categoria_id')
+                ->where('convocatoria_id',$convocatoriaActualId)
+                ->where('c.id',1)
                 ->get()
-            )
-            /*
-            Categoria::with(['items' => function($q) use($convocatoriaActualId) {
-                $q->where('convocatoria_id', $convocatoriaActualId);
-            }])->get()*/
+            ),
+            'capacitaciones' => new ItemCollection( 
+                $categoria
+                ->join('items as i','c.id','=','i.categoria_id')
+                ->where('convocatoria_id',$convocatoriaActualId)
+                ->where('c.id',2)
+                ->get()
+            ),
+            'experiencias_generales' => new ItemCollection( 
+                $categoria
+                ->join('items as i','c.id','=','i.categoria_id')
+                ->where('convocatoria_id',$convocatoriaActualId)
+                ->where('c.id',3)
+                ->get()
+            ),
+            'experiencias_inspector' => new ItemCollection( 
+                $categoria
+                ->join('items as i','c.id','=','i.categoria_id')
+                ->where('convocatoria_id',$convocatoriaActualId)
+                ->where('c.id',4)
+                ->get()
+            ),
+            'verificaciones_realizadas' => new ItemCollection( 
+                $categoria
+                ->join('items as i','c.id','=','i.categoria_id')
+                ->where('convocatoria_id',$convocatoriaActualId)
+                ->where('c.id',5)
+                ->get()
+            ),
+
         ];
         return response()->json($response, 200);
     }

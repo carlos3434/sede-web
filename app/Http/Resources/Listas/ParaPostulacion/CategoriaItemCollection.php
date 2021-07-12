@@ -21,8 +21,8 @@ class CategoriaItemCollection extends ResourceCollection
         return $this->collection->transform(function ($categoria) use ($convocatoriaActualId) {
             return [
                 
-                'id' => $categoria->id,
-                'nombre' => $categoria->nombre,
+               // 'id' => $categoria->id,
+              //  'nombre' => $categoria->nombre,
 
                 $categoria->slug => new ItemCollection( 
                     $categoria->items->where('convocatoria_id',$convocatoriaActualId)
