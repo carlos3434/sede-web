@@ -51,7 +51,7 @@ class CalificacionRepository extends AbstractRepository implements CalificacionR
             ->select('c.*', \DB::raw('coalesce(sum(p.puntaje),0)') )
             ->leftJoin('puntajes as p','c.id','=','p.calificacion_id')
             ->where('c.convocatoria_id',$request->convocatoria_id)
-            ->whereNotNull('p.id')
+            ->whereNull('p.id')
             //->having( \DB::raw('coalesce(sum(p.puntaje),0)'), $request->filtro, $request->puntaje )
             ->groupBy('c.id')
             ->paginate(config('sede.items_per_page'))
