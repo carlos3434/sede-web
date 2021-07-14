@@ -36,6 +36,10 @@ class CalificacionWithDetailResource extends JsonResource
             'convocatoria_nombre'    => $this->convocatoria->nombre,
             'sede_registral_id'      => $this->sede_registral_id,
             'sede_registral_nombre'  => $this->sedeRegistral->nombre,
+            
+            'puntaje_total'          => $this->puntajeTotal(),
+            'esta_acreditado'        => $this->estaAcreditado(),
+            'esta_calificado'        => ($this->puntajeTotal() > 0) ? true : false,
 
             'created_at'             => $this->created_at->toDateTimeString(),
             'updated_at'             => $this->updated_at->toDateTimeString(),

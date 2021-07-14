@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
 use App\Models\SeleccionAdhoc\Item;
 use App\Models\SeleccionAdhoc\Categoria;
+use App\Models\SeleccionAdhoc\Calificacion;
 
 class PuntajeController extends Controller
 {
@@ -59,6 +60,11 @@ class PuntajeController extends Controller
     {
         $calificacion_id = $request->calificacion_id;
         $puntajes = $request->puntajes;
+        //validar si una calificacion ya tiene puntaje
+        $calificacion = Calificacion::find($request->calificacion_id);
+        if ( $calificacion->puntajeToTal() > 0) {
+            return response()->json(['message' => "Ya se ha resigstrado puntaje para esta postulacion." ], 422);
+        }
 
         //validar que se envie puntaje de todas las categorias
         $categorias = Categoria::all()->count();

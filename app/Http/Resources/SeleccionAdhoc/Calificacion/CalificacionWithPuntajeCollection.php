@@ -32,6 +32,7 @@ class CalificacionWithPuntajeCollection extends ResourceCollection
 
                 'puntaje_total'          => $calificacion->puntajeTotal(),
                 'esta_acreditado'        => $calificacion->estaAcreditado(),
+                'esta_calificado'        => ($calificacion->puntajeTotal() > 0) ? true : false,
 
                 'created_at'             => $calificacion->created_at->toDateTimeString(),
                 'updated_at'             => $calificacion->updated_at->toDateTimeString(),
