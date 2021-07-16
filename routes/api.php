@@ -111,6 +111,7 @@ Route::prefix('v1')->group(function(){
         Route::get('listasParaExperienciaInspector','Api\Listas\ParaExperienciaInspectorController@index');
         Route::get('listasParaVerificacionRealizada','Api\Listas\ParaVerificacionRealizadaController@index');
         Route::get('listasParaPostulacion','Api\Listas\ParaPostulacionController@index');
+        Route::get('listasParaCalificacion','Api\Listas\ParaCalificacionController@index');
 
         Route::get('listasParaPuntaje','Api\Listas\ParaPuntajeController@index');
 
