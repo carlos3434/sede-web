@@ -43,6 +43,7 @@ class User extends Authenticatable //implements MustVerifyEmail
         'colegio_profesional',
         'numero_colegiatura',
         'esta_habilitado',
+        'profesion',
 
         'constancia_habilidad',
         'declaracion_jurada',

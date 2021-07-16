@@ -43,6 +43,7 @@ class UserRequest extends FormRequest
             'colegio_profesional'       => 'string',
             'numero_colegiatura'        => 'string',
             'esta_habilitado'           => 'boolean',
+            'profesion'                 => 'string',
             'constancia_habilidad'      => 'file|max:3072',//2048
             'declaracion_jurada'        => 'file|max:3072',
             'copia_dni'                 => 'file|max:3072',
