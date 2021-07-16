@@ -96,7 +96,7 @@ class ExpedienteAdhocResource extends JsonResource
             'certificado_sistema_electrico' => $this->certificado_sistema_electrico,
             'usuario_id' => $this->usuario_id,
             'observaciones' => $this->observaciones,
-            'estado' => $this->estado,
+            'estado_expediente_id' => $this->estado_expediente_id,
             'usuario_revisor_id' => $this->usuario_revisor_id,
             'x' => $this->x,
             'y' => $this->y,

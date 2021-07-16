@@ -96,7 +96,7 @@ class ExpedienteAdhoc extends Model
         'certificado_sistema_electrico',
         'usuario_id',
         'observaciones',
-        'estado',
+        'estado_expediente_id',
         'usuario_revisor_id',
         'x',
         'y',
@@ -132,7 +132,7 @@ class ExpedienteAdhoc extends Model
 
     public function observaciones()
     {
-        return $this->hasMany('App\Models\ExpedienteAdhoc\Observacion', 'expediente_adhoc_id');
+        return $this->hasMany('App\Models\RegistroExpedienteAdhoc\Observacion', 'expediente_adhoc_id');
     }
 
     public function entrega()
