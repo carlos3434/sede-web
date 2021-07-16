@@ -73,6 +73,7 @@ Route::prefix('v1')->group(function(){
         Route::get('calificacion/{convocatoria}/resultados','Api\SeleccionAdhoc\CalificacionController@resultados');
         Route::get('calificacion/{convocatoria}/acreditaciones','Api\SeleccionAdhoc\CalificacionController@acreditaciones');
         //Registro de expediente Adhoc
+        Route::apiResource('expedienteadhoc','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController');
 
         //Revisión de expediente Adhoc
 

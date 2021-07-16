@@ -39,12 +39,17 @@ use App\Repositories\RegistroAdhoc\Interfaces\ExperienciaInspectorRepositoryInte
 use App\Repositories\RegistroAdhoc\VerificacionRealizadaRepository;
 use App\Repositories\RegistroAdhoc\Interfaces\VerificacionRealizadaRepositoryInterface;
 
+//SeleccionAdhoc
 use App\Repositories\SeleccionAdhoc\CalificacionRepository;
 use App\Repositories\SeleccionAdhoc\Interfaces\CalificacionRepositoryInterface;
 use App\Repositories\SeleccionAdhoc\PuntajeRepository;
 use App\Repositories\SeleccionAdhoc\Interfaces\PuntajeRepositoryInterface;
 use App\Repositories\SeleccionAdhoc\AcreditacionRepository;
 use App\Repositories\SeleccionAdhoc\Interfaces\AcreditacionRepositoryInterface;
+
+//Registro Expediente Ad Hoc
+use App\Repositories\RegistroExpedienteAdhoc\ExpedienteAdhocRepository;
+use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
 
 use App\Repositories\AbstractRepository;
 use App\Repositories\RepositoryInterface;
@@ -84,6 +89,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind( PuntajeRepositoryInterface::class, PuntajeRepository::class );
         $this->app->bind( AcreditacionRepositoryInterface::class, AcreditacionRepository::class );
         //Registro de expediente Adhoc
+        $this->app->bind( ExpedienteAdhocRepositoryInterface::class, ExpedienteAdhocRepository::class );
 
         //Revisión de expediente Adhoc
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\ExpedienteAdhoc;
+namespace App\Models\RegistroExpedienteAdhoc;
 
 use Illuminate\Database\Eloquent\Model;
 
