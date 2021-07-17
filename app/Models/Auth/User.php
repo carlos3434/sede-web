@@ -161,7 +161,15 @@ class User extends Authenticatable //implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\RegistroAdhoc\VerificacionRealizada','usuario_id');
     }
-
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->apellido_paterno} {$this->apellido_materno} {$this->nombres}";
+    }
     public function sendEmailVerificationNotification()
     {
         $this->notify(new \App\Notifications\VerifyEmailQueued);

@@ -15,7 +15,40 @@ class ExpedienteAdhocCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->collection->transform(function ($expedienteAdhoc) {
-            return new ExpedienteAdhocResource($expedienteAdhoc);
+            return [
+                'id'                         => $expedienteAdhoc->id,
+
+                'nombre_comercial'           => $expedienteAdhoc->nombre_comercial,
+                'direccion'                  => $expedienteAdhoc->direccion,
+                'area'                       => $expedienteAdhoc->area,
+
+                'observaciones'              => $expedienteAdhoc->observaciones,
+                'x'                          => $expedienteAdhoc->x,
+                'y'                          => $expedienteAdhoc->y,
+                'fecha_solicitud_ht'         => $expedienteAdhoc->fecha_solicitud_ht,
+                'fecha_ingreso_ht'           => $expedienteAdhoc->fecha_ingreso_ht,
+                'ht'                         => $expedienteAdhoc->ht,
+                'usuario_id'                 => $expedienteAdhoc->usuario_id,
+                'usuario_nombres'            => (isset($expedienteAdhoc->usuario))?$expedienteAdhoc->usuario->full_name:'',
+                'estado_expediente_id'       => $expedienteAdhoc->estado_expediente_id,
+                'estado_expediente_nombre'   => $expedienteAdhoc->estadoExpedienteAdhoc->full_name,
+
+                'usuario_revisor_id'         => $expedienteAdhoc->usuario_revisor_id,
+                'usuario_revisor_nombres'    => (isset($expedienteAdhoc->usuarioRevisor))?$expedienteAdhoc->usuarioRevisor->full_name:'',
+
+                'Archivos'                   => $expedienteAdhoc->archivos,
+
+                'Documentos principales'     => $expedienteAdhoc->documentos_principales,
+                'Planos de arquitectura'     => $expedienteAdhoc->planos_arquitectura,
+                'Planos de fábrica inscrita' => $expedienteAdhoc->planos_fabrica_excrita,
+                'Planos de remodelación'     => $expedienteAdhoc->planos_remodelacion,
+                'Planos de ampliación'       => $expedienteAdhoc->planos_ampliacion,
+                'Planos de rutas de evacuación' => $expedienteAdhoc->planos_rutas_evacuacion,
+                'Planos de señalización'     => $expedienteAdhoc->planos_senalizacion,
+
+                'created_at'                 => $expedienteAdhoc->created_at->toDateTimeString(),
+                'updated_at'                 => $expedienteAdhoc->updated_at->toDateTimeString(),
+            ];
         });
     }
 }

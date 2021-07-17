@@ -20,6 +20,8 @@ class ExpedienteAdhocResource extends JsonResource
             'nombre_comercial' => $this->nombre_comercial,
             'direccion' => $this->direccion,
             'area' => $this->area,
+
+            'Archivos'                   => $this->archivos,
             //Documentos principales
             'Documentos principales' => [
                 'carta_poder_simple' => $this->carta_poder_simple,
