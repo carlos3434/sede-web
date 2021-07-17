@@ -113,3 +113,5 @@ http://sede-web.herokuapp.com/admin/dashboard
 -- correr una migracion en especifico
 
 php artisan migrate --path database/migrations/2021_07_15_120758_add_profesion_users_table.php
+
+php artisan db:seed --class=EstadoExpedienteAdhocSeeder
