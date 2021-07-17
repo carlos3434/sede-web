@@ -166,5 +166,43 @@ Route::prefix('v1')->group(function(){
             return response()->file($pathToFile);
         });
 
+        //Expediente adhoc
+        Route::get('files/carta_poder_simple/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/carta_poder_simple/'.$path) );
+        });
+        Route::get('files/copia_vigencia_poder/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/copia_vigencia_poder/'.$path) );
+        });
+        Route::get('files/copia_partida_registral/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/copia_partida_registral/'.$path) );
+        });
+        Route::get('files/copia_dni_propietario/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/copia_dni_propietario/'.$path) );
+        });
+        Route::get('files/recibo_pago/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/recibo_pago/'.$path) );
+        });
+        Route::get('files/copia_formulario_for/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/copia_formulario_for/'.$path) );
+        });
+        Route::get('files/informe_tecnico_verificador_responsable/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/informe_tecnico_verificador_responsable/'.$path) );
+        });
+        Route::get('files/esquela_observacion_sunarp/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/esquela_observacion_sunarp/'.$path) );
+        });
+        Route::get('files/memoria_descriptiva_seguridad/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/memoria_descriptiva_seguridad/'.$path) );
+        });
+        Route::get('files/certificado_pozo_tierra/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/certificado_pozo_tierra/'.$path) );
+        });
+        Route::get('files/certificado_laminados/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/certificado_laminados/'.$path) );
+        });
+        Route::get('files/certificado_sistema_electrico/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/certificado_sistema_electrico/'.$path) );
+        });
+
     });
 });

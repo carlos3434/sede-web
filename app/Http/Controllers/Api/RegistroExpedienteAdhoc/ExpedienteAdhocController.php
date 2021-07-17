@@ -93,7 +93,95 @@ class ExpedienteAdhocController extends Controller
     public function update(ExpedienteAdhocUpdateRequest $request, ExpedienteAdhoc $expedienteAdhoc)
     {
         $all = $request->all();
-        $all = $this->storeFile($request, $all, 'ExpedienteAdhoc', 'archivo_titulo');
+        $all = $this->storeFile($request, $all, 'constancias', 'constancia_habilidad');
+        $all = $this->storeFile($request, $all, 'declaraciones', 'declaracion_jurada');
+        $all = $this->storeFile($request, $all, 'dni', 'copia_dni');
+        $all = $this->storeFile($request, $all, 'rj_itse', 'rj_itse');
+        $all = $this->storeFile($request, $all, 'rj_verificador', 'rj_verificador');
+        $all = $this->storeFile($request, $all, 'anexo_1', 'anexo_1');
+        $all = $this->storeFile($request, $all, 'fotos', 'foto');
+
+        $all = $this->storeFile($request, $all, 'carta_poder_simple', 'carta_poder_simple');
+        $all = $this->storeFile($request, $all, 'copia_vigencia_poder', 'copia_vigencia_poder');
+        $all = $this->storeFile($request, $all, 'copia_partida_registral', 'copia_partida_registral');
+        $all = $this->storeFile($request, $all, 'copia_dni_propietario', 'copia_dni_propietario');
+        $all = $this->storeFile($request, $all, 'recibo_pago', 'recibo_pago');
+        $all = $this->storeFile($request, $all, 'copia_formulario_for', 'copia_formulario_for');
+        $all = $this->storeFile($request, $all, 'informe_tecnico_verificador_responsable', 'informe_tecnico_verificador_responsable');
+        $all = $this->storeFile($request, $all, 'esquela_observacion_sunarp', 'esquela_observacion_sunarp');
+        $all = $this->storeFile($request, $all, 'memoria_descriptiva_seguridad', 'memoria_descriptiva_seguridad');
+        $all = $this->storeFile($request, $all, 'certificado_pozo_tierra', 'certificado_pozo_tierra');
+        $all = $this->storeFile($request, $all, 'certificado_laminados', 'certificado_laminados');
+        $all = $this->storeFile($request, $all, 'certificado_sistema_electrico', 'certificado_sistema_electrico');
+
+        $all = $this->storeFile($request, $all, 'plano_ubicacion_01', 'plano_ubicacion_01');
+        $all = $this->storeFile($request, $all, 'plano_ubicacion_02', 'plano_ubicacion_02');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_1', 'plano_arquitectura_1');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_2', 'plano_arquitectura_2');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_3', 'plano_arquitectura_3');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_4', 'plano_arquitectura_4');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_5', 'plano_arquitectura_5');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_6', 'plano_arquitectura_6');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_7', 'plano_arquitectura_7');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_8', 'plano_arquitectura_8');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_9', 'plano_arquitectura_9');
+        $all = $this->storeFile($request, $all, 'plano_arquitectura_10', 'plano_arquitectura_10');
+
+        $all = $this->storeFile($request, $all, 'plano_fabrica_1', 'plano_fabrica_1');
+        $all = $this->storeFile($request, $all, 'plano_fabrica_2', 'plano_fabrica_2');
+        $all = $this->storeFile($request, $all, 'plano_fabrica_3', 'plano_fabrica_3');
+        $all = $this->storeFile($request, $all, 'plano_fabrica_4', 'plano_fabrica_4');
+        $all = $this->storeFile($request, $all, 'plano_fabrica_5', 'plano_fabrica_5');
+        $all = $this->storeFile($request, $all, 'plano_fabrica_6', 'plano_fabrica_6');
+        $all = $this->storeFile($request, $all, 'plano_fabrica_7', 'plano_fabrica_7');
+        $all = $this->storeFile($request, $all, 'plano_fabrica_8', 'plano_fabrica_8');
+        $all = $this->storeFile($request, $all, 'plano_fabrica_9', 'plano_fabrica_9');
+        $all = $this->storeFile($request, $all, 'plano_fabrica_10', 'plano_fabrica_10');
+
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_1', 'plano_remodelacion_1');
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_2', 'plano_remodelacion_2');
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_3', 'plano_remodelacion_3');
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_4', 'plano_remodelacion_4');
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_5', 'plano_remodelacion_5');
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_6', 'plano_remodelacion_6');
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_7', 'plano_remodelacion_7');
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_8', 'plano_remodelacion_8');
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_9', 'plano_remodelacion_9');
+        $all = $this->storeFile($request, $all, 'plano_remodelacion_10', 'plano_remodelacion_10');
+
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_1', 'plano_ampliacion_1');
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_2', 'plano_ampliacion_2');
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_3', 'plano_ampliacion_3');
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_4', 'plano_ampliacion_4');
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_5', 'plano_ampliacion_5');
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_6', 'plano_ampliacion_6');
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_7', 'plano_ampliacion_7');
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_8', 'plano_ampliacion_8');
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_9', 'plano_ampliacion_9');
+        $all = $this->storeFile($request, $all, 'plano_ampliacion_10', 'plano_ampliacion_10');
+
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_1', 'plano_rutas_evacuacion_1');
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_2', 'plano_rutas_evacuacion_2');
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_3', 'plano_rutas_evacuacion_3');
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_4', 'plano_rutas_evacuacion_4');
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_5', 'plano_rutas_evacuacion_5');
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_6', 'plano_rutas_evacuacion_6');
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_7', 'plano_rutas_evacuacion_7');
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_8', 'plano_rutas_evacuacion_8');
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_9', 'plano_rutas_evacuacion_9');
+        $all = $this->storeFile($request, $all, 'plano_rutas_evacuacion_10', 'plano_rutas_evacuacion_10');
+
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_1', 'plano_senalizacion_1');
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_2', 'plano_senalizacion_2');
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_3', 'plano_senalizacion_3');
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_4', 'plano_senalizacion_4');
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_5', 'plano_senalizacion_5');
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_6', 'plano_senalizacion_6');
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_7', 'plano_senalizacion_7');
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_8', 'plano_senalizacion_8');
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_9', 'plano_senalizacion_9');
+        $all = $this->storeFile($request, $all, 'plano_senalizacion_10', 'plano_senalizacion_10');
+
         $expedienteAdhoc = $this->repository->updateOne($all, $expedienteAdhoc);
         return response()->json($expedienteAdhoc, 200);
     }

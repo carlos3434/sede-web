@@ -20,6 +20,7 @@ class ExpedienteAdhoc extends Model
         'nombre_comercial',
         'direccion',
         'area',
+
         'carta_poder_simple',
         'copia_vigencia_poder',
         'copia_partida_registral',
@@ -28,6 +29,11 @@ class ExpedienteAdhoc extends Model
         'copia_formulario_for',
         'informe_tecnico_verificador_responsable',
         'esquela_observacion_sunarp',
+        'memoria_descriptiva_seguridad',
+        'certificado_pozo_tierra',
+        'certificado_laminados',
+        'certificado_sistema_electrico',
+
         'plano_ubicacion_01',
         'plano_ubicacion_02',
         'plano_arquitectura_1',
@@ -40,6 +46,7 @@ class ExpedienteAdhoc extends Model
         'plano_arquitectura_8',
         'plano_arquitectura_9',
         'plano_arquitectura_10',
+
         'plano_fabrica_1',
         'plano_fabrica_2',
         'plano_fabrica_3',
@@ -50,6 +57,7 @@ class ExpedienteAdhoc extends Model
         'plano_fabrica_8',
         'plano_fabrica_9',
         'plano_fabrica_10',
+
         'plano_remodelacion_1',
         'plano_remodelacion_2',
         'plano_remodelacion_3',
@@ -60,6 +68,7 @@ class ExpedienteAdhoc extends Model
         'plano_remodelacion_8',
         'plano_remodelacion_9',
         'plano_remodelacion_10',
+
         'plano_ampliacion_1',
         'plano_ampliacion_2',
         'plano_ampliacion_3',
@@ -70,6 +79,7 @@ class ExpedienteAdhoc extends Model
         'plano_ampliacion_8',
         'plano_ampliacion_9',
         'plano_ampliacion_10',
+
         'plano_rutas_evacuacion_1',
         'plano_rutas_evacuacion_2',
         'plano_rutas_evacuacion_3',
@@ -80,6 +90,7 @@ class ExpedienteAdhoc extends Model
         'plano_rutas_evacuacion_8',
         'plano_rutas_evacuacion_9',
         'plano_rutas_evacuacion_10',
+
         'plano_senalizacion_1',
         'plano_senalizacion_2',
         'plano_senalizacion_3',
@@ -90,20 +101,16 @@ class ExpedienteAdhoc extends Model
         'plano_senalizacion_8',
         'plano_senalizacion_9',
         'plano_senalizacion_10',
-        'memoria_descriptiva_seguridad',
-        'certificado_pozo_tierra',
-        'certificado_laminados',
-        'certificado_sistema_electrico',
-        'usuario_id',
+
         'observaciones',
-        'estado_expediente_id',
-        'usuario_revisor_id',
         'x',
         'y',
         'fecha_solicitud_ht',
         'fecha_ingreso_ht',
         'ht',
+
         'usuario_id',
+        'estado_expediente_id',
         'usuario_revisor_id',
 
     ];
