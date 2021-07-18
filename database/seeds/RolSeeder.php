@@ -13,10 +13,10 @@ class RolSeeder extends Seeder
     public function run()
     {
         $items = [
-            ['name' => 'ADMINISTRADOR','guard_name' =>'web'],
-            ['name' => 'USUARIO_CENEPRED','guard_name' =>'web'],
-            ['name' => 'USUARIO_ADHOC','guard_name' =>'web'],
-            ['name' => 'USUARIO_ADMINISTRADO','guard_name' =>'web'],
+            ['name' => 'ADMINISTRADOR','nombre'=>'Admin','guard_name' =>'web'],
+            ['name' => 'USUARIO_CENEPRED','nombre'=>'Usuario Cenepred','guard_name' =>'web'],
+            ['name' => 'USUARIO_ADHOC','nombre'=>'Usuario Ad Hoc','guard_name' =>'web'],
+            ['name' => 'USUARIO_ADMINISTRADO','nombre'=>'Usuario Administrado','guard_name' =>'web'],
         ];
 
         foreach ($items as $item)

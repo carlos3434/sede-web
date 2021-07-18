@@ -22,8 +22,14 @@ class AuthController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user = $this->userRepository->create($input);
         $this->userRepository->syncRolesAndPermissions($request, $user);
-        $user['token'] =  $user->createToken('AppName')->accessToken;
-        return response()->json(['success'=>$user], $this->successStatus);
+        $tokenResult =  $user->createToken('AppName');
+
+        $user['token'] =  $tokenResult->accessToken;
+        $user['token_type'] =  'Bearer';
+        $user['expires_at'] = Carbon::parse($tokenResult->token->expires_at)
+                                ->toDateTimeString();
+        $success = $this->userRepository->getOneForLogin($user);
+        return response()->json(['success'=>$success], $this->successStatus);
     }
 
     protected function validateLogin(Request $request){

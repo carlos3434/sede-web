@@ -115,6 +115,7 @@ Route::prefix('v1')->group(function(){
         Route::get('listasParaCalificacion','Api\Listas\ParaCalificacionController@index');
 
         Route::get('listasParaPuntaje','Api\Listas\ParaPuntajeController@index');
+        //Route::get('listasParaPuntaje','Api\Listas\ParaPuntajeController@index');
 
         //documentos 
         // http://{{domain}}/api/v1/files/cv/1624854166.pdf

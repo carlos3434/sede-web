@@ -39,7 +39,7 @@ class UserRequest extends FormRequest
             'distrito_id'               => 'required|exists:distritos,id',
             'telefono_fijo'             => 'required|string',
             'celular'                   => 'required|string',
-            'password'                  => 'required|confirmed|min:6',
+            'password'                  => 'required|confirmed|min:8',
             'colegio_profesional'       => 'string',
             'numero_colegiatura'        => 'string',
             'esta_habilitado'           => 'boolean',
@@ -52,7 +52,7 @@ class UserRequest extends FormRequest
             'anexo_1'                   => 'file|max:3072',
             'foto'                      => 'file|max:3072',
 
-            'roles'                     => 'string|exists:roles,name',
+            'roles'                     => 'required|string|in:USUARIO_ADHOC,USUARIO_ADMINISTRADO',
             'permissions'               => 'string|exists:permissions,name'
         ];
     }
