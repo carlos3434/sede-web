@@ -84,7 +84,19 @@ class ExpedienteAdhocController extends Controller
     {
         return $this->repository->getOne($expedienteAdhoc);
     }
-    public function updateHojaTramite(ExpedienteAdhocAddHojaTramiteRequest $request, ExpedienteAdhoc $expedienteAdhoc)
+    public function solicitarHojaTramite(ExpedienteAdhocAddHojaTramiteRequest $request, ExpedienteAdhoc $expedienteAdhoc)
+    {
+        $fields = $request->only($request->getFillableForAddHojaTramite());
+
+        $fields = $this->storeFile($request, $fields, 'recibo_pago', 'recibo_pago');
+        $fields = $this->storeFile($request, $fields, 'archivo_solicitud_ht', 'archivo_solicitud_ht');
+
+        $fields['fecha_solicitud_ht'] = Carbon::now()->toDateTimeString();;
+
+        $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);
+        return $expedienteAdhoc;
+    }
+    public function solicitarVerificacionAdhoc(ExpedienteAdhocAddHojaTramiteRequest $request, ExpedienteAdhoc $expedienteAdhoc)
     {
         $fields = $request->only($request->getFillableForAddHojaTramite());
 
