@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddRequest;
 use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocUpdateRequest;
+use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddHojaTramiteRequest;
 use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
 use App\Helpers\FileUploader;
+use Carbon\Carbon;
 
 class ExpedienteAdhocController extends Controller
 {
@@ -82,7 +84,18 @@ class ExpedienteAdhocController extends Controller
     {
         return $this->repository->getOne($expedienteAdhoc);
     }
+    public function updateHojaTramite(ExpedienteAdhocAddHojaTramiteRequest $request, ExpedienteAdhoc $expedienteAdhoc)
+    {
+        $fields = $request->only($request->getFillableForAddHojaTramite());
 
+        $fields = $this->storeFile($request, $fields, 'recibo_pago', 'recibo_pago');
+        $fields = $this->storeFile($request, $fields, 'archivo_solicitud_ht', 'archivo_solicitud_ht');
+
+        $fields['fecha_solicitud_ht'] = Carbon::now()->toDateTimeString();;
+
+        $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);
+        return $expedienteAdhoc;
+    }
     /**
      * Update the specified resource in storage.
      *

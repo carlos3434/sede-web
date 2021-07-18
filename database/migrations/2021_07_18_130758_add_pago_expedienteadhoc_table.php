@@ -26,7 +26,7 @@ class AddPagoExpedienteadhocTable extends Migration
             $table->date('fecha_operacion')->nullable()->after('agencia');
 
             $table->double('monto')->nullable()->after('fecha_operacion');
-            $table->foreignId('distrito_id')->after('monto');
+            $table->foreignId('distrito_id')->nullable()->after('monto');
             $table->foreign('distrito_id')->references('id')->on('distritos');
         });
     }

@@ -110,6 +110,13 @@ class ExpedienteAdhoc extends Model
         'fecha_ingreso_ht',
         'ht',
 
+        'numero_operacion',
+        'nombre_banco',
+        'agencia',
+        'fecha_operacion',
+        'monto',
+        'distrito_id',
+        
         'usuario_id',
         'estado_expediente_id',
         'usuario_revisor_id',

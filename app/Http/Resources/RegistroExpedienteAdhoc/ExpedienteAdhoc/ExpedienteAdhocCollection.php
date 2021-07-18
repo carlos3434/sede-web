@@ -22,19 +22,27 @@ class ExpedienteAdhocCollection extends ResourceCollection
                 'direccion'                  => $expedienteAdhoc->direccion,
                 'area'                       => $expedienteAdhoc->area,
 
-                'observaciones'              => $expedienteAdhoc->observaciones,
-                'x'                          => $expedienteAdhoc->x,
-                'y'                          => $expedienteAdhoc->y,
+                //'observaciones'              => $expedienteAdhoc->observaciones,
+                //'x'                          => $expedienteAdhoc->x,
+                //'y'                          => $expedienteAdhoc->y,
                 'fecha_solicitud_ht'         => $expedienteAdhoc->fecha_solicitud_ht,
                 'fecha_ingreso_ht'           => $expedienteAdhoc->fecha_ingreso_ht,
-                'ht'                         => $expedienteAdhoc->ht,
-                'usuario_id'                 => $expedienteAdhoc->usuario_id,
-                'usuario_nombres'            => (isset($expedienteAdhoc->usuario))?$expedienteAdhoc->usuario->full_name:'',
-                'estado_expediente_id'       => $expedienteAdhoc->estado_expediente_id,
-                'estado_expediente_nombre'   => $expedienteAdhoc->estadoExpedienteAdhoc->full_name,
+                'numero_hoja_tramite'        => $expedienteAdhoc->ht,
 
+                'numero_operacion'           => $expedienteAdhoc->numero_operacion,
+                'nombre_banco'               => $expedienteAdhoc->nombre_banco,
+                'agencia'                    => $expedienteAdhoc->agencia,
+                'fecha_operacion'            => $expedienteAdhoc->fecha_operacion ,
+                'monto'                      => $expedienteAdhoc->monto,
+                'distrito_id'                => $expedienteAdhoc->distrito_id,
+
+                'usuario_id'                 => $expedienteAdhoc->usuario_id,
+                'usuario_full_name'          => $expedienteAdhoc->usuario->full_name,
+                'estado_expediente_id'       => $expedienteAdhoc->estado_expediente_id,
+                'estado_expediente_nombre'   => $expedienteAdhoc->estadoExpedienteAdhoc->nombre,
                 'usuario_revisor_id'         => $expedienteAdhoc->usuario_revisor_id,
-                'usuario_revisor_nombres'    => (isset($expedienteAdhoc->usuarioRevisor))?$expedienteAdhoc->usuarioRevisor->full_name:'',
+                'usuario_revisor_full_name'  => (isset($expedienteAdhoc->usuarioRevisor))?
+                                                $expedienteAdhoc->usuarioRevisor->full_name:null,
 
                 'Archivos'                   => $expedienteAdhoc->archivos,
 

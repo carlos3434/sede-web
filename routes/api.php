@@ -74,6 +74,7 @@ Route::prefix('v1')->group(function(){
         Route::get('calificacion/{convocatoria}/acreditaciones','Api\SeleccionAdhoc\CalificacionController@acreditaciones');
         //Registro de expediente Adhoc
         Route::apiResource('expedienteadhoc','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController');
+        Route::put('expedienteadhoc/{expedienteadhoc}/update_hoja_ramite','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController@updateHojaTramite')->name('expedienteadhoc.update_hoja_ramite');
 
         //Revisión de expediente Adhoc
 
