@@ -35,7 +35,6 @@ class ExpedienteAdhocUpdateRequest extends FormRequest
             'copia_vigencia_poder' => 'file|max:11264',
             'copia_partida_registral' => 'file|max:11264',
             'copia_dni_propietario' => 'file|max:11264',
-            'recibo_pago' => 'file|max:11264',
             'copia_formulario_for' => 'file|max:11264',
             'informe_tecnico_verificador_responsable' => 'file|max:11264',
             'esquela_observacion_sunarp' => 'file|max:11264',
@@ -111,17 +110,6 @@ class ExpedienteAdhocUpdateRequest extends FormRequest
             'plano_senalizacion_8' => 'file|max:11264',
             'plano_senalizacion_9' => 'file|max:11264',
             'plano_senalizacion_10' => 'file|max:11264',
-
-            'observaciones'         => 'alpha_num_spaces',
-            'x'                     => 'numeric|between:0,9999.99',
-            'y'                     => 'numeric|between:0,9999.99',
-            'fecha_solicitud_ht'    => 'date_format:Y-m-d',
-            'fecha_ingreso_ht'      => 'date_format:Y-m-d',
-            'ht'                    => 'alpha_num_spaces',
-
-            'usuario_id'            => 'exists:usuarios,id',
-            'estado_expediente_id'  => 'exists:estado_expediente,id',
-            'usuario_revisor_id'    => 'exists:usuarios,id',
 
         ];
     }

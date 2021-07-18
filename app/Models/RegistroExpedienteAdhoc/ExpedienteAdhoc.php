@@ -116,7 +116,7 @@ class ExpedienteAdhoc extends Model
         'fecha_operacion',
         'monto',
         'distrito_id',
-        
+
         'usuario_id',
         'estado_expediente_id',
         'usuario_revisor_id',
@@ -155,7 +155,7 @@ class ExpedienteAdhoc extends Model
             $this->planos_ampliacion['completados'] +
             $this->planos_rutas_evacuacion['completados'] +
             $this->planos_senalizacion['completados'] ,
-            'total' => 74,
+            'total' => 73,
         ];
     }
 
@@ -167,7 +167,7 @@ class ExpedienteAdhoc extends Model
                (bool) $this->copia_vigencia_poder +
                (bool) $this->copia_partida_registral +
                (bool) $this->copia_dni_propietario +
-               (bool) $this->recibo_pago +
+               //(bool) $this->recibo_pago +
                (bool) $this->copia_formulario_for +
                (bool) $this->informe_tecnico_verificador_responsable +
                (bool) $this->esquela_observacion_sunarp +
@@ -177,7 +177,7 @@ class ExpedienteAdhoc extends Model
                (bool) $this->certificado_pozo_tierra +
                (bool) $this->certificado_pozo_tierra +
                (bool) $this->certificado_sistema_electrico ,
-            'total' => 14,
+            'total' => 13,
         ];
     }
     public function getPlanosArquitecturaAttribute()

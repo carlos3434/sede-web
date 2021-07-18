@@ -29,7 +29,7 @@ class ExpedienteAdhocResource extends JsonResource
                 'copia_vigencia_poder' => $this->copia_vigencia_poder,
                 'copia_partida_registral' => $this->copia_partida_registral,
                 'copia_dni_propietario' => $this->copia_dni_propietario,
-                'recibo_pago' => $this->recibo_pago,
+                //'recibo_pago' => $this->recibo_pago,
                 'copia_formulario_for' => $this->copia_formulario_for,
                 'informe_tecnico_verificador_responsable' => $this->informe_tecnico_verificador_responsable,
                 'esquela_observacion_sunarp' => $this->esquela_observacion_sunarp,

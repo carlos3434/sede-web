@@ -39,10 +39,6 @@ class ExpedienteAdhocAddHojaTramiteRequest extends FormRequest
     {
         return [
 
-            'nombre_comercial'  => 'alpha_num_spaces',
-            'direccion'         => 'alpha_num_spaces',
-            'area'              => 'integer',
-
             'numero_operacion'      => 'required|alpha_num_spaces',
             'nombre_banco'          => 'required|alpha_num_spaces',
             'agencia'               => 'required|alpha_num_spaces',
@@ -51,13 +47,6 @@ class ExpedienteAdhocAddHojaTramiteRequest extends FormRequest
             'distrito_id'           => 'required|exists:distritos,id',
             'recibo_pago'           => 'required|file|max:11264',
             'archivo_solicitud_ht'  => 'required|file|max:11264',
-
-            'observaciones'         => 'alpha_num_spaces',
-            'x'                     => 'numeric|between:0,9999.99',
-            'y'                     => 'numeric|between:0,9999.99',
-            'fecha_solicitud_ht'    => 'date_format:Y-m-d',
-            'fecha_ingreso_ht'      => 'date_format:Y-m-d',
-            'ht'                    => 'alpha_num_spaces',
 
         ];
     }

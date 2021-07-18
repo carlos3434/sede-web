@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
 use App\Helpers\FileUploader;
 use Carbon\Carbon;
+use App\Mail\SolicitarHojaTramite;
+use Illuminate\Support\Facades\Mail;
 
 class ExpedienteAdhocController extends Controller
 {
@@ -67,7 +69,7 @@ class ExpedienteAdhocController extends Controller
     {
         $all = $request->all();
         $all['usuario_id'] = Auth::id();
-        $all['estado_expediente_id'] = 1;
+        $all['estado_expediente_id'] = 1;//CREADO
         //$all = $this->storeFile($request, $all, 'constancias', 'constancia_habilidad');
        // $all = $this->storeFile($request, $all, 'ExpedienteAdhoc', 'archivo_titulo');
         $expedienteAdhoc = $this->repository->create( $all );
@@ -91,19 +93,26 @@ class ExpedienteAdhocController extends Controller
         $fields = $this->storeFile($request, $fields, 'recibo_pago', 'recibo_pago');
         $fields = $this->storeFile($request, $fields, 'archivo_solicitud_ht', 'archivo_solicitud_ht');
 
-        $fields['fecha_solicitud_ht'] = Carbon::now()->toDateTimeString();;
+        $fields['fecha_solicitud_ht'] = Carbon::now()->toDateTimeString();
+        $fields['estado_expediente_id'] = 2;//HOJA DE TRAMITE
 
         $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);
+        $datos = [
+            'usuario' => Auth::user(),
+            'expedienteid' => $expedienteAdhoc->id,
+            'archivo' => $request->file('archivo_solicitud_ht'),
+            'recibo' => $request->file('recibo_pago'),
+        ];
+        $to = ['carlos34343434@gmail.com'];
+        Mail::to($to)->send(new SolicitarHojaTramite($datos));
         return $expedienteAdhoc;
     }
-    public function solicitarVerificacionAdhoc(ExpedienteAdhocAddHojaTramiteRequest $request, ExpedienteAdhoc $expedienteAdhoc)
+    public function solicitarVerificacionAdhoc(ExpedienteAdhocAddVerificacionAdhocRequest $request, ExpedienteAdhoc $expedienteAdhoc)
     {
-        $fields = $request->only($request->getFillableForAddHojaTramite());
+        $fields = $request->only($request->getFillableForVerificacionAdhoc());
 
-        $fields = $this->storeFile($request, $fields, 'recibo_pago', 'recibo_pago');
-        $fields = $this->storeFile($request, $fields, 'archivo_solicitud_ht', 'archivo_solicitud_ht');
-
-        $fields['fecha_solicitud_ht'] = Carbon::now()->toDateTimeString();;
+        $fields['estado_expediente_id'] = 3;//SOLICITUD VERIFICACION
+        $fields['fecha_ingreso_ht'] = Carbon::now()->toDateTimeString();
 
         $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);
         return $expedienteAdhoc;
@@ -130,7 +139,7 @@ class ExpedienteAdhocController extends Controller
         $all = $this->storeFile($request, $all, 'copia_vigencia_poder', 'copia_vigencia_poder');
         $all = $this->storeFile($request, $all, 'copia_partida_registral', 'copia_partida_registral');
         $all = $this->storeFile($request, $all, 'copia_dni_propietario', 'copia_dni_propietario');
-        $all = $this->storeFile($request, $all, 'recibo_pago', 'recibo_pago');
+        //$all = $this->storeFile($request, $all, 'recibo_pago', 'recibo_pago');
         $all = $this->storeFile($request, $all, 'copia_formulario_for', 'copia_formulario_for');
         $all = $this->storeFile($request, $all, 'informe_tecnico_verificador_responsable', 'informe_tecnico_verificador_responsable');
         $all = $this->storeFile($request, $all, 'esquela_observacion_sunarp', 'esquela_observacion_sunarp');
