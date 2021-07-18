@@ -24,6 +24,7 @@ class ExpedienteAdhocResource extends JsonResource
             'Archivos'                   => $this->archivos,
             //Documentos principales
             'Documentos principales' => [
+                'estadistica' => $this->documentos_principales,
                 'carta_poder_simple' => $this->carta_poder_simple,
                 'copia_vigencia_poder' => $this->copia_vigencia_poder,
                 'copia_partida_registral' => $this->copia_partida_registral,
@@ -41,6 +42,7 @@ class ExpedienteAdhocResource extends JsonResource
             ],
             //Planos de arquitectura
             'Planos de arquitectura' => [
+                'estadistica' => $this->planos_arquitectura,
                 'plano_arquitectura_1' => $this->plano_arquitectura_1,
                 'plano_arquitectura_2' => $this->plano_arquitectura_2,
                 'plano_arquitectura_3' => $this->plano_arquitectura_3,
@@ -54,6 +56,7 @@ class ExpedienteAdhocResource extends JsonResource
             ],
             //Planos de fábrica inscrita
             'Planos de fábrica inscrita' => [
+                'estadistica' => $this->planos_fabrica_excrita,
                 'plano_fabrica_1' => $this->plano_fabrica_1,
                 'plano_fabrica_2' => $this->plano_fabrica_2,
                 'plano_fabrica_3' => $this->plano_fabrica_3,
@@ -68,6 +71,7 @@ class ExpedienteAdhocResource extends JsonResource
 
             //Planos de remodelación
             'Planos de remodelación' => [
+                'estadistica' => $this->planos_remodelacion,
                 'plano_remodelacion_1' => $this->plano_remodelacion_1,
                 'plano_remodelacion_2' => $this->plano_remodelacion_2,
                 'plano_remodelacion_3' => $this->plano_remodelacion_3,
@@ -82,6 +86,7 @@ class ExpedienteAdhocResource extends JsonResource
 
             //Planos de ampliación
             'Planos de ampliación' => [
+                'estadistica' => $this->planos_ampliacion,
                 'plano_ampliacion_1' => $this->plano_ampliacion_1,
                 'plano_ampliacion_2' => $this->plano_ampliacion_2,
                 'plano_ampliacion_3' => $this->plano_ampliacion_3,
@@ -96,6 +101,7 @@ class ExpedienteAdhocResource extends JsonResource
 
             //Planos de rutas de evacuación
             'Planos de rutas de evacuación' => [
+                'estadistica' => $this->planos_rutas_evacuacion,
                 'plano_rutas_evacuacion_1' => $this->plano_rutas_evacuacion_1,
                 'plano_rutas_evacuacion_2' => $this->plano_rutas_evacuacion_2,
                 'plano_rutas_evacuacion_3' => $this->plano_rutas_evacuacion_3,
@@ -110,6 +116,7 @@ class ExpedienteAdhocResource extends JsonResource
 
             //Planos de señalización
             'Planos de señalización' => [
+                'estadistica' => $this->planos_senalizacion,
                 'plano_senalizacion_1' => $this->plano_senalizacion_1,
                 'plano_senalizacion_2' => $this->plano_senalizacion_2,
                 'plano_senalizacion_3' => $this->plano_senalizacion_3,
