@@ -11,16 +11,18 @@ class SolicitarHojaTramite extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $datos;
+    public $user;
+    public $adjuntos;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($datos)
+    public function __construct( $user, $adjuntos = array())
     {
-        $this->datos = $datos;
+        $this->user = $user;
+        $this->adjuntos = $adjuntos;
     }
 
     /**
@@ -30,14 +32,15 @@ class SolicitarHojaTramite extends Mailable
      */
     public function build()
     {
-        return $this->subject('Solicito numero de hoja de tramite')
-                        ->view('emails.solicitar-hoja-tramite')
-                        ->attach($this->datos['archivo']->getRealPath(), [
-                                'as' => $this->datos['archivo']->getClientOriginalName()
-                                //'mime' => 'image/jpeg',
-                        ])
-                        ->attach($this->datos['recibo']->getRealPath(), [
-                            'as' => $this->datos['recibo']->getClientOriginalName()
-                        ]);                         
+        $mailable = $this->subject( 'Solicito numero de hoja de tramite' )
+                 ->view('emails.solicitar-hoja-tramite');
+
+        if ( count( $this->adjuntos ) > 0 ) {
+            foreach ( $this->adjuntos as $adjunto ) {
+                $mailable->attach( $adjunto );
+            }
+        }
+
+        return $mailable;
     }
 }

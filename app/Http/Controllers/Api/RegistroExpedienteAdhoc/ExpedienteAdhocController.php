@@ -7,6 +7,7 @@ use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddRequest;
 use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocUpdateRequest;
 use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddHojaTramiteRequest;
+use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddVerificacionAdhocRequest;
 use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
@@ -14,6 +15,7 @@ use App\Helpers\FileUploader;
 use Carbon\Carbon;
 use App\Mail\SolicitarHojaTramite;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\ProcessSentEmail;
 
 class ExpedienteAdhocController extends Controller
 {
@@ -97,14 +99,14 @@ class ExpedienteAdhocController extends Controller
         $fields['estado_expediente_id'] = 2;//HOJA DE TRAMITE
 
         $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);
-        $datos = [
-            'usuario' => Auth::user(),
-            'expedienteid' => $expedienteAdhoc->id,
-            'archivo' => $request->file('archivo_solicitud_ht'),
-            'recibo' => $request->file('recibo_pago'),
+
+        $adjuntos = [
+            storage_path('app/uploads/files/'.$fields['recibo_pago']),
+            storage_path('app/uploads/files/'.$fields['archivo_solicitud_ht'])
         ];
-        $to = ['carlos34343434@gmail.com'];
-        Mail::to($to)->send(new SolicitarHojaTramite($datos));
+
+        dispatch( new ProcessSentEmail( Auth::user(), $adjuntos ) );
+
         return $expedienteAdhoc;
     }
     public function solicitarVerificacionAdhoc(ExpedienteAdhocAddVerificacionAdhocRequest $request, ExpedienteAdhoc $expedienteAdhoc)
