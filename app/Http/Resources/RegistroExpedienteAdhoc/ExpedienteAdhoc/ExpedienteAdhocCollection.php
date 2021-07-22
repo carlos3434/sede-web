@@ -46,13 +46,13 @@ class ExpedienteAdhocCollection extends ResourceCollection
 
                 'Archivos'                   => $expedienteAdhoc->archivos,
 
-                'Documentos principales'     => $expedienteAdhoc->documentos_principales,
-                'Planos de arquitectura'     => $expedienteAdhoc->planos_arquitectura,
-                'Planos de fábrica inscrita' => $expedienteAdhoc->planos_fabrica_excrita,
-                'Planos de remodelación'     => $expedienteAdhoc->planos_remodelacion,
-                'Planos de ampliación'       => $expedienteAdhoc->planos_ampliacion,
-                'Planos de rutas de evacuación' => $expedienteAdhoc->planos_rutas_evacuacion,
-                'Planos de señalización'     => $expedienteAdhoc->planos_senalizacion,
+                'Documentos_principales'     => $expedienteAdhoc->documentos_principales,
+                'Planos_de_arquitectura'     => $expedienteAdhoc->planos_arquitectura,
+                'Planos_de_fábrica inscrita' => $expedienteAdhoc->planos_fabrica_excrita,
+                'Planos_de_remodelación'     => $expedienteAdhoc->planos_remodelacion,
+                'Planos_de_ampliación'       => $expedienteAdhoc->planos_ampliacion,
+                'Planos_de_rutas_de_evacuación' => $expedienteAdhoc->planos_rutas_evacuacion,
+                'Planos_de_señalización'     => $expedienteAdhoc->planos_senalizacion,
 
                 'created_at'                 => $expedienteAdhoc->created_at->toDateTimeString(),
                 'updated_at'                 => $expedienteAdhoc->updated_at->toDateTimeString(),
