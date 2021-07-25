@@ -32,18 +32,16 @@ class ExpedienteAdhocArchivoCollection extends ResourceCollection
             if (isset($value[0]['nombre_padre'])) {
                 $nombre = $value[0]['nombre_padre'];
             }
-            $response[] = [
-                $key => [
-                    'nombre' => $nombre,
-                    'estadisticas' => [
-                        'completados' => $grouped->get( $key )->filter(function($item)
-                            {
-                                if($item['valor_archivo']) return $item;
-                            })->count(),
-                        'total' => $grouped->get( $key )->count(),
-                    ],
-                    'archivos' => $grouped->get( $key )->all(),
-                ]
+            $response[$key] = [
+                'nombre' => $nombre,
+                'estadisticas' => [
+                    'completados' => $grouped->get( $key )->filter(function($item)
+                        {
+                            if($item['valor_archivo']) return $item;
+                        })->count(),
+                    'total' => $grouped->get( $key )->count(),
+                ],
+                'archivos' => $grouped->get( $key )->all(),
             ];
 
         }

@@ -29,16 +29,14 @@ class ExpedienteAdhocCollection extends ResourceCollection
 
         foreach ($archivos as $key => $value) {
 
-            $archivosParent[] = [
-                $value->slug => [
-                    'nombre' => $value->nombre,
-                    'estadisticas' => [
-                        'completados' => $value->hijos->filter(function($item)
-                            {
-                                if($item['valor_archivo']) return $item;
-                            })->count(),
-                        'total' => $value->hijos->count(),
-                    ],
+            $archivosParent[$value->slug] = [
+                'nombre' => $value->nombre,
+                'estadisticas' => [
+                    'completados' => $value->hijos->filter(function($item)
+                        {
+                            if($item['valor_archivo']) return $item;
+                        })->count(),
+                    'total' => $value->hijos->count(),
                 ],
             ];
         }
