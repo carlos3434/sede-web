@@ -16,6 +16,11 @@ use Carbon\Carbon;
 use App\Mail\SolicitarHojaTramite;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\ProcessSentEmail;
+use App\Models\RegistroExpedienteAdhoc\Archivo;
+
+use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\ExpedienteAdhocArchivoCollection;
+use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\ExpedienteAdhocArchivoResource;
+use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocCollection;
 
 class ExpedienteAdhocController extends Controller
 {
@@ -72,10 +77,18 @@ class ExpedienteAdhocController extends Controller
         $all = $request->all();
         $all['usuario_id'] = Auth::id();
         $all['estado_expediente_id'] = 1;//CREADO
-        //$all = $this->storeFile($request, $all, 'constancias', 'constancia_habilidad');
-       // $all = $this->storeFile($request, $all, 'ExpedienteAdhoc', 'archivo_titulo');
+
         $expedienteAdhoc = $this->repository->create( $all );
-        return response()->json($expedienteAdhoc, 201);
+        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
+        if ($convocatoriaId) {
+            //traer todos los archivos de la actual convocatoria
+            $archivos = Archivo::GetArchivosByConvocatoriaId( $convocatoriaId );
+            $expedienteAdhoc->expedienteAdhocArchivos()->createMany( $archivos->toArray() );
+        }
+        //consultar los archivos y sus observaciones
+        $result = $this->repository->get( $convocatoriaId , $expedienteAdhoc->id );
+
+        return response()->json( new ExpedienteAdhocArchivoResource( $result ) , 201 );
     }
 
     /**
@@ -86,7 +99,13 @@ class ExpedienteAdhocController extends Controller
      */
     public function show(ExpedienteAdhoc $expedienteAdhoc)
     {
-        return $this->repository->getOne($expedienteAdhoc);
+        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
+        if (!$convocatoriaId) {
+            return [];
+        }
+        $result = $this->repository->get( $convocatoriaId , $expedienteAdhoc->id );
+
+        return response()->json( new ExpedienteAdhocArchivoResource( $result ) , 200 );
     }
     public function solicitarHojaTramite(ExpedienteAdhocAddHojaTramiteRequest $request, ExpedienteAdhoc $expedienteAdhoc)
     {

@@ -115,3 +115,35 @@ http://sede-web.herokuapp.com/admin/dashboard
 php artisan migrate --path database/migrations/2021_07_15_120758_add_profesion_users_table.php
 
 php artisan db:seed --class=EstadoExpedienteAdhocSeeder
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+QUEUE_CONNECTION=redis
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+REDIS_HOST=redis
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+REDIS_CLIENT=predis
+
+MAIL_DRIVER=smtp
+MAIL_FROM_ADDRESS=carlos34343434@gmail.com
+MAIL_FROM_NAME="Sede Electronica"
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PASSWORD=9a30ab688d7ccf
+MAIL_PORT=2525
+MAIL_USERNAME=1989753a7c3066
+
+observaciones
+
+- revisar TDR, si esta la implementacion de dominio
+  asignacion 
+- agregar la tecnologia redis en la descripcion del proyecto
+
+- OS punto 3, se tiene que revisar la funcionalidad de todo el sistema
+  revisar con Kelly y Jose ( enviar correo)
+  solicitando su conformidad de ellos
+  para que Miguel realize su conformidad
+
+- 

@@ -34,6 +34,7 @@
 
 	7 Recepcion y descarga del informe Adhoc 		ADMINISTRADOR|USUARIO_CENEPRED
 		Verificar expediente
+		esta en antiguo sistemA http://sede.juan/diligencia/descarga#/
 
 	8 Reportes 										ADMINISTRADOR|USUARIO_CENEPRED
 		Cuadro de méritos
@@ -102,3 +103,19 @@ oauth_auth_codes
 oauth_clients						
 oauth_personal_access_clients						
 oauth_refresh_tokens	
+
+
+ANEXO N° 1: Formato de solicitud de postulante al proceso de selección de Verificadores Ad Hoc del CENEPRED.
+ANEXO N° 2: Cuadro de postulantes al proceso de selección de Verificadores Ad Hoc del CENEPRED.
+ANEXO N° 3: Cuadro de méritos de postulantes a Verificadores Ad Hoc del CENEPRED.
+ANEXO N° 4: Condiciones para la prestación de servicio de los verificadores Ad Hoc del CENEPRED.
+ANEXO N° 5: Solicitud de informe de VAH. (el sistema debe enviar un correo con un documento a mesa de parte) al correo del mismo usuario, correo de mesa de parte y correo de usuario cenepred
+ANEXO N° 6: Requisitos para las Verificaciones Ad Hoc.
+ANEXO N° 7: Cuadro de avance de verificaciones Ad Hoc
+ANEXO N° 8: Acta de entrega N° -20 -DD
+ANEXO N° 9: Acta de diligencia de verificaciones Ad Hoc N°____
+ANEXO N°10: Estructura del Informe de Verificación Ad Hoc.
+ANEXO N°11: Requerimiento de pago de los Verificadores Ad Hoc del CENEPRED.
+ANEXO N° 12: Acta de conformidad de pago.
+ANEXO N° 13: Cuadro desempeño del Verificador Ad Hoc N° ____
+

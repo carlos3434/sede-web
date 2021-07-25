@@ -18,5 +18,34 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
     protected $collectionNamePath = "App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocCollection";
     protected $resourceNamePath = "App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocResource";
 
+    public function get($convocatoriaId , $expedienteAdhocId ){
+        return \DB::select("
+            SELECT eaa.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
+                   eaa.monto , eaa.nombre_banco , eaa.numero_operacion  ,
+                   eaa.fecha_operacion , eaa.agencia ,  eaa.distrito_id ,
 
+                   ea.id AS expedienteadhoc_archivo_id, ea.valor AS valor_archivo,
+                   a.id AS archivo_id, a.nombre AS nombre_archivo, a.slug AS slug_archivo,
+                   padre.id id_padre, padre.nombre AS nombre_padre , padre.slug AS slug_padre,
+
+                   ( SELECT count(id) AS total 
+                       FROM archivos 
+                       WHERE convocatoria_id = ? and level = 2 
+                    )   AS total,
+                   ( SELECT count(id) AS completados 
+                       FROM expedienteadhoc_archivo 
+                       WHERE expedienteadhoc_id = ? 
+                    )   AS completados
+                   
+            FROM expedientes_adhocs eaa 
+            LEFT JOIN expedienteadhoc_archivo ea on eaa.id = ea.expedienteadhoc_id 
+            RIGHT JOIN archivos a on ea.archivo_id = a.id
+            JOIN archivos AS padre on a.parent_id = padre.id 
+            WHERE eaa.id = ? and a.convocatoria_id = ?
+
+            GROUP BY eaa.id , ea.id , a.id, padre.id 
+            ORDER BY padre.id;",
+            [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
+        );
+    }
 }

@@ -3,9 +3,15 @@
 namespace App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+//use Illuminate\Http\Resources\Json\JsonResource;
+
+use App\Models\RegistroExpedienteAdhoc\Archivo;
+
+use App\Models\Settings\Convocatoria;
 
 class ExpedienteAdhocCollection extends ResourceCollection
 {
+
     /**
      * Transform the resource collection into an array.
      *
@@ -14,7 +20,31 @@ class ExpedienteAdhocCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->transform(function ($expedienteAdhoc) {
+        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
+        if ($convocatoriaId) {
+            //traer todos los archivos de la actual convocatoria
+            $archivos = Archivo::GetArchivosCategoriaByConvocatoriaId( $convocatoriaId );
+        }
+        $archivos = Archivo::GetArchivosCategoriaByConvocatoriaId( $convocatoriaId );
+
+        foreach ($archivos as $key => $value) {
+
+            $archivosParent[] = [
+                $value->slug => [
+                    'nombre' => $value->nombre,
+                    'estadisticas' => [
+                        'completados' => $value->hijos->filter(function($item)
+                            {
+                                if($item['valor_archivo']) return $item;
+                            })->count(),
+                        'total' => $value->hijos->count(),
+                    ],
+                ],
+            ];
+        }
+
+        return $this->collection->transform(function ($expedienteAdhoc) use ($archivosParent) {
+
             return [
                 'id'                         => $expedienteAdhoc->id,
 
@@ -44,15 +74,15 @@ class ExpedienteAdhocCollection extends ResourceCollection
                 'usuario_revisor_full_name'  => (isset($expedienteAdhoc->usuarioRevisor))?
                                                 $expedienteAdhoc->usuarioRevisor->full_name:null,
 
-                'Archivos'                   => $expedienteAdhoc->archivos,
+                'estadisticas'               => [
+                    "completados" => $expedienteAdhoc->expedienteAdhocArchivos->filter(function($item)
+                            {
+                                if($item['valor_archivo']) return $item;
+                            })->count(),
+                    "total" => $expedienteAdhoc->expedienteAdhocArchivos->count(),
+                ],
 
-                'documentos_principales'     => $expedienteAdhoc->documentos_principales,
-                'planos_de_arquitectura'     => $expedienteAdhoc->planos_arquitectura,
-                'planos_de_fabrica inscrita' => $expedienteAdhoc->planos_fabrica_excrita,
-                'planos_de_remodelacion'     => $expedienteAdhoc->planos_remodelacion,
-                'planos_de_ampliacion'       => $expedienteAdhoc->planos_ampliacion,
-                'planos_de_rutas_de_evacuacion' => $expedienteAdhoc->planos_rutas_evacuacion,
-                'planos_de_senalizacion'     => $expedienteAdhoc->planos_senalizacion,
+                'expedienteadhoc_archivo'    => $archivosParent,
 
                 'created_at'                 => $expedienteAdhoc->created_at->toDateTimeString(),
                 'updated_at'                 => $expedienteAdhoc->updated_at->toDateTimeString(),

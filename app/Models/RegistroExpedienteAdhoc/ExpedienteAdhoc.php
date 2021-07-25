@@ -144,143 +144,28 @@ class ExpedienteAdhoc extends Model
         return $this->belongsTo('App\Models\Settings\EstadoExpedienteAdhoc', 'estado_expediente_id');
     }
 
-    public function getArchivosAttribute()
+    public function expedienteAdhocArchivos()
     {
-        return [
-            'completados' => 
-            $this->documentos_principales['completados'] +
-            $this->planos_arquitectura['completados'] +
-            $this->planos_fabrica_excrita['completados'] +
-            $this->planos_remodelacion['completados'] +
-            $this->planos_ampliacion['completados'] +
-            $this->planos_rutas_evacuacion['completados'] +
-            $this->planos_senalizacion['completados'] ,
-            'total' => 73,
-        ];
+        return $this->hasMany('App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos', 'expedienteadhoc_id');
     }
 
-    public function getDocumentosPrincipalesAttribute()
+    public function scopeArchivos($query)
     {
-        return [
-            'completados' => 
-               (bool) $this->carta_poder_simple +
-               (bool) $this->copia_vigencia_poder +
-               (bool) $this->copia_partida_registral +
-               (bool) $this->copia_dni_propietario +
-               //(bool) $this->recibo_pago +
-               (bool) $this->copia_formulario_for +
-               (bool) $this->informe_tecnico_verificador_responsable +
-               (bool) $this->esquela_observacion_sunarp +
-               (bool) $this->plano_ubicacion_01 +
-               (bool) $this->plano_ubicacion_02 +
-               (bool) $this->memoria_descriptiva_seguridad +
-               (bool) $this->certificado_pozo_tierra +
-               (bool) $this->certificado_pozo_tierra +
-               (bool) $this->certificado_sistema_electrico ,
-            'total' => 13,
-        ];
+        return $query->leftjoin('expedienteadhoc_archivo as ea', 'expedientes_adhocs.id', '=', 'ea.expedienteadhoc_id')
+                     ->rightJoin('archivos as a','ea.archivo_id','=','a.id')
+                     ->where('a.level',2)
+                     ->where('expedientes_adhocs.id',14);
     }
-    public function getPlanosArquitecturaAttribute()
+
+    public function scopePadres($query)
     {
-        return [
-            'completados' => 
-               (bool) $this->plano_arquitectura_1 +
-               (bool) $this->plano_arquitectura_2 +
-               (bool) $this->plano_arquitectura_3 +
-               (bool) $this->plano_arquitectura_4 +
-               (bool) $this->plano_arquitectura_5 +
-               (bool) $this->plano_arquitectura_6 +
-               (bool) $this->plano_arquitectura_7 +
-               (bool) $this->plano_arquitectura_8 +
-               (bool) $this->plano_arquitectura_9 +
-               (bool) $this->plano_arquitectura_10  ,
-            'total' => 10,
-        ];
-    }
-    public function getPlanosFabricaExcritaAttribute()
-    {
-        return [
-            'completados' => 
-               (bool) $this->plano_fabrica_1 +
-               (bool) $this->plano_fabrica_2 +
-               (bool) $this->plano_fabrica_3 +
-               (bool) $this->plano_fabrica_4 +
-               (bool) $this->plano_fabrica_5 +
-               (bool) $this->plano_fabrica_6 +
-               (bool) $this->plano_fabrica_7 +
-               (bool) $this->plano_fabrica_8 +
-               (bool) $this->plano_fabrica_9 +
-               (bool) $this->plano_fabrica_10  ,
-            'total' => 10,
-        ];
-    }
-    public function getPlanosRemodelacionAttribute()
-    {
-        return [
-            'completados' => 
-               (bool) $this->plano_remodelacion_1 +
-               (bool) $this->plano_remodelacion_2 +
-               (bool) $this->plano_remodelacion_3 +
-               (bool) $this->plano_remodelacion_4 +
-               (bool) $this->plano_remodelacion_5 +
-               (bool) $this->plano_remodelacion_6 +
-               (bool) $this->plano_remodelacion_7 +
-               (bool) $this->plano_remodelacion_8 +
-               (bool) $this->plano_remodelacion_9 +
-               (bool) $this->plano_remodelacion_10  ,
-            'total' => 10,
-        ];
-    }
-    public function getPlanosAmpliacionAttribute()
-    {
-        return [
-            'completados' => 
-               (bool) $this->plano_ampliacion_1 +
-               (bool) $this->plano_ampliacion_2 +
-               (bool) $this->plano_ampliacion_3 +
-               (bool) $this->plano_ampliacion_4 +
-               (bool) $this->plano_ampliacion_5 +
-               (bool) $this->plano_ampliacion_6 +
-               (bool) $this->plano_ampliacion_7 +
-               (bool) $this->plano_ampliacion_8 +
-               (bool) $this->plano_ampliacion_9 +
-               (bool) $this->plano_ampliacion_10  ,
-            'total' => 10,
-        ];
-    }
-    public function getPlanosRutasEvacuacionAttribute()
-    {
-        return [
-            'completados' => 
-               (bool) $this->plano_rutas_evacuacion_1 +
-               (bool) $this->plano_rutas_evacuacion_2 +
-               (bool) $this->plano_rutas_evacuacion_3 +
-               (bool) $this->plano_rutas_evacuacion_4 +
-               (bool) $this->plano_rutas_evacuacion_5 +
-               (bool) $this->plano_rutas_evacuacion_6 +
-               (bool) $this->plano_rutas_evacuacion_7 +
-               (bool) $this->plano_rutas_evacuacion_8 +
-               (bool) $this->plano_rutas_evacuacion_9 +
-               (bool) $this->plano_rutas_evacuacion_10  ,
-            'total' => 10,
-        ];
-    }
-    public function getPlanosSenalizacionAttribute()
-    {
-        return [
-            'completados' => 
-               (bool) $this->plano_senalizacion_1 +
-               (bool) $this->plano_senalizacion_2 +
-               (bool) $this->plano_senalizacion_3 +
-               (bool) $this->plano_senalizacion_4 +
-               (bool) $this->plano_senalizacion_5 +
-               (bool) $this->plano_senalizacion_6 +
-               (bool) $this->plano_senalizacion_7 +
-               (bool) $this->plano_senalizacion_8 +
-               (bool) $this->plano_senalizacion_9 +
-               (bool) $this->plano_senalizacion_10  ,
-            'total' => 10,
-        ];
+        return $query->leftjoin('expedienteadhoc_archivo as ea', 'expedientes_adhocs.id', '=', 'ea.expedienteadhoc_id')
+                     ->rightJoin('archivos as a','ea.archivo_id','=','a.id')
+                     ->leftjoin('archivos as padres','a.parent_id','=','padres.id')
+                     ->where('padres.level',1)
+                     ->select(\DB::raw('DISTINCT padres.*'))
+                     //->select(\DB::raw('DISTINCT padres.id , padres.nombre  ,  padres.slug'))
+                     ->get();
     }
 
     public function usuarioRevisor()
