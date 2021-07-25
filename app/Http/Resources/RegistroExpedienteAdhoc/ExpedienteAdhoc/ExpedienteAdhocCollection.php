@@ -32,10 +32,12 @@ class ExpedienteAdhocCollection extends ResourceCollection
             $archivosParent[$value->slug] = [
                 'nombre' => $value->nombre,
                 'estadisticas' => [
-                    'completados' => $value->hijos->filter(function($item)
+                    //ir a los expedientes completados
+                    'completados' => $value->expedienteadhoc_archivo->filter(function($item)
                         {
-                            if($item['valor_archivo']) return $item;
+                            if($item['valor']) return $item;
                         })->count(),
+
                     'total' => $value->hijos->count(),
                 ],
             ];
@@ -75,7 +77,7 @@ class ExpedienteAdhocCollection extends ResourceCollection
                 'estadisticas'               => [
                     "completados" => $expedienteAdhoc->expedienteAdhocArchivos->filter(function($item)
                             {
-                                if($item['valor_archivo']) return $item;
+                                if($item['valor']) return $item;
                             })->count(),
                     "total" => $expedienteAdhoc->expedienteAdhocArchivos->count(),
                 ],

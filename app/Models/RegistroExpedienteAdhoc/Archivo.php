@@ -42,8 +42,13 @@ class Archivo extends Model
             'archivo_id'
         );
     }
-
-
+    /**
+     * para tabla pivot 
+     */
+    public function expedienteadhoc_archivo()
+    {
+        return $this->hasMany('App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos', 'archivo_id','id');
+    }
 /*
     public function scopeGetPadres($query)
     {
