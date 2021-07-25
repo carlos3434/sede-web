@@ -30,9 +30,21 @@ class Archivo extends Model
     {
         return $this->hasMany('App\Models\RegistroExpedienteAdhoc\Archivo','parent_id','id');
     }
+    /**
+     * para tabla pivot 
+     */
+    public function expedienteAdhoc()
+    {
+        return $this->belongsToMany(
+            'App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc',
+            'expedienteadhoc_archivo',
+            'expedienteadhoc_id',
+            'archivo_id'
+        );
+    }
 
 
-
+/*
     public function scopeGetPadres($query)
     {
          return $query->where('level',1);
@@ -40,7 +52,7 @@ class Archivo extends Model
     public function scopeGetChild($query)
     {
         return $query->get();
-    }
+    }*/
     public function scopeGetArchivosByConvocatoriaId( $query , $convocatoriaId )
     {
         return $this->where('convocatoria_id', $convocatoriaId )

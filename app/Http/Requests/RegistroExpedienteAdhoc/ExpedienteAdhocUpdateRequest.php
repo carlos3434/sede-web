@@ -30,7 +30,7 @@ class ExpedienteAdhocUpdateRequest extends FormRequest
             'nombre_comercial'  => 'alpha_num_spaces',
             'direccion'         => 'alpha_num_spaces',
             'area'              => 'integer',
-
+/*
             'carta_poder_simple' => 'file|max:11264',
             'copia_vigencia_poder' => 'file|max:11264',
             'copia_partida_registral' => 'file|max:11264',
@@ -110,7 +110,7 @@ class ExpedienteAdhocUpdateRequest extends FormRequest
             'plano_senalizacion_8' => 'file|max:11264',
             'plano_senalizacion_9' => 'file|max:11264',
             'plano_senalizacion_10' => 'file|max:11264',
-
+*/
         ];
     }
 

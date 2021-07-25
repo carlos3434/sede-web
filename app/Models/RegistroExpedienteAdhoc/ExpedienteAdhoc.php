@@ -22,93 +22,16 @@ class ExpedienteAdhoc extends Model
         'direccion',
         'area',
 
-        'carta_poder_simple',
-        'copia_vigencia_poder',
-        'copia_partida_registral',
-        'copia_dni_propietario',
         'recibo_pago',
-        'copia_formulario_for',
-        'informe_tecnico_verificador_responsable',
-        'esquela_observacion_sunarp',
-        'plano_ubicacion_01',
-        'plano_ubicacion_02',
-        'memoria_descriptiva_seguridad',
-        'certificado_pozo_tierra',
-        'certificado_laminados',
-        'certificado_sistema_electrico',
 
-        'plano_arquitectura_1',
-        'plano_arquitectura_2',
-        'plano_arquitectura_3',
-        'plano_arquitectura_4',
-        'plano_arquitectura_5',
-        'plano_arquitectura_6',
-        'plano_arquitectura_7',
-        'plano_arquitectura_8',
-        'plano_arquitectura_9',
-        'plano_arquitectura_10',
-
-        'plano_fabrica_1',
-        'plano_fabrica_2',
-        'plano_fabrica_3',
-        'plano_fabrica_4',
-        'plano_fabrica_5',
-        'plano_fabrica_6',
-        'plano_fabrica_7',
-        'plano_fabrica_8',
-        'plano_fabrica_9',
-        'plano_fabrica_10',
-
-        'plano_remodelacion_1',
-        'plano_remodelacion_2',
-        'plano_remodelacion_3',
-        'plano_remodelacion_4',
-        'plano_remodelacion_5',
-        'plano_remodelacion_6',
-        'plano_remodelacion_7',
-        'plano_remodelacion_8',
-        'plano_remodelacion_9',
-        'plano_remodelacion_10',
-
-        'plano_ampliacion_1',
-        'plano_ampliacion_2',
-        'plano_ampliacion_3',
-        'plano_ampliacion_4',
-        'plano_ampliacion_5',
-        'plano_ampliacion_6',
-        'plano_ampliacion_7',
-        'plano_ampliacion_8',
-        'plano_ampliacion_9',
-        'plano_ampliacion_10',
-
-        'plano_rutas_evacuacion_1',
-        'plano_rutas_evacuacion_2',
-        'plano_rutas_evacuacion_3',
-        'plano_rutas_evacuacion_4',
-        'plano_rutas_evacuacion_5',
-        'plano_rutas_evacuacion_6',
-        'plano_rutas_evacuacion_7',
-        'plano_rutas_evacuacion_8',
-        'plano_rutas_evacuacion_9',
-        'plano_rutas_evacuacion_10',
-
-        'plano_senalizacion_1',
-        'plano_senalizacion_2',
-        'plano_senalizacion_3',
-        'plano_senalizacion_4',
-        'plano_senalizacion_5',
-        'plano_senalizacion_6',
-        'plano_senalizacion_7',
-        'plano_senalizacion_8',
-        'plano_senalizacion_9',
-        'plano_senalizacion_10',
+        'archivo_solicitud_ht',
 
         'observaciones',
         'x',
         'y',
         'fecha_solicitud_ht',
         'fecha_ingreso_ht',
-        'ht',
+        'ht',//numero de hoja tramite
 
         'numero_operacion',
         'nombre_banco',
@@ -149,23 +72,18 @@ class ExpedienteAdhoc extends Model
         return $this->hasMany('App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos', 'expedienteadhoc_id');
     }
 
-    public function scopeArchivos($query)
+    /**
+     * para tabla pivot 
+     */
+    public function archivos()
     {
-        return $query->leftjoin('expedienteadhoc_archivo as ea', 'expedientes_adhocs.id', '=', 'ea.expedienteadhoc_id')
-                     ->rightJoin('archivos as a','ea.archivo_id','=','a.id')
-                     ->where('a.level',2)
-                     ->where('expedientes_adhocs.id',14);
-    }
-
-    public function scopePadres($query)
-    {
-        return $query->leftjoin('expedienteadhoc_archivo as ea', 'expedientes_adhocs.id', '=', 'ea.expedienteadhoc_id')
-                     ->rightJoin('archivos as a','ea.archivo_id','=','a.id')
-                     ->leftjoin('archivos as padres','a.parent_id','=','padres.id')
-                     ->where('padres.level',1)
-                     ->select(\DB::raw('DISTINCT padres.*'))
-                     //->select(\DB::raw('DISTINCT padres.id , padres.nombre  ,  padres.slug'))
-                     ->get();
+        return $this->belongsToMany(
+            'App\Models\RegistroExpedienteAdhoc\Archivo',
+            'expedienteadhoc_archivo',
+            'expedienteadhoc_id',
+            'archivo_id'
+        );
+        //return $this->belongsToMany('App\Models\RegistroExpedienteAdhoc\Archivo');
     }
 
     public function usuarioRevisor()

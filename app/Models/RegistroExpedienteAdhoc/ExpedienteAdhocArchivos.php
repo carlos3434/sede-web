@@ -23,9 +23,10 @@ class ExpedienteAdhocArchivos extends Model
     {
         return $this->belongsTo('App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc', 'expedienteadhoc_id');
     }
+    /*
     public function scopeArchivos($query)
     {
         return $query->leftjoin('expedienteadhoc_archivo as ea', 'expedientes_adhocs.id', '=', 'ea.expedienteadhoc_id')
                      ->rightJoin('archivos as a','ea.archivo_id','=','a.id');
-    }
+    }*/
 }
