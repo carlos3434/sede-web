@@ -176,6 +176,8 @@ class ExpedienteAdhocController extends Controller
      */
     public function destroy(ExpedienteAdhoc $expedienteAdhoc)
     {
+        //primero eliminar los archivos relacionados ExpedienteAdhocArchivos
+        $expedienteAdhoc->archivos()->detach();
         $this->repository->deleteOne($expedienteAdhoc);
         return response()->json(null, 204);
     }
