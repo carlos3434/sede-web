@@ -103,7 +103,7 @@ class ExpedienteAdhocController extends Controller
         if (!$convocatoriaId) {
             return [];
         }
-        $result = $this->repository->get( $convocatoriaId , $expedienteAdhoc->id );
+        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhoc->id );
 
         return response()->json( new ExpedienteAdhocArchivoResource( $result ) , 200 );
     }
@@ -165,7 +165,7 @@ class ExpedienteAdhocController extends Controller
         $expedienteAdhoc = $this->repository->updateOne($all, $expedienteAdhoc);
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
 
-        $result = $this->repository->get( $convocatoriaId , $expedienteAdhoc->id );
+        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhoc->id );
         return response()->json( new ExpedienteAdhocArchivoResource( $result ) , 200 );
     }
 

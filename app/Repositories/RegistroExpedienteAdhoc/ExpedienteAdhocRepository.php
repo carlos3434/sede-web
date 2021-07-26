@@ -18,11 +18,12 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
     protected $collectionNamePath = "App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocCollection";
     protected $resourceNamePath = "App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocResource";
 
-    public function get($convocatoriaId , $expedienteAdhocId ){
+    public function getByConvocatoriaAndExpediente($convocatoriaId , $expedienteAdhocId ){
         return \DB::select("
             SELECT eaa.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
                    eaa.monto , eaa.nombre_banco , eaa.numero_operacion  ,
                    eaa.fecha_operacion , eaa.agencia ,  eaa.distrito_id ,
+                   eaa.recibo_pago, eaa.archivo_solicitud_ht,
 
                    ea.id AS expedienteadhoc_archivo_id, ea.valor AS valor_archivo,
                    a.id AS archivo_id, a.nombre AS nombre_archivo, a.slug AS slug_archivo,

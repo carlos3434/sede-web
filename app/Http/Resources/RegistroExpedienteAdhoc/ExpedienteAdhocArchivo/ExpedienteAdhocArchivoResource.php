@@ -31,6 +31,8 @@ class ExpedienteAdhocArchivoResource extends JsonResource
             'fecha_operacion' => $this->result[0]->fecha_operacion,
             'agencia' => $this->result[0]->agencia,
             'distrito_id' => $this->result[0]->distrito_id,
+            'recibo_pago' => $this->result[0]->recibo_pago,
+            'archivo_solicitud_ht' => $this->result[0]->archivo_solicitud_ht,
             'expedienteadhoc_archivo' => new ExpedienteAdhocArchivoCollection( $this->result ),
         ];
     }
