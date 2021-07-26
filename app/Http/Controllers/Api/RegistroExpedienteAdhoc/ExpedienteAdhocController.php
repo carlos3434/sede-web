@@ -193,7 +193,7 @@ class ExpedienteAdhocController extends Controller
         $result= false;
         if (isset($expArch)) {
             $fieldName = $expArch->valor;
-            $result = $expArch->save(['valor'=>null]);
+            $result = $expArch->update(['valor'=>null]);
             $this->fileUploader->destroyStorage($fieldName);
         }
 
