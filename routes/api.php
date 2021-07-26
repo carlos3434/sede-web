@@ -182,7 +182,7 @@ Route::prefix('v1')->group(function(){
             return response()->file( storage_path('app/uploads/files/archivo_solicitud_ht/'.$path) );
         });
         Route::get('files/expediente_adhoc_archivos/{path}', function ($path) {
-            return response()->file( storage_path('app/uploads/files/archivo_solicitud_ht/'.$path) );
+            return response()->file( storage_path('app/uploads/files/expediente_adhoc_archivos/'.$path) );
         });
         /*
         Route::get('files/carta_poder_simple/{path}', function ($path) {
