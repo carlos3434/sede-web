@@ -148,17 +148,18 @@ class ExpedienteAdhocController extends Controller
     public function update(ExpedienteAdhocUpdateRequest $request, ExpedienteAdhoc $expedienteAdhoc)
     {
         $all = $request->all();
+        if ($request->has('archivo')) {
+            //validar que el archivoId exista en el expedienteadhoc
+            foreach ($request->archivo as $key => $archivo) {
 
-        //validar que el archivoId exista en el expedienteadhoc
-        foreach ($request->archivo as $key => $archivo) {
+                $fileValue = $this->storeFile($request, 'expediente_adhoc_archivos', 'archivo.' .$key.'.valor');
 
-            $fileValue = $this->storeFile($request, 'expediente_adhoc_archivos', 'archivo.' .$key.'.valor');
-
-            $expedienteAdhoc->archivos()->updateExistingPivot(
-                $archivo['id'] , [
-                    'valor' =>  $fileValue,
-                ]
-            );
+                $expedienteAdhoc->archivos()->updateExistingPivot(
+                    $archivo['id'] , [
+                        'valor' =>  $fileValue,
+                    ]
+                );
+            }
         }
 
         $expedienteAdhoc = $this->repository->updateOne($all, $expedienteAdhoc);
