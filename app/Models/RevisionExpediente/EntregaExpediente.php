@@ -1,15 +1,31 @@
 <?php
 
-namespace App\Models\RegistroAdhoc;
+namespace App\Models\RevisionExpediente;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Http\Filters\RegistroAdhoc\EntregaExpedienteFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class EntregaExpediente extends Model
 {
+    use LogsActivity;
     //
     protected $table="entregas_expedientes";
 
+    protected $fillable = [
+        'fecha_entrega',
+        'fecha_recepcion',
+        'expediente_adhoc_id',
+        'usuario_asignador_id',
+        'acreditacion_id',
+    ];
+
+    public function scopeFilter(Builder $builder, $request)
+    {
+        return (new EntregaExpedienteFilter($request))->filter($builder);
+    }
     public function expediente()
     {
         return $this->belongsTo('App\Models\ExpedienteAdhoc\ExpedienteAdhoc', 'expediente_adhoc_id');
