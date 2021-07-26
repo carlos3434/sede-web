@@ -86,7 +86,7 @@ class ExpedienteAdhocController extends Controller
             $expedienteAdhoc->expedienteAdhocArchivos()->createMany( $archivos->toArray() );
         }
         //consultar los archivos y sus observaciones
-        $result = $this->repository->get( $convocatoriaId , $expedienteAdhoc->id );
+        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhoc->id );
 
         return response()->json( new ExpedienteAdhocArchivoResource( $result ) , 201 );
     }
