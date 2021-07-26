@@ -76,6 +76,7 @@ Route::prefix('v1')->group(function(){
         Route::apiResource('expedienteadhoc','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController');
         Route::put('expedienteadhoc/{expedienteadhoc}/solicitar_hoja_tramite','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController@solicitarHojaTramite')->name('expedienteadhoc.solicitar_hoja_tramite');
         Route::put('expedienteadhoc/{expedienteadhoc}/solicitar_verificacion_adhoc','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController@solicitarVerificacionAdhoc')->name('expedienteadhoc.solicitar_verificacion_adhoc');
+        Route::delete('expedienteadhoc/{expedienteadhoc}/archivo/{archivo}','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController@destroyArchivo')->name('expedienteadhoc.destroyArchivo');
 
         //Revisión de expediente Adhoc
 
@@ -172,6 +173,16 @@ Route::prefix('v1')->group(function(){
         });
 
         //Expediente adhoc
+        Route::get('files/recibo_pago/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/recibo_pago/'.$path) );
+        });
+        Route::get('files/archivo_solicitud_ht/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/archivo_solicitud_ht/'.$path) );
+        });
+        Route::get('files/expediente_adhoc_archivos/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/archivo_solicitud_ht/'.$path) );
+        });
+        /*
         Route::get('files/carta_poder_simple/{path}', function ($path) {
             return response()->file( storage_path('app/uploads/files/carta_poder_simple/'.$path) );
         });
@@ -207,7 +218,7 @@ Route::prefix('v1')->group(function(){
         });
         Route::get('files/certificado_sistema_electrico/{path}', function ($path) {
             return response()->file( storage_path('app/uploads/files/certificado_sistema_electrico/'.$path) );
-        });
+        });*/
 
     });
 });

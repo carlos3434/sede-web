@@ -21,7 +21,7 @@ use App\Models\RegistroExpedienteAdhoc\Archivo;
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\ExpedienteAdhocArchivoCollection;
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\ExpedienteAdhocArchivoResource;
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocCollection;
-
+use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos;
 class ExpedienteAdhocController extends Controller
 {
     private $repository;
@@ -111,8 +111,8 @@ class ExpedienteAdhocController extends Controller
     {
         $fields = $request->only($request->getFillableForAddHojaTramite());
 
-        $fields = $this->storeFile($request, $fields, 'recibo_pago', 'recibo_pago');
-        $fields = $this->storeFile($request, $fields, 'archivo_solicitud_ht', 'archivo_solicitud_ht');
+        $fields = $this->storeFileField($request, $fields, 'recibo_pago', 'recibo_pago');
+        $fields = $this->storeFileField($request, $fields, 'archivo_solicitud_ht', 'archivo_solicitud_ht');
 
         $fields['fecha_solicitud_ht'] = Carbon::now()->toDateTimeString();
         $fields['estado_expediente_id'] = 2;//HOJA DE TRAMITE
@@ -182,7 +182,37 @@ class ExpedienteAdhocController extends Controller
         return response()->json(null, 204);
     }
 
-    private function storeFile( $request , $folder, $fieldName ){
+    public function destroyArchivo(ExpedienteAdhoc $expedienteAdhoc, Archivo $archivo)
+    {
+        $expArch = ExpedienteAdhocArchivos::select('id','valor')
+        ->where('expedienteadhoc_id',$expedienteAdhoc->id)
+        ->where('archivo_id',$archivo->id)
+        ->first();
+
+        $result= false;
+        if (isset($expArch)) {
+            $fieldName = $expArch->valor;
+            $result = $expArch->save(['valor'=>null]);
+            $this->fileUploader->destroyStorage($fieldName);
+        }
+
+        return response()->json(['success' => $result], 204);
+    }
+
+    private function storeFileField( $request , $all , $folder, $fieldName )
+    {
+        if ( $request->hasFile($fieldName) ) {
+            $fileValue = $this->fileUploader->upload(
+                $request->file($fieldName),
+                'files/'.$folder
+            );
+            $all[$fieldName] = $folder.'/'.$fileValue;
+        }
+        return $all;
+    }
+
+    private function storeFile( $request , $folder, $fieldName )
+    {
         $fileValue= '';
         if ( $request->hasFile($fieldName) ) {
 

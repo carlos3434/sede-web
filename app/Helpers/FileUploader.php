@@ -36,4 +36,10 @@ class FileUploader
         return $fileName;
         //$this->storage::disk('tenant')->put('uploads/'.$fileFolder.'/'.$filename, $file_content);
     }
+    public function destroyStorage( $fileName )
+    {
+        $this->storage::delete('uploads/files'.'/'.$fileName );
+        //return $fileName;
+        //$this->storage::disk('tenant')->put('uploads/'.$fileFolder.'/'.$filename, $file_content);
+    }
 }
