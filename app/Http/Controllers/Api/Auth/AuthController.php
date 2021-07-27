@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\UserRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -17,7 +18,7 @@ class AuthController extends Controller
     {
         $this->userRepository = $userRepository;
     }
-    public function register(UserRequest $request) {
+    public function register(RegisterRequest $request) {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = $this->userRepository->create($input);

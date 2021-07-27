@@ -10,6 +10,7 @@ return [
         | como las reglas de tamaño. Siéntase libre de modificar cada uno de estos mensajes aquí.
     |
     */
+    'recaptchav3'           => 'El campo :attribute no es valido .',
     'convocatoriaactual'    => 'No se ha encontrado ninguna convocatoria en curso.',
     'acentos'               => 'El campo :attribute sólo puede contener acentos.',
     'alpha_spaces'          => 'El campo :attribute sólo puede contener letters and spaces.',
