@@ -42,8 +42,7 @@ class AuthController extends Controller
     public function login(Request $request){
         $this->validateLogin($request);
         if (!Auth::attempt( request(['email', 'password']) )) {
-            return response()->json([
-                'message' => 'Unauthorized'], $this->unauthorizedStatus);
+            return $this->unauthorized();
         }
         $user = Auth::user();
         $tokenResult =  $user->createToken('AppName');
@@ -59,7 +58,7 @@ class AuthController extends Controller
 
     public function logout( Request $request ) {
         $request->user()->token()->revoke();
-        return response()->json(['message' =>'Successfully logged out']);
+        return response()->json(['message' =>'Cerrar sesión correctamente']);
     }
     public function getUser() {
         $user = Auth::user();
@@ -67,6 +66,6 @@ class AuthController extends Controller
         return response()->json(['success' => $success], $this->successStatus);
     }
     public function unauthorized() { 
-        return response()->json("unauthorized", $this->unauthorizedStatus); 
+        return response()->json(['message' =>"No autorizado"], $this->unauthorizedStatus); 
     }
 }
