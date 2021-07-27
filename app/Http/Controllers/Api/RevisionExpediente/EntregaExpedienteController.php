@@ -104,12 +104,6 @@ class EntregaExpedienteController extends Controller
      */
     public function show(EntregaExpediente $entregaExpediente)
     {
-        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
-        if (!$convocatoriaId) {
-            return [];
-        }
-        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $entregaExpediente->id );
-
         return response()->json( new EntregaExpedienteResource( $result ) , 200 );
     }
     /**

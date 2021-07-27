@@ -58,6 +58,8 @@ class ExpedienteAdhocCollection extends ResourceCollection
                 'fecha_solicitud_ht'         => $expedienteAdhoc->fecha_solicitud_ht,
                 'fecha_ingreso_ht'           => $expedienteAdhoc->fecha_ingreso_ht,
                 'numero_hoja_tramite'        => $expedienteAdhoc->ht,
+                'recibo_pago'                => $expedienteAdhoc->recibo_pago,
+                'archivo_solicitud_ht'       => $expedienteAdhoc->archivo_solicitud_ht,
 
                 'numero_operacion'           => $expedienteAdhoc->numero_operacion,
                 'nombre_banco'               => $expedienteAdhoc->nombre_banco,

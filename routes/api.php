@@ -79,7 +79,9 @@ Route::prefix('v1')->group(function(){
         Route::delete('expedienteadhoc/{expedienteadhoc}/archivo/{archivo}','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController@destroyArchivo')->name('expedienteadhoc.destroyArchivo');
 
         //Revisión de expediente Adhoc
-        Route::apiResource('entregaexpediente','Api\RevisionExpediente\EntregaExpedienteController');
+        Route::get('entregaexpediente','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController@index');
+        Route::get('entregaexpediente/{expedienteadhoc}','Api\RegistroExpedienteAdhoc\ExpedienteAdhocController@show');
+        //Route::apiResource('entregaexpediente','Api\RevisionExpediente\EntregaExpedienteController');
 
 
         //Diligencia y formulación del informe Adhoc
