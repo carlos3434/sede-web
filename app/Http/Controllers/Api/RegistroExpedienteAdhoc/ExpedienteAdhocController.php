@@ -22,6 +22,8 @@ use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\Expediente
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\ExpedienteAdhocArchivoResource;
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocCollection;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos;
+use Illuminate\Support\Facades\Storage;
+
 class ExpedienteAdhocController extends Controller
 {
     private $repository;
@@ -120,8 +122,8 @@ class ExpedienteAdhocController extends Controller
         $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);
 
         $adjuntos = [
-            storage_path('app/uploads/files/'.$fields['recibo_pago']),
-            storage_path('app/uploads/files/'.$fields['archivo_solicitud_ht'])
+            Storage::path("uploads/files/".$fields['recibo_pago']),
+            Storage::path("uploads/files/".$fields['archivo_solicitud_ht']),
         ];
 
         dispatch( new ProcessSentEmail( Auth::user(), $adjuntos ) );

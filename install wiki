@@ -34,6 +34,22 @@ login to heroku
 
 heroku ps:exec -a sede-web
 heroku logs --dyno=supervisor
+heroku config  --app=sede-web | grep REDIS
+heroku redis:cli -a sede-web -c sede-web 
+
+Host ec2-52-1-203-211.compute-1.amazonaws.com
+User
+Port 7010
+Password p6a7cdb03f30a70e4d1dc63bbc0d5b574f2700a1a947900d6f9c8a607cf9e6409
+URI redis://:p6a7cdb03f30a70e4d1dc63bbc0d5b574f2700a1a947900d6f9c8a607cf9e6409@ec2-52-1-203-211.compute-1.amazonaws.com:7010
+
+REDIS_URL:      redis://:password@hostname:port
+REDIS_TLS_URL:  rediss://:password@hostname:tls-port
+
+
+REDIS_URL:      redis://:p6a7cdb03f30a70e4d1dc63bbc0d5b574f2700a1a947900d6f9c8a607cf9e6409@ec2-52-1-203-211.compute-1.amazonaws.com:7010
+REDIS_TLS_URL:  rediss://:p6a7cdb03f30a70e4d1dc63bbc0d5b574f2700a1a947900d6f9c8a607cf9e6409@ec2-52-1-203-211.compute-1.amazonaws.com:7010
+
 
 sino corrio migracione
 
