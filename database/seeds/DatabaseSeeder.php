@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoNivelesSeeder::class);
         $this->call(EstadoCivilSeeder::class);
         $this->call(EstadoExpedienteAdhocSeeder::class);
-        $this->call(EstadoObservacionSeeder::class);
+        $this->call(EstadoRevisionSeeder::class);
 
         //fake data
         $this->call(ConfiguracionSeeder::class);

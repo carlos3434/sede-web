@@ -91,11 +91,6 @@ class ExpedienteAdhoc extends Model
         return $this->belongsTo('App\Models\Auth\User', 'usuario_revisor_id');
     }
 
-    public function observaciones()
-    {
-        return $this->hasMany('App\Models\RegistroExpedienteAdhoc\Observacion', 'expediente_adhoc_id');
-    }
-
     public function entrega()
     {
         return $this->hasOne('App\Models\RegistroAdhoc\EntregaExpediente', 'expediente_adhoc_id');
