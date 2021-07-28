@@ -33,6 +33,7 @@ https://blog.marco-marassi.com/posts/laravel-passport-heroku-oauth-private-key-d
 login to heroku
 
 heroku ps:exec -a sede-web
+heroku logs --dyno=supervisor
 
 sino corrio migracione
 
