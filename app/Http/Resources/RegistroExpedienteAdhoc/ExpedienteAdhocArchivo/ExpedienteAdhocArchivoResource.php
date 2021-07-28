@@ -20,6 +20,9 @@ class ExpedienteAdhocArchivoResource extends JsonResource
      */
     public function toArray($request)
     {
+        if (!isset($this->result[0])) {
+            return [];
+        }
         return [
             'id' => $this->result[0]->id,
             'nombre_comercial' => $this->result[0]->nombre_comercial,

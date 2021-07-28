@@ -30,6 +30,57 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
             $this->getFilter($request)->sort()->get()
         );
     }
+
+    public function getByConvocatoriaAndExpediente($convocatoriaId , $expedienteAdhocId ){
+        return \DB::select("
+            SELECT eaa.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
+                   eaa.monto , eaa.nombre_banco , eaa.numero_operacion  ,
+                   eaa.fecha_operacion , eaa.agencia ,  eaa.distrito_id ,
+                   eaa.recibo_pago, eaa.archivo_solicitud_ht,
+
+                   ee.id as estado_expediente_id, ee.nombre as estado_expediente_nombre,
+
+                   ea.id AS expedienteadhoc_archivo_id, ea.valor AS valor_archivo,
+                   a.id AS archivo_id, a.nombre AS nombre_archivo, a.slug AS slug_archivo,
+                   padre.id id_padre, padre.nombre AS nombre_padre , padre.slug AS slug_padre,
+
+                   adhoc.nombres AS adhoc_nombres,
+                   adhoc.apellido_paterno as adhoc_apellido_paterno,
+                   adhoc.apellido_materno as adhoc_apellido_materno,
+                   adhoc.id as adhoc_id,
+
+                   
+
+                   ( SELECT count(id) AS total 
+                       FROM archivos 
+                       WHERE convocatoria_id = ? and level = 2 
+                    )   AS total,
+                   ( SELECT count(id) AS completados 
+                       FROM expedienteadhoc_archivo 
+                       WHERE expedienteadhoc_id = ? 
+                    )   AS completados
+                   
+            FROM expedientes_adhocs AS eaa 
+            JOIN estado_expediente AS ee on eaa.estado_expediente_id = ee.id
+            LEFT JOIN expedienteadhoc_archivo AS ea on eaa.id = ea.expedienteadhoc_id
+
+            LEFT JOIN revisiones AS r ON ea.id = r.expedienteadhoc_archivo_id
+            LEFT JOIN estado_revision AS er ON r.estado_revision_id = er.id
+
+            RIGHT JOIN archivos AS a on ea.archivo_id = a.id
+            JOIN archivos AS padre on a.parent_id = padre.id 
+            LEFT JOIN entregas_expedientes AS eee ON ea.id = eee.expediente_adhoc_id
+            LEFT JOIN acreditaciones AS aa ON eee.acreditacion_id = aa.id
+            LEFT JOIN calificaciones AS c ON aa.calificacion_id = c.id
+            LEFT JOIN users AS adhoc ON c.usuario_id = adhoc.id
+
+            WHERE eaa.id = ? and a.convocatoria_id = ?
+
+            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id, r.id
+            ORDER BY padre.id;",
+            [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
+        );
+    }
     public function expedientes()
     {
         return \DB::table('expedientes_adhocs as ea')

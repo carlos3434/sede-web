@@ -47,6 +47,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('verificaciones-realizada', \App\Models\RegistroAdhoc\VerificacionRealizada::class);
         Route::model('documento', \App\Models\Auth\User::class);
         Route::model('expedienteadhoc', \App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc::class);
+        //Route::model('entregaexpediente', \App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc::class);
         //oute::model('calificacio', \App\Models\SeleccionAdhoc\Calificacion::class);
 
         parent::boot();

@@ -9,13 +9,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\ProcessSentEmail;
 
-//use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
-use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
+use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
+//use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
 
 use App\Models\RevisionExpediente\EntregaExpediente;
 use App\Http\Requests\RevisionExpediente\EntregaExpedienteRequest;
 use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddRequest;
 use App\Models\Settings\EstadoExpedienteAdhoc;
+use App\Models\Settings\Convocatoria;
+use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteResource;
+//use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\ExpedienteAdhocArchivoResource;
 /*
 
 use App\Http\Requests\RegistroEntregaExpediente\EntregaExpedienteAddRequest;
@@ -37,7 +40,7 @@ class EntregaExpedienteController extends Controller
     //private $fileUploader;
 
 
-    public function __construct( ExpedienteAdhocRepositoryInterface $repository/*, FileUploader $fileUploader*/ )
+    public function __construct( EntregaExpedienteRepositoryInterface $repository/*, FileUploader $fileUploader*/ )
     {
         $this->repository = $repository;
         //$this->fileUploader = $fileUploader;
@@ -88,7 +91,7 @@ class EntregaExpedienteController extends Controller
     {
         $all = $request->all();
         $all['usuario_id'] = Auth::id();
-        $all['estado_expediente_id'] = EstadoExpedienteAdhoc::CREADO;
+        $all['estado_expediente_id'] = EntregaExpedienteResource::CREADO;
 
         $entregaExpediente = $this->repository->create( $all );
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
@@ -100,7 +103,7 @@ class EntregaExpedienteController extends Controller
         //consultar los archivos y sus observaciones
         $result = $this->repository->get( $convocatoriaId , $entregaExpediente->id );
 
-        return response()->json( new EntregaExpedienteArchivoResource( $result ) , 201 );
+        return response()->json( new EntregaExpedienteResource( $result ) , 201 );
     }
 
     /**
@@ -109,8 +112,13 @@ class EntregaExpedienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(EntregaExpediente $entregaExpediente)
+    public function show( $expedienteAdhocId )
     {
+        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
+        if (!$convocatoriaId) {
+            return [];
+        } //dd( $convocatoriaId , $expedienteAdhocId );
+        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         return response()->json( new EntregaExpedienteResource( $result ) , 200 );
     }
     /**
