@@ -4,7 +4,7 @@ namespace App\Http\Resources\RegistroExpedienteAdhoc\Archivo;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ExpedienteAdhocArchivoResource extends ResourceCollection
+class ArchivoParentCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
