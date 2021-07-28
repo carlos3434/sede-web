@@ -2,10 +2,17 @@
 namespace App\Repositories\RevisionExpediente;
 
 use App\Repositories\AbstractRepository;
+/*
 use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
 use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteExcelCollection;
 use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteCollection;
 use App\Models\RevisionExpediente\EntregaExpediente;
+*/
+
+use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
+use App\Models\RevisionExpediente\EntregaExpediente;
+use App\Http\Requests\RevisionExpediente\EntregaExpedienteRequest;
+use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddRequest;
 /**
  * 
  */

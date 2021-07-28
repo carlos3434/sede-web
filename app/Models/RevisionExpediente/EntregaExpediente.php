@@ -4,7 +4,7 @@ namespace App\Models\RevisionExpediente;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Http\Filters\RegistroAdhoc\EntregaExpedienteFilter;
+use App\Http\Filters\RevisionExpediente\EntregaExpedienteFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Traits\LogsActivity;
 

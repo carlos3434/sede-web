@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\ProcessSentEmail;
 
-use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
+//use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
+use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
+
 use App\Models\RevisionExpediente\EntregaExpediente;
 use App\Http\Requests\RevisionExpediente\EntregaExpedienteRequest;
+use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddRequest;
+use App\Models\Settings\EstadoExpedienteAdhoc;
 /*
 
 use App\Http\Requests\RegistroEntregaExpediente\EntregaExpedienteAddRequest;
@@ -33,7 +37,7 @@ class EntregaExpedienteController extends Controller
     //private $fileUploader;
 
 
-    public function __construct(EntregaExpedienteRepositoryInterface $repository/*, FileUploader $fileUploader*/ )
+    public function __construct( ExpedienteAdhocRepositoryInterface $repository/*, FileUploader $fileUploader*/ )
     {
         $this->repository = $repository;
         //$this->fileUploader = $fileUploader;
@@ -63,12 +67,14 @@ class EntregaExpedienteController extends Controller
                 $headings = true
             );
         }
-        //por defecto traer todos las EntregaExpedientees del usuario logueado
-        //$request->request->add( ['puntaje' => $request->input('puntaje', 0) ]);
-        //$request->request->add( ['filtro'  => $request->input('filtro', '>=') ]);
         //solo de la convocatoria actual
         //$request->request->add(['usuario_id' => Auth::id() ]);
-        return $this->repository->expedientes($request);
+        $request->merge(['user.dob' => 321]);
+        if (!$request->has('estado_expediente_id')) {
+            $request->request->add(['estado_expediente_id' => [3,4,5,6,7] ]);
+        }
+
+        return $this->repository->all($request);
     }
 
     /**
@@ -77,7 +83,8 @@ class EntregaExpedienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EntregaExpedienteRequest $request)
+    //public function store(EntregaExpedienteRequest $request)
+    public function store(ExpedienteAdhocAddRequest $request)
     {
         $all = $request->all();
         $all['usuario_id'] = Auth::id();

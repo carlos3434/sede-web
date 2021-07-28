@@ -23,6 +23,7 @@ use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\Expediente
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocCollection;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Settings\EstadoExpedienteAdhoc;
 
 class ExpedienteAdhocController extends Controller
 {

@@ -10,6 +10,7 @@ use App\Http\Resources\Listas\Commons\InstitucionCollection;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Http\Resources\Listas\ParaEstadosExpedienteAdhoc\ParaSolicitarExpedienteCollection;
+use App\Models\Settings\EstadoExpedienteAdhoc;
 
 class ParaEstadosExpedienteAdhocController extends Controller
 {
