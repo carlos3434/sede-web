@@ -78,7 +78,7 @@ class ExpedienteAdhocController extends Controller
     {
         $all = $request->all();
         $all['usuario_id'] = Auth::id();
-        $all['estado_expediente_id'] = 1;//CREADO
+        $all['estado_expediente_id'] = EstadoExpedienteAdhoc::CREADO;
 
         $expedienteAdhoc = $this->repository->create( $all );
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
@@ -117,7 +117,7 @@ class ExpedienteAdhocController extends Controller
         $fields = $this->storeFileField($request, $fields, 'archivo_solicitud_ht', 'archivo_solicitud_ht');
 
         $fields['fecha_solicitud_ht'] = Carbon::now()->toDateTimeString();
-        $fields['estado_expediente_id'] = 2;//HOJA DE TRAMITE
+        $fields['estado_expediente_id'] = EstadoExpedienteAdhoc::HOJATRAMITE;
 
         $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);
 
@@ -134,7 +134,7 @@ class ExpedienteAdhocController extends Controller
     {
         $fields = $request->only($request->getFillableForVerificacionAdhoc());
 
-        $fields['estado_expediente_id'] = 3;//SOLICITUD VERIFICACION
+        $fields['estado_expediente_id'] = EstadoExpedienteAdhoc::SOLICITUDVERIFICACION;
         $fields['fecha_ingreso_ht'] = Carbon::now()->toDateTimeString();
 
         $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);

@@ -5,8 +5,8 @@ use App\Repositories\AbstractRepository;
 use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocExcelCollection;
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocCollection;
-use App\Http\Resources\RegistroAdhoc\Postulacion\PostulacionCollection;
-use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
+//use App\Http\Resources\RegistroAdhoc\Postulacion\PostulacionCollection;
+//use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 /**
  * 
  */

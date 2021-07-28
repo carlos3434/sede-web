@@ -16,16 +16,22 @@ class EstadoExpedienteAdhocSeeder extends Seeder
             'nombre'      => 'CREADO',
         ]);
         EstadoExpedienteAdhoc::create([
-            'nombre'      => 'OBSERVADO',
+            'nombre'      => 'HOJA DE TRAMITE',
         ]);
         EstadoExpedienteAdhoc::create([
-            'nombre'      => 'PROGRAMADO',
+            'nombre'      => 'SOLICITUD VERIFICACION',
+        ]);
+        EstadoExpedienteAdhoc::create([
+            'nombre'      => 'OBSERVADO',
         ]);
         EstadoExpedienteAdhoc::create([
             'nombre'      => 'ENTREGADO',
         ]);
         EstadoExpedienteAdhoc::create([
             'nombre'      => 'RECIBIDO',
+        ]);
+        EstadoExpedienteAdhoc::create([
+            'nombre'      => 'PROGRAMADO',
         ]);
     }
 }

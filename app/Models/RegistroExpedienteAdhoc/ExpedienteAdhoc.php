@@ -51,12 +51,12 @@ class ExpedienteAdhoc extends Model
         return (new ExpedienteAdhocFilter($request))->filter($builder);
     }
 
-
+/*
     public static function pendientes()
     {
         return DB::select('select *  from public.expedientes_adhocs_pendientes()');
     }
-
+*/
     public function usuario()
     {
         return $this->belongsTo('App\Models\Auth\User', 'usuario_id');

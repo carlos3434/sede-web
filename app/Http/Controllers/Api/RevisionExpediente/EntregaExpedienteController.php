@@ -81,7 +81,7 @@ class EntregaExpedienteController extends Controller
     {
         $all = $request->all();
         $all['usuario_id'] = Auth::id();
-        $all['estado_expediente_id'] = 1;//CREADO
+        $all['estado_expediente_id'] = EstadoExpedienteAdhoc::CREADO;
 
         $entregaExpediente = $this->repository->create( $all );
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;

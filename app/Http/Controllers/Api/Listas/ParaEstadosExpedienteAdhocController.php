@@ -24,7 +24,7 @@ class ParaEstadosExpedienteAdhocController extends Controller
             //'esta_postulando' => Auth::user()->estaPostulando(),
             'expedientes' => new ParaSolicitarExpedienteCollection(
                 ExpedienteAdhoc::where('usuario_id', Auth::id() )
-                ->where('estado_expediente_id',1)//CREADO
+                ->where('estado_expediente_id',EstadoExpedienteAdhoc::CREADO)
                 ->orderBy('nombre_comercial', 'asc')
                 ->get()
             )
@@ -37,7 +37,7 @@ class ParaEstadosExpedienteAdhocController extends Controller
             //'esta_postulando' => Auth::user()->estaPostulando(),
             'expedientes' => new ParaSolicitarExpedienteCollection(
                 ExpedienteAdhoc::where('usuario_id', Auth::id() )
-                ->where('estado_expediente_id',2)//Hoja tramite
+                ->where('estado_expediente_id',EstadoExpedienteAdhoc::HOJATRAMITE)
                 ->orderBy('nombre_comercial', 'asc')
                 ->get()
             )
