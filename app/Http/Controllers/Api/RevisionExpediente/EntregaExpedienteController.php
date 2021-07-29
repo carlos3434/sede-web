@@ -119,7 +119,8 @@ class EntregaExpedienteController extends Controller
             return [];
         } //dd( $convocatoriaId , $expedienteAdhocId );
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
-        return response()->json( new EntregaExpedienteResource( $result ) , 200 );
+        $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
+        return response()->json( new EntregaExpedienteResource( $result , $revisiones) , 200 );
     }
     /**
      * Update the specified resource in storage.

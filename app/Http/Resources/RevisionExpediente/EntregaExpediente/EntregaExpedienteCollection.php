@@ -23,6 +23,9 @@ class EntregaExpedienteCollection extends ResourceCollection
                     "nombre_archivo"  => $archivo->nombre_archivo,
                     "slug_archivo"    => $archivo->slug_archivo,
                     "nombre_padre"    => $archivo->nombre_padre,
+                    "revision_id"    => $archivo->revision_id,
+                    "estado_revision_id"    => $archivo->estado_revision_id,
+                    "estado_revision_nombre"    => $archivo->estado_revision_nombre,
                 ]
             ];
         });

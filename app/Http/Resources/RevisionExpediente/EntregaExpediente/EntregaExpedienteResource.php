@@ -8,9 +8,11 @@ use Carbon\Carbon;
 class EntregaExpedienteResource extends JsonResource
 {
     private $result;
-    public function __construct($result)
+    private $revisiones;
+    public function __construct($result, $revisiones)
     {
         $this->result = $result;
+        $this->revisiones = $revisiones;
     }
     /**
      * Transform the resource into an array.
@@ -44,6 +46,7 @@ class EntregaExpedienteResource extends JsonResource
             'adhoc' => $this->result[0]->adhoc_nombres.' '.$this->result[0]->adhoc_apellido_paterno,
             //agregar la observacion
             //agregar cuantos son observados y cuantos admitidos
+            'revisiones' => $this->revisiones,
             'expedienteadhoc_archivo' => new EntregaExpedienteCollection( $this->result ),
         ];
     }

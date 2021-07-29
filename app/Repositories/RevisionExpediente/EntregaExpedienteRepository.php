@@ -49,7 +49,9 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                    adhoc.apellido_materno as adhoc_apellido_materno,
                    adhoc.id as adhoc_id,
 
-                   
+                   r.id as revision_id,
+                   er.id as estado_revision_id,
+                   er.nombre as estado_revision_nombre,
 
                    ( SELECT count(id) AS total 
                        FROM archivos 
@@ -76,10 +78,20 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
 
             WHERE eaa.id = ? and a.convocatoria_id = ?
 
-            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id, r.id
+            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id, r.id, er.id
             ORDER BY padre.id;",
             [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
         );
+    }
+    public function getRevisiones($expedienteAdhocId)
+    {
+        return \DB::table('expedienteadhoc_archivo as ea')
+        ->select('r.estado_revision_id','er.nombre AS estado_revision',\DB::raw('count( r.id ) AS total'))
+        ->join('revisiones as r', 'ea.id', '=', 'r.expedienteadhoc_archivo_id')
+        ->join('estado_revision as er', 'r.estado_revision_id', '=', 'er.id')
+        ->where('ea.expedienteadhoc_id', $expedienteAdhocId)
+        ->groupBy('r.estado_revision_id','er.id' )
+        ->get();
     }
     public function expedientes()
     {
