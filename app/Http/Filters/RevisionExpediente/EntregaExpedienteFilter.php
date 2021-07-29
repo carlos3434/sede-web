@@ -1,21 +1,20 @@
 <?php
 namespace App\Http\Filters\RevisionExpediente;
 
-
 use App\Http\Filters\AbstractFilter;
-use App\Http\Filters\Commons\UsuarioFilter;
-use App\Http\Filters\Commons\FechaFilter;
-use App\Http\Filters\Commons\ConvocatoriaFilter;
-use App\Http\Filters\Commons\SedeRegistralFilter;
+use App\Http\Filters\RevisionExpediente\EntregaExpediente\FechaEntregaFilter;
+use App\Http\Filters\RevisionExpediente\EntregaExpediente\FechaRecepcionFilter;
+use App\Http\Filters\RevisionExpediente\EntregaExpediente\ExpedienteAdhocFilter;
+use App\Http\Filters\RevisionExpediente\EntregaExpediente\UsuarioAsignadorFilter;
+use App\Http\Filters\RevisionExpediente\EntregaExpediente\AcreditacionFilter;
 
 class EntregaExpedienteFilter extends AbstractFilter
 {
     protected $filters = [
-        /*
-        'usuario_id'        => UsuarioFilter::class,
-        'convocatoria_id'   => ConvocatoriaFilter::class,
-        'sede_registral_id' => SedeRegistralFilter::class,
-        'fecha'             => FechaFilter::class,
-    */
+        'fecha_entrega'        => FechaEntregaFilter::class,
+        'fecha_recepcion'      => FechaRecepcionFilter::class,
+        'expediente_adhoc_id'  => ExpedienteAdhocFilter::class,
+        'usuario_asignador_id' => UsuarioAsignadorFilter::class,
+        'acreditacion_id'      => AcreditacionFilter::class,
     ];
 }

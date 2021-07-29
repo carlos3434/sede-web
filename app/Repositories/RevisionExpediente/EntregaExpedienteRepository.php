@@ -50,6 +50,7 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                    adhoc.id as adhoc_id,
 
                    r.id as revision_id,
+                   ea.id AS expedienteadhoc_archivo_id,
                    er.id as estado_revision_id,
                    er.nombre as estado_revision_nombre,
 

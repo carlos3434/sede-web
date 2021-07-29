@@ -26,10 +26,11 @@ class EntregaExpedienteCollection extends ResourceCollection
                     "revision_id"    => $archivo->revision_id,
                     "estado_revision_id"    => $archivo->estado_revision_id,
                     "estado_revision_nombre"    => $archivo->estado_revision_nombre,
+                    "expedienteadhoc_archivo_id"    => $archivo->expedienteadhoc_archivo_id,
                 ]
             ];
         });
-
+        $response = [];
         foreach ($grouped as $key => $value) {
             $nombre ='';
             if (isset($value[0]['nombre_padre'])) {

@@ -81,7 +81,7 @@ Route::prefix('v1')->group(function(){
         //Revisión de expediente Adhoc
         Route::get('entregaexpediente','Api\RevisionExpediente\EntregaExpedienteController@index');
         Route::get('entregaexpediente/{id}','Api\RevisionExpediente\EntregaExpedienteController@show');
-        //Route::apiResource('entregaexpediente','Api\RevisionExpediente\EntregaExpedienteController');
+        Route::apiResource('revision','Api\RevisionExpediente\RevisionController');
 
 
         //Diligencia y formulación del informe Adhoc

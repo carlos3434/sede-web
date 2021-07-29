@@ -54,6 +54,8 @@ use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositor
 //Revision expediente adhoc
 use App\Repositories\RevisionExpediente\EntregaExpedienteRepository;
 use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
+use App\Repositories\RevisionExpediente\RevisionRepository;
+use App\Repositories\RevisionExpediente\Interfaces\RevisionRepositoryInterface;
 
 
 use App\Repositories\AbstractRepository;
@@ -98,6 +100,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
         //Revisión de expediente Adhoc
         $this->app->bind( EntregaExpedienteRepositoryInterface::class, EntregaExpedienteRepository::class );
+        $this->app->bind( RevisionRepositoryInterface::class, RevisionRepository::class );
 
         //Diligencia y formulación del informe Adhoc
 

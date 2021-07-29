@@ -70,14 +70,12 @@ class EntregaExpedienteController extends Controller
                 $headings = true
             );
         }
-        //solo de la convocatoria actual
-        //$request->request->add(['usuario_id' => Auth::id() ]);
-        $request->merge(['user.dob' => 321]);
+
         if (!$request->has('estado_expediente_id')) {
             $request->request->add(['estado_expediente_id' => [3,4,5,6,7] ]);
         }
 
-        return $this->repository->all($request);
+        return $this->repository->expedientes($request);
     }
 
     /**

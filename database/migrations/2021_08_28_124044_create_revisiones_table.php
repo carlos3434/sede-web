@@ -15,9 +15,9 @@ class CreateRevisionesTable extends Migration
     {
         Schema::create('revisiones', function (Blueprint $table) {
             $table->id();
-            $table->text('observacion');
-            $table->dateTime('fecha_revision');
-            $table->dateTime('fecha_subsanacion');
+            $table->text('observacion')->nullable();
+            $table->dateTime('fecha_revision')->nullable();
+            $table->dateTime('fecha_subsanacion')->nullable();
 
             $table->foreignId('estado_revision_id');
             $table->foreignId('expedienteadhoc_archivo_id');
