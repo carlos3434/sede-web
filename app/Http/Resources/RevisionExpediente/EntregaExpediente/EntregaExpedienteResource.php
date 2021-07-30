@@ -44,6 +44,13 @@ class EntregaExpedienteResource extends JsonResource
             'adhoc_apellido_paterno' => $this->result[0]->adhoc_apellido_paterno,
             'adhoc_apellido_materno' => $this->result[0]->adhoc_apellido_materno,
             'adhoc' => $this->result[0]->adhoc_nombres.' '.$this->result[0]->adhoc_apellido_paterno,
+
+            'entregas_expediente_id' => $this->result[0]->entregas_expediente_id,
+            'fecha_entrega' => $this->result[0]->fecha_entrega,
+            'fecha_recepcion' => $this->result[0]->fecha_recepcion,
+            'cenepred_nombres' => $this->result[0]->cenepred_nombres,
+            'cenepred_apellido_paterno' => $this->result[0]->cenepred_apellido_paterno,
+            'cenepred_apellido_materno' => $this->result[0]->cenepred_apellido_materno,
             //agregar la observacion
             //agregar cuantos son observados y cuantos admitidos
             'revisiones' => $this->revisiones,

@@ -10,29 +10,13 @@ use Illuminate\Support\Facades\Mail;
 use App\Jobs\ProcessSentEmail;
 
 use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
-//use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
 
 use App\Models\RevisionExpediente\EntregaExpediente;
 use App\Http\Requests\RevisionExpediente\EntregaExpedienteRequest;
-use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddRequest;
 use App\Models\Settings\EstadoExpedienteAdhoc;
+use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Models\Settings\Convocatoria;
 use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteResource;
-//use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\ExpedienteAdhocArchivoResource;
-/*
-
-use App\Http\Requests\RegistroEntregaExpediente\EntregaExpedienteAddRequest;
-use App\Http\Requests\RegistroEntregaExpediente\EntregaExpedienteUpdateRequest;
-use App\Http\Requests\RegistroEntregaExpediente\EntregaExpedienteAddHojaTramiteRequest;
-use App\Http\Requests\RegistroEntregaExpediente\EntregaExpedienteAddVerificacionAdhocRequest;
-use App\Models\Settings\Convocatoria;
-use App\Mail\SolicitarHojaTramite;
-use App\Models\RegistroEntregaExpediente\Archivo;
-use App\Http\Resources\RegistroEntregaExpediente\EntregaExpedienteArchivo\EntregaExpedienteArchivoCollection;
-use App\Http\Resources\RegistroEntregaExpediente\EntregaExpedienteArchivo\EntregaExpedienteArchivoResource;
-use App\Http\Resources\RegistroEntregaExpediente\EntregaExpediente\EntregaExpedienteCollection;
-use App\Models\RegistroEntregaExpediente\EntregaExpedienteArchivos;
-*/
 
 class EntregaExpedienteController extends Controller
 {
@@ -50,8 +34,6 @@ class EntregaExpedienteController extends Controller
         $this->middleware(['role_or_permission:ADMINISTRADOR|EXPEDIENTE_ADHOC_EDIT'])->only(['edit','update']);
         $this->middleware(['role_or_permission:ADMINISTRADOR|EXPEDIENTE_ADHOC_SHOW'])->only('show');
         $this->middleware(['role_or_permission:ADMINISTRADOR|EXPEDIENTE_ADHOC_DESTROY'])->only('destroy');*/
-        //mostrarEntregaExpedienteesUsuarioActual
-
 
     }
 
@@ -85,23 +67,25 @@ class EntregaExpedienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     //public function store(EntregaExpedienteRequest $request)
-    public function store(ExpedienteAdhocAddRequest $request)
+    public function store(EntregaExpedienteRequest $request)
     {
         $all = $request->all();
-        $all['usuario_id'] = Auth::id();
-        $all['estado_expediente_id'] = EntregaExpedienteResource::CREADO;
-
+        $all['usuario_asignador_id'] = Auth::id();
+        $all['fecha_entrega'] = date("Y-m-d");
+        $expedienteAdhocId = $request->get('expediente_adhoc_id');
         $entregaExpediente = $this->repository->create( $all );
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
-        if ($convocatoriaId) {
-            //traer todos los archivos de la actual convocatoria
-            $archivos = Archivo::GetArchivosByConvocatoriaId( $convocatoriaId );
-            $entregaExpediente->EntregaExpedienteArchivos()->createMany( $archivos->toArray() );
+        if (!$convocatoriaId) {
+            return [];
         }
-        //consultar los archivos y sus observaciones
-        $result = $this->repository->get( $convocatoriaId , $entregaExpediente->id );
+        //cambiar el estado del expediente a Entregado
+        $expedienteAdhoc = ExpedienteAdhoc::find($expedienteAdhocId);
+        $expedienteAdhoc->update(['estado_expediente_id' => EstadoExpedienteAdhoc::ENTREGADO]);
+         
 
-        return response()->json( new EntregaExpedienteResource( $result ) , 201 );
+        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
+        $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
+        return response()->json( new EntregaExpedienteResource( $result , $revisiones ) , 201 );
     }
 
     /**
@@ -115,7 +99,7 @@ class EntregaExpedienteController extends Controller
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
         if (!$convocatoriaId) {
             return [];
-        } //dd( $convocatoriaId , $expedienteAdhocId );
+        }
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
         return response()->json( new EntregaExpedienteResource( $result , $revisiones) , 200 );
@@ -127,7 +111,7 @@ class EntregaExpedienteController extends Controller
      * @param  \App\EntregaExpediente  $entregaExpediente
      * @return \Illuminate\Http\Response
      */
-    public function update(EntregaExpedienteRequest $request, EntregaExpediente $entregaExpediente)
+    /*public function update(EntregaExpedienteRequest $request, EntregaExpediente $entregaExpediente)
     {
         $all = $request->all();
         if ($request->has('archivo')) {
@@ -149,7 +133,7 @@ class EntregaExpedienteController extends Controller
 
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $entregaExpediente->id );
         return response()->json( new EntregaExpedienteArchivoResource( $result ) , 200 );
-    }
+    }*/
 
     /**
      * Remove the specified resource from storage.
@@ -157,12 +141,12 @@ class EntregaExpedienteController extends Controller
      * @param  \App\EntregaExpediente  $entregaExpediente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EntregaExpediente $entregaExpediente)
+    /*public function destroy(EntregaExpediente $entregaExpediente)
     {
         //primero eliminar los archivos relacionados EntregaExpedienteArchivos
         $entregaExpediente->archivos()->detach();
         $this->repository->deleteOne($entregaExpediente);
         return response()->json(null, 204);
-    }
+    }*/
 
 }

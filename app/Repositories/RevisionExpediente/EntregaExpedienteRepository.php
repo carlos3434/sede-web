@@ -49,6 +49,16 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                    adhoc.apellido_materno as adhoc_apellido_materno,
                    adhoc.id as adhoc_id,
 
+                   eee.id AS entregas_expediente_id,
+                   eee.fecha_entrega,
+                   eee.fecha_recepcion,
+
+                   cenepred.nombres as cenepred_nombres,
+                   cenepred.apellido_paterno as cenepred_apellido_paterno,
+                   cenepred.apellido_materno as cenepred_apellido_materno,
+                   cenepred.id as cenepred_id,
+
+
                    r.id as revision_id,
                    ea.id AS expedienteadhoc_archivo_id,
                    er.id as estado_revision_id,
@@ -72,14 +82,15 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
 
             RIGHT JOIN archivos AS a on ea.archivo_id = a.id
             JOIN archivos AS padre on a.parent_id = padre.id 
-            LEFT JOIN entregas_expedientes AS eee ON ea.id = eee.expediente_adhoc_id
+            LEFT JOIN entregas_expedientes AS eee ON eaa.id = eee.expediente_adhoc_id
             LEFT JOIN acreditaciones AS aa ON eee.acreditacion_id = aa.id
             LEFT JOIN calificaciones AS c ON aa.calificacion_id = c.id
             LEFT JOIN users AS adhoc ON c.usuario_id = adhoc.id
+            LEFT JOIN users as cenepred ON eee.usuario_asignador_id = cenepred.id
 
             WHERE eaa.id = ? and a.convocatoria_id = ?
 
-            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id, r.id, er.id
+            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id, r.id, er.id, eee.id, cenepred.id
             ORDER BY padre.id;",
             [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
         );
@@ -110,12 +121,15 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
             'eee.fecha_entrega',
             'u.nombres as administrado_nombres',
             'u.apellido_paterno as administrado_apellido_paterno',
-            'u.apellido_materno as administrado_apellido_paterno',
+            'u.apellido_materno as administrado_apellido_materno',
             'u.id as administrado_id',
             'adhoc.nombres AS adhoc_nombres',
             'adhoc.apellido_paterno as adhoc_apellido_paterno',
             'adhoc.apellido_materno as adhoc_apellido_materno',
             'adhoc.id as adhoc_id',
+            'ea.fecha_solicitud_ht',
+            'ea.fecha_ingreso_ht',
+            'ea.distrito_id',
             'cenepred.nombres as cenepred_nombres',
             'cenepred.apellido_paterno as cenepred_apellido_paterno',
             'cenepred.apellido_materno as cenepred_apellido_materno',
