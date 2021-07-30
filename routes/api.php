@@ -125,6 +125,7 @@ Route::prefix('v1')->group(function(){
         Route::get('listasParaPuntaje','Api\Listas\ParaPuntajeController@index');
         Route::get('listasParaSolicitarHojaTramite','Api\Listas\ParaEstadosExpedienteAdhocController@hojaTramite');
         Route::get('listasParaSolicitarVerificacion','Api\Listas\ParaEstadosExpedienteAdhocController@verificacion');
+        Route::get('listasParaEntregaExpediente','Api\Listas\ParaEntregaExpedienteController@index');
         //Route::get('listasParaPuntaje','Api\Listas\ParaPuntajeController@index');
 
         //documentos 
