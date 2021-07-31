@@ -14,41 +14,35 @@ class EntregaExpedienteCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $grouped = $this->collection->mapToGroups(function ($archivo, $key) {
+        return $this->collection->transform( function ($expedienteAdhoc) {
+
             return [
-                $archivo->slug_padre  => 
-                [
-                    "valor_archivo"   => $archivo->valor_archivo,
-                    "id_archivo"      => $archivo->archivo_id,
-                    "nombre_archivo"  => $archivo->nombre_archivo,
-                    "slug_archivo"    => $archivo->slug_archivo,
-                    "nombre_padre"    => $archivo->nombre_padre,
-                    "revision_id"    => $archivo->revision_id,
-                    "estado_revision_id"    => $archivo->estado_revision_id,
-                    "estado_revision_nombre"    => $archivo->estado_revision_nombre,
-                    "expedienteadhoc_archivo_id"    => $archivo->expedienteadhoc_archivo_id,
-                ]
+                "id" => $expedienteAdhoc->id,
+                "nombre_comercial" => $expedienteAdhoc->nombre_comercial,
+                "direccion" => $expedienteAdhoc->direccion,
+                "estado_expediente" => $expedienteAdhoc->estado_expediente,
+                "estado_id" => $expedienteAdhoc->estado_id,
+                "fecha_entrega" => $expedienteAdhoc->fecha_entrega,
+                "administrado_nombres" => $expedienteAdhoc->administrado_nombres,
+                "administrado_apellido_paterno" => $expedienteAdhoc->administrado_apellido_paterno,
+                "administrado_apellido_materno" => $expedienteAdhoc->administrado_apellido_materno,
+                "administrado_id" => $expedienteAdhoc->administrado_id,
+                "adhoc_nombres" => $expedienteAdhoc->adhoc_nombres,
+                "adhoc_apellido_paterno" => $expedienteAdhoc->adhoc_apellido_paterno,
+                "adhoc_apellido_materno" => $expedienteAdhoc->adhoc_apellido_materno,
+                "adhoc_id" => $expedienteAdhoc->adhoc_id,
+                "fecha_solicitud_ht" => $expedienteAdhoc->fecha_solicitud_ht,
+                "fecha_ingreso_ht" => $expedienteAdhoc->fecha_ingreso_ht,
+                "distrito_id" => $expedienteAdhoc->distrito_id,
+                "provincia_id" => $expedienteAdhoc->provincia_id,
+                "departamento_id" => $expedienteAdhoc->departamento_id,
+               // "ubigeo" => $expedienteAdhoc->ubigeo,
+                "departamento_nombre" => $expedienteAdhoc->departamento_nombre,
+                "cenepred_nombres" => $expedienteAdhoc->cenepred_nombres,
+                "cenepred_apellido_paterno" => $expedienteAdhoc->cenepred_apellido_paterno,
+                "cenepred_apellido_materno" => $expedienteAdhoc->cenepred_apellido_materno,
+                "cenepred_id" => $expedienteAdhoc->cenepred_id,
             ];
         });
-        $response = [];
-        foreach ($grouped as $key => $value) {
-            $nombre ='';
-            if (isset($value[0]['nombre_padre'])) {
-                $nombre = $value[0]['nombre_padre'];
-            }
-            $response[$key] = [
-                'nombre' => $nombre,
-                'estadisticas' => [
-                    'completados' => $grouped->get( $key )->filter(function($item)
-                        {
-                            if($item['valor_archivo']) return $item;
-                        })->count(),
-                    'total' => $grouped->get( $key )->count(),
-                ],
-                'archivos' => $grouped->get( $key )->all(),
-            ];
-
-        }
-        return  $response ;
     }
 }

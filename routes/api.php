@@ -86,6 +86,7 @@ Route::prefix('v1')->group(function(){
 
 
         //Diligencia y formulación del informe Adhoc
+        
 
         //Notificación del informe Adhoc
 

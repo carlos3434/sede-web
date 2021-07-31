@@ -88,4 +88,9 @@ abstract class AbstractFilter
         return $this->builder->count();
     }
 
+    public function toSql()
+    {
+        return $this->builder->toSql();
+    }
+
 }

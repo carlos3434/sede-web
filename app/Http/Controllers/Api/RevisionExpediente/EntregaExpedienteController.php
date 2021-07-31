@@ -18,13 +18,12 @@ use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Models\Settings\Convocatoria;
 use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteResource;
 
+use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteCollection;
 class EntregaExpedienteController extends Controller
 {
     private $repository;
-    //private $fileUploader;
 
-
-    public function __construct( EntregaExpedienteRepositoryInterface $repository/*, FileUploader $fileUploader*/ )
+    public function __construct( EntregaExpedienteRepositoryInterface $repository)
     {
         $this->repository = $repository;
         //$this->fileUploader = $fileUploader;
@@ -66,7 +65,6 @@ class EntregaExpedienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    //public function store(EntregaExpedienteRequest $request)
     public function store(EntregaExpedienteRequest $request)
     {
         $all = $request->all();
@@ -74,15 +72,15 @@ class EntregaExpedienteController extends Controller
         $all['fecha_entrega'] = date("Y-m-d");
         $expedienteAdhocId = $request->get('expediente_adhoc_id');
         $entregaExpediente = $this->repository->create( $all );
-        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
-        if (!$convocatoriaId) {
-            return [];
-        }
+
         //cambiar el estado del expediente a Entregado
         $expedienteAdhoc = ExpedienteAdhoc::find($expedienteAdhocId);
         $expedienteAdhoc->update(['estado_expediente_id' => EstadoExpedienteAdhoc::ENTREGADO]);
          
-
+        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
+        if (!$convocatoriaId) {
+            return [];
+        }
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
         return response()->json( new EntregaExpedienteResource( $result , $revisiones ) , 201 );
