@@ -53,9 +53,10 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                    cenepred.apellido_materno as cenepred_apellido_materno,
                    cenepred.id as cenepred_id,
 
+                   CONCAT( administrado.nombres , ' ',administrado.apellido_materno ) as administrado_full_name,
+                   administrado.celular as administrado_celular,
 
                    r.id as revision_id,
-                   ea.id AS expedienteadhoc_archivo_id,
                    er.id as estado_revision_id,
                    er.nombre as estado_revision_nombre,
 
@@ -63,6 +64,7 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                        FROM archivos 
                        WHERE convocatoria_id = ? and level = 2 
                     )   AS total,
+
                    ( SELECT count(id) AS completados 
                        FROM expedienteadhoc_archivo 
                        WHERE expedienteadhoc_id = ? 
@@ -80,12 +82,13 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
             LEFT JOIN entregas_expedientes AS eee ON eaa.id = eee.expediente_adhoc_id
             LEFT JOIN acreditaciones AS aa ON eee.acreditacion_id = aa.id
             LEFT JOIN calificaciones AS c ON aa.calificacion_id = c.id
+            LEFT JOIN users AS administrado ON eaa.usuario_id = administrado.id
             LEFT JOIN users AS adhoc ON c.usuario_id = adhoc.id
             LEFT JOIN users as cenepred ON eee.usuario_asignador_id = cenepred.id
 
             WHERE eaa.id = ? and a.convocatoria_id = ?
 
-            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id, r.id, er.id, eee.id, cenepred.id
+            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id, r.id, er.id, eee.id, cenepred.id, administrado.id
             ORDER BY padre.id;",
             [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
         );
@@ -121,6 +124,8 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                 'u.nombres as administrado_nombres',
                 'u.apellido_paterno as administrado_apellido_paterno',
                 'u.apellido_materno as administrado_apellido_materno',
+               // \DB::raw("CONCAT( u.nombres , ' ',u.apellido_materno ) as administrado_full_name"),
+               // 'u.celular as administrado_celular',
                 'u.id as administrado_id',
                 'adhoc.nombres AS adhoc_nombres',
                 'adhoc.apellido_paterno as adhoc_apellido_paterno',

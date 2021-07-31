@@ -51,10 +51,12 @@ class EntregaExpedienteResource extends JsonResource
             'cenepred_nombres' => $this->result[0]->cenepred_nombres,
             'cenepred_apellido_paterno' => $this->result[0]->cenepred_apellido_paterno,
             'cenepred_apellido_materno' => $this->result[0]->cenepred_apellido_materno,
+            'administrado_full_name' => $this->result[0]->administrado_full_name,
+            'administrado_celular' => $this->result[0]->administrado_celular,
             //agregar la observacion
             //agregar cuantos son observados y cuantos admitidos
             'revisiones' => $this->revisiones,
-            'expedienteadhoc_archivo' => new EntregaExpedienteCollection( $this->result ),
+            'expedienteadhoc_archivo' => new ArchivoCollection( $this->result )
         ];
     }
 }

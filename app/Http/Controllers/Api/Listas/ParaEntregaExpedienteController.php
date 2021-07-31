@@ -32,7 +32,7 @@ class ParaEntregaExpedienteController extends Controller
 
             'acreditaciones' => new AcreditacionCollection(Acreditacion::all()),//Acreditacion
             'estado_expediente' => new EstadoExpedienteAdhocCollection(EstadoExpedienteAdhoc::all()),//EstadoExpedienteAdhoc
-            'estado_revision' => new EstadoRevisionCollection(EstadoRevision::all()),//EstadoRevision
+            'estado_revision' => new EstadoRevisionCollection(EstadoRevision::whereIn('id',[EstadoRevision::OBSERVADO, EstadoRevision::ADMITIDO])->get()),//EstadoRevision
 
         ];
         return response()->json($response, 200);
