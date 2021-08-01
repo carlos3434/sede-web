@@ -63,7 +63,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                 'cenepred.apellido_paterno as cenepred_apellido_paterno',
                 'cenepred.apellido_materno as cenepred_apellido_materno',
                 'cenepred.id as cenepred_id',
-                'd.fecha',
+                'd.fecha as fecha_diligencia',
                 'd.anexo8',
                 'd.anexo9',
                 'd.anexo10'

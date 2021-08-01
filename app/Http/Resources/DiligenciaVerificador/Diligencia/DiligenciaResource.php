@@ -41,7 +41,7 @@ class DiligenciaResource extends JsonResource
             'cenepred_apellido_paterno' => $this->cenepred_apellido_paterno,
             'cenepred_apellido_materno' => $this->cenepred_apellido_materno,
             'cenepred_id' => $this->cenepred_id,
-            'fecha' => $this->fecha,
+            'fecha_diligencia' => $this->fecha_diligencia,
             'anexo8' => $this->anexo8,
             'anexo9' => $this->anexo9,
             'anexo10' => $this->anexo10,

@@ -16,9 +16,6 @@ use App\Http\Requests\RevisionExpediente\EntregaExpedienteRequest;
 use App\Models\Settings\EstadoExpedienteAdhoc;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Models\Settings\Convocatoria;
-//use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteResource;
-
-//use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteCollection;
 
 class DiligenciaVerificadorController extends Controller
 {
@@ -54,7 +51,7 @@ class DiligenciaVerificadorController extends Controller
         }
 
         if (!$request->has('estado_expediente_id')) {
-            $request->request->add(['estado_expediente_id' => [3,4,5,6,7] ]);
+            $request->request->add(['estado_expediente_id' => [5,6,7] ]);
         }
         $request->request->add(['verificador_id' => Auth::id() ]);//usuario verificador adhoc
         //$request->request->add(['acreditacion_id' => 2 ]);//usuario verificador adhoc
