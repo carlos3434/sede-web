@@ -10,6 +10,11 @@ use App\Http\Filters\RevisionExpediente\EntregaExpediente\AcreditacionFilter;
 
 class EntregaExpedienteFilter extends AbstractFilter
 {
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+        dd($this->request);
+    }
     protected $filters = [
         'fecha_entrega'        => FechaEntregaFilter::class,
         'fecha_recepcion'      => FechaRecepcionFilter::class,

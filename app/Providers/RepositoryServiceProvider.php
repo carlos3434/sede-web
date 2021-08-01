@@ -57,6 +57,10 @@ use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryIn
 use App\Repositories\RevisionExpediente\RevisionRepository;
 use App\Repositories\RevisionExpediente\Interfaces\RevisionRepositoryInterface;
 
+//Diligencia
+use App\Repositories\DiligenciaVerificador\DiligenciaRepository;
+use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterface;
+
 
 use App\Repositories\AbstractRepository;
 use App\Repositories\RepositoryInterface;
@@ -103,6 +107,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind( RevisionRepositoryInterface::class, RevisionRepository::class );
 
         //Diligencia y formulación del informe Adhoc
+        $this->app->bind( DiligenciaRepositoryInterface::class, DiligenciaRepository::class );
 
         //Notificación del informe Adhoc
 

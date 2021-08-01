@@ -66,6 +66,11 @@ class ExpedienteAdhoc extends Model
         return $this->hasMany('App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos', 'expedienteadhoc_id');
     }
 
+    public function diligencia()
+    {
+        return $this->hasMany('App\Models\DiligenciaVerificador\Diligencia', 'diligencia_id');
+    }
+
     /**
      * para tabla pivot 
      */
