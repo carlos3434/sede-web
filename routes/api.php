@@ -85,12 +85,13 @@ Route::prefix('v1')->group(function(){
         Route::apiResource('revision','Api\RevisionExpediente\RevisionController');
 
 
-        //Diligencia y formulación del informe Adhoc
-        
+        //7 Diligencia y formulación del informe Adhoc ( Usuario adhoc)
+        Route::get('diligencia','Api\RevisionExpediente\diligenciaController@index');
 
-        //Notificación del informe Adhoc
 
-        //Recepcion y descarga del informe Adhoc
+        //8 Notificación del informe Adhoc 
+
+        //9 Recepcion y descarga del informe Adhoc
 
         //Reportes
         Route::get('listasParaPostulantesAdhoc','Api\Reportes\PostulantesAdhocController@listas');

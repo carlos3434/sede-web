@@ -8,6 +8,8 @@ use App\Models\RevisionExpediente\EntregaExpediente;
 use App\Http\Requests\RevisionExpediente\EntregaExpedienteRequest;
 use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddRequest;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
+use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos;
+use App\Models\RevisionExpediente\Revision;
 /**
  * 
  */
@@ -31,7 +33,7 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
             SELECT eaa.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
                    eaa.monto , eaa.nombre_banco , eaa.numero_operacion  ,
                    eaa.fecha_operacion , eaa.agencia ,  eaa.distrito_id ,
-                   eaa.recibo_pago, eaa.archivo_solicitud_ht,
+                   eaa.recibo_pago, eaa.archivo_solicitud_ht, eaa.ht,
 
                    ee.id as estado_expediente_id, ee.nombre as estado_expediente_nombre,
 
@@ -58,7 +60,7 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
 
                    r.id as revision_id,
                    er.id as estado_revision_id,
-                   er.nombre as estado_revision_nombre,
+                   er.nombre as estado_revision_nombre, 
 
                    ( SELECT count(id) AS total 
                        FROM archivos 
@@ -74,7 +76,13 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
             JOIN estado_expediente AS ee on eaa.estado_expediente_id = ee.id
             LEFT JOIN expedienteadhoc_archivo AS ea on eaa.id = ea.expedienteadhoc_id
 
-            LEFT JOIN revisiones AS r ON ea.id = r.expedienteadhoc_archivo_id
+            left join (
+                select max(r.id) as revision_id , r.expedienteadhoc_archivo_id 
+                from revisiones r
+                group by r.expedienteadhoc_archivo_id 
+            ) rr on ea.id = rr.expedienteadhoc_archivo_id
+
+            LEFT JOIN revisiones AS r ON rr.revision_id = r.id
             LEFT JOIN estado_revision AS er ON r.estado_revision_id = er.id
 
             RIGHT JOIN archivos AS a on ea.archivo_id = a.id
@@ -95,9 +103,16 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
     }
     public function getRevisiones($expedienteAdhocId)
     {
-        return \DB::table('expedienteadhoc_archivo as ea')
+         $revisiones = Revision::from('revisiones as r')
+                   ->select('r.expedienteadhoc_archivo_id', \DB::raw('max(r.id) as revision_id'))
+                   ->groupBy('r.expedienteadhoc_archivo_id');
+
+        return ExpedienteAdhocArchivos::from('expedienteadhoc_archivo as ea')
         ->select('r.estado_revision_id','er.nombre AS estado_revision',\DB::raw('count( r.id ) AS total'))
-        ->join('revisiones as r', 'ea.id', '=', 'r.expedienteadhoc_archivo_id')
+        ->joinSub( $revisiones, 'rr', function ($join) {
+            $join->on('ea.id', '=', 'rr.expedienteadhoc_archivo_id');
+        })
+        ->join('revisiones as r', 'rr.revision_id', '=', 'r.id')
         ->join('estado_revision as er', 'r.estado_revision_id', '=', 'er.id')
         ->where('ea.expedienteadhoc_id', $expedienteAdhocId)
         ->groupBy('r.estado_revision_id','er.id' )
@@ -124,8 +139,6 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                 'u.nombres as administrado_nombres',
                 'u.apellido_paterno as administrado_apellido_paterno',
                 'u.apellido_materno as administrado_apellido_materno',
-               // \DB::raw("CONCAT( u.nombres , ' ',u.apellido_materno ) as administrado_full_name"),
-               // 'u.celular as administrado_celular',
                 'u.id as administrado_id',
                 'adhoc.nombres AS adhoc_nombres',
                 'adhoc.apellido_paterno as adhoc_apellido_paterno',

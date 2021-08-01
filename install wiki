@@ -32,8 +32,11 @@ https://blog.marco-marassi.com/posts/laravel-passport-heroku-oauth-private-key-d
 
 login to heroku
 
+
+
 heroku ps:exec -a sede-web
 heroku logs --dyno=supervisor
+heroku logs --app=sede-web -t
 heroku config  --app=sede-web | grep REDIS
 heroku redis:cli -a sede-web -c sede-web 
 
