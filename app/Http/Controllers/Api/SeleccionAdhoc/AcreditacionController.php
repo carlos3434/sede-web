@@ -48,6 +48,11 @@ class AcreditacionController extends Controller
 
         $all['usuario_id'] = Auth::id();
         $all['fecha'] = date("Y-m-d");
+        //validar si tiene puntaje
+        $puntaje = $this->repository->sumPuntajeByCalificacionId($request->calificacion_id);
+        if ($puntaje==0) {
+            return response()->json(['message' => "No se puede acreditar la postulacion cuando la suma de los puntajes es cero" ], 422);
+        }
         //validar si ya se registro acreditacion
         $acreditacion = [];
         $acreditaionDB = $this->repository->countByCalificacionId($request->calificacion_id);

@@ -16,7 +16,7 @@ return [
     'alpha_spaces'          => 'El campo :attribute sólo puede contener letters and spaces.',
     'tipo_documento_identidad'       => 'El campo :attribute solo puede ser Ruc cuando el tipo de Documento Pago es Factura.',
     'numero_documento_identidad'       => 'La longitud del :campo no concide con el tipo de documento de identidad.',
-    'alpha_num_spaces'         => 'El campo sólo puede contener alpha-numeric characters, spaces, underscores, and dashes.',
+    'alpha_num_spaces'         => 'El campo sólo puede contener letras, numeros, spacios, guines, puntos, comas y barras.',
 
     'accepted'              => 'El campo :attribute debe ser aceptado.',
     'active_url'            => 'El campo :attribute no es una URL válida.',

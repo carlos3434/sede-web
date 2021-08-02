@@ -6,6 +6,7 @@ use App\Repositories\SeleccionAdhoc\Interfaces\AcreditacionRepositoryInterface;
 use App\Http\Resources\SeleccionAdhoc\Acreditacion\AcreditacionExcelCollection;
 use App\Http\Resources\SeleccionAdhoc\Acreditacion\AcreditacionCollection;
 use App\Models\SeleccionAdhoc\Acreditacion;
+use App\Models\SeleccionAdhoc\Puntaje;
 /**
  * 
  */
@@ -20,6 +21,10 @@ class AcreditacionRepository extends AbstractRepository implements AcreditacionR
     public function countByCalificacionId($calificacion_id)
     {
         return Acreditacion::where('calificacion_id',$calificacion_id)->count();
+    }
+    public function sumPuntajeByCalificacionId($calificacion_id)
+    {
+        return Puntaje::where('calificacion_id',$calificacion_id)->sum('puntaje');
     }
     public function allToExport($request)
     {

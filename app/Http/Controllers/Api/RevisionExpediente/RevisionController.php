@@ -8,6 +8,7 @@ use App\Http\Requests\RevisionExpediente\RevisionRequest;
 use App\Repositories\RevisionExpediente\Interfaces\RevisionRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
+use App\Models\Settings\EstadoRevision;
 
 class RevisionController extends Controller
 {
@@ -44,8 +45,31 @@ class RevisionController extends Controller
     public function store(RevisionRequest $request)
     {
         $all = $request->all();
-        //$all['usuario_id'] = Auth::id();
-        //$all = $this->storeFile($request, $all, 'Revision', 'archivo_titulo');
+        //validar si el ultimo estado de revision es igual al que se intenta ingresar
+        $revisionDB = $this->repository->getEstadoRevisionByArchivoId( $request->expedienteadhoc_archivo_id );
+
+        if (isset($revisionDB->estado_revision_id) ) {
+            if ($revisionDB->estado_revision_id == $request->estado_revision_id) {
+                return response()->json(['message' => "Ya se encuentra registrado una revision para este archivo" ], 422);
+            }
+            //validar que no se registre revision excepto en los iguientes casos
+            //observado => admitido  no
+            if ( $revisionDB->estado_revision_id == EstadoRevision::OBSERVADO &&
+                 $request->estado_revision_id == EstadoRevision::ADMITIDO ) {
+                return response()->json(['message' => "No se puede admitir un archivo observado" ], 422);
+            }
+            //admitido  => observado no
+            if ( $revisionDB->estado_revision_id == EstadoRevision::ADMITIDO &&
+                 $request->estado_revision_id == EstadoRevision::OBSERVADO ) {
+                return response()->json(['message' => "No se puede observar un archivo admitido" ], 422);
+            }
+            //admitido  => subsanado no
+            if ( $revisionDB->estado_revision_id == EstadoRevision::ADMITIDO && 
+                 $request->estado_revision_id == EstadoRevision::SUBSANADO ) {
+                return response()->json(['message' => "No se puede subsanar un archivo admitido" ], 422);
+            }
+        }
+
         $revision = $this->repository->create( $all );
         return response()->json($revision, 201);
     }
