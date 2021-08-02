@@ -52,9 +52,6 @@ class ExpedienteAdhocCollection extends ResourceCollection
                 'direccion'                  => $expedienteAdhoc->direccion,
                 'area'                       => $expedienteAdhoc->area,
 
-                //'observaciones'              => $expedienteAdhoc->observaciones,
-                //'x'                          => $expedienteAdhoc->x,
-                //'y'                          => $expedienteAdhoc->y,
                 'fecha_solicitud_ht'         => $expedienteAdhoc->fecha_solicitud_ht,
                 'fecha_ingreso_ht'           => $expedienteAdhoc->fecha_ingreso_ht,
                 'numero_hoja_tramite'        => $expedienteAdhoc->ht,
@@ -75,7 +72,6 @@ class ExpedienteAdhocCollection extends ResourceCollection
                 'usuario_revisor_id'         => $expedienteAdhoc->usuario_revisor_id,
                 'usuario_revisor_full_name'  => (isset($expedienteAdhoc->usuarioRevisor))?
                                                 $expedienteAdhoc->usuarioRevisor->full_name:null,
-
                 'estadisticas'               => [
                     "completados" => $expedienteAdhoc->expedienteAdhocArchivos->filter(function($item)
                             {

@@ -24,7 +24,10 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
                    eaa.monto , eaa.nombre_banco , eaa.numero_operacion  ,
                    eaa.fecha_operacion , eaa.agencia ,  eaa.distrito_id ,
                    eaa.recibo_pago, eaa.archivo_solicitud_ht,
-
+                   eaa.fecha_solicitud_ht,
+                   eaa.fecha_ingreso_ht,
+                   eaa.ht,
+                   departamentos.nombre as departamento_nombre,
                    ee.id as estado_expediente_id, ee.nombre as estado_expediente_nombre,
 
                    ea.id AS expedienteadhoc_archivo_id, ea.valor AS valor_archivo,
@@ -41,13 +44,16 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
                     )   AS completados
                    
             FROM expedientes_adhocs eaa 
+            JOIN distritos ON eaa.distrito_id = distritos.id
+            JOIN provincias ON distritos.provincia_id = provincias.id
+            JOIN departamentos ON provincias.departamento_id = departamentos.id
             JOIN estado_expediente ee on eaa.estado_expediente_id = ee.id
             LEFT JOIN expedienteadhoc_archivo ea on eaa.id = ea.expedienteadhoc_id 
             RIGHT JOIN archivos a on ea.archivo_id = a.id
             JOIN archivos AS padre on a.parent_id = padre.id 
             WHERE eaa.id = ? and a.convocatoria_id = ?
 
-            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id
+            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, departamentos.id
             ORDER BY padre.id;",
             [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
         );

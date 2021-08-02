@@ -26,9 +26,9 @@ class ExpedienteAdhoc extends Model
 
         'archivo_solicitud_ht',
 
-        'observaciones',
-        'x',
-        'y',
+        //'observaciones',
+        //'x',
+        //'y',
         'fecha_solicitud_ht',
         'fecha_ingreso_ht',
         'ht',//numero de hoja tramite

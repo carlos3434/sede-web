@@ -33,5 +33,8 @@ class EstadoExpedienteAdhocSeeder extends Seeder
         EstadoExpedienteAdhoc::create([
             'nombre'      => 'PROGRAMADO',
         ]);
+        EstadoExpedienteAdhoc::create([
+            'nombre'      => 'INFORME ENTREGADO',
+        ]);
     }
 }

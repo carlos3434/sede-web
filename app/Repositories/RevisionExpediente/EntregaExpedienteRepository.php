@@ -27,13 +27,17 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
             $this->getFilter($request)->sort()->get()
         );
     }
-
+    /**
+     * Retorna informacion del un determinado expediente
+     */
     public function getByConvocatoriaAndExpediente($convocatoriaId , $expedienteAdhocId ){
         return \DB::select("
             SELECT eaa.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
                    eaa.monto , eaa.nombre_banco , eaa.numero_operacion  ,
+                   departamentos.nombre as departamento_nombre,
                    eaa.fecha_operacion , eaa.agencia ,  eaa.distrito_id ,
                    eaa.recibo_pago, eaa.archivo_solicitud_ht, eaa.ht,
+                   eaa.fecha_solicitud_ht, eaa.fecha_ingreso_ht,
 
                    ee.id as estado_expediente_id, ee.nombre as estado_expediente_nombre,
 
@@ -41,21 +45,18 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                    a.id AS archivo_id, a.nombre AS nombre_archivo, a.slug AS slug_archivo,
                    padre.id id_padre, padre.nombre AS nombre_padre , padre.slug AS slug_padre,
 
-                   adhoc.nombres AS adhoc_nombres,
-                   adhoc.apellido_paterno as adhoc_apellido_paterno,
-                   adhoc.apellido_materno as adhoc_apellido_materno,
-                   adhoc.id as adhoc_id,
-
                    eee.id AS entregas_expediente_id,
                    eee.fecha_entrega,
                    eee.fecha_recepcion,
 
-                   cenepred.nombres as cenepred_nombres,
-                   cenepred.apellido_paterno as cenepred_apellido_paterno,
-                   cenepred.apellido_materno as cenepred_apellido_materno,
-                   cenepred.id as cenepred_id,
+                   CONCAT( adhoc.nombres, ' ',adhoc.apellido_paterno,' ', adhoc.apellido_materno ) 
+                   as adhoc_full_name, adhoc.id as adhoc_id,
 
-                   CONCAT( administrado.nombres , ' ',administrado.apellido_materno ) as administrado_full_name,
+                   CONCAT( cenepred.nombres, ' ',cenepred.apellido_paterno,' ', cenepred.apellido_materno ) 
+                   as cenepred_full_name, cenepred.id as cenepred_id,
+
+                   CONCAT( administrado.nombres, ' ',administrado.apellido_paterno,' ', administrado.apellido_materno ) 
+                   as administrado_full_name, administrado.id as administrado_id,
                    administrado.celular as administrado_celular,
 
                    r.id as revision_id,
@@ -72,7 +73,10 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                        WHERE expedienteadhoc_id = ? 
                     )   AS completados
                    
-            FROM expedientes_adhocs AS eaa 
+            FROM expedientes_adhocs AS eaa
+            JOIN distritos ON eaa.distrito_id = distritos.id
+            JOIN provincias ON distritos.provincia_id = provincias.id
+            JOIN departamentos ON provincias.departamento_id = departamentos.id
             JOIN estado_expediente AS ee on eaa.estado_expediente_id = ee.id
             LEFT JOIN expedienteadhoc_archivo AS ea on eaa.id = ea.expedienteadhoc_id
 
@@ -96,7 +100,9 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
 
             WHERE eaa.id = ? and a.convocatoria_id = ?
 
-            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id, r.id, er.id, eee.id, cenepred.id, administrado.id
+            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id,
+                     r.id, er.id, eee.id, cenepred.id, administrado.id,
+                     departamentos.id
             ORDER BY padre.id;",
             [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
         );
@@ -133,28 +139,36 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
             ->leftJoin('users as adhoc', 'c.usuario_id', '=', 'adhoc.id')
             ->leftJoin('users as cenepred', 'eee.usuario_asignador_id', '=', 'cenepred.id')
             ->select(
-                'ea.id' , 'ea.nombre_comercial' , 'ea.direccion',
-                'ee.nombre as estado_expediente', 'ee.id as estado_id',
-                'eee.fecha_entrega',
-                'u.nombres as administrado_nombres',
-                'u.apellido_paterno as administrado_apellido_paterno',
-                'u.apellido_materno as administrado_apellido_materno',
-                'u.id as administrado_id',
-                'adhoc.nombres AS adhoc_nombres',
-                'adhoc.apellido_paterno as adhoc_apellido_paterno',
-                'adhoc.apellido_materno as adhoc_apellido_materno',
-                'adhoc.id as adhoc_id',
+                'ea.id' , 'ea.nombre_comercial' , 'ea.direccion', 'ea.area',
+                'ea.numero_operacion', 'ea.nombre_banco','ea.agencia',
+                'ea.fecha_operacion', 'ea.monto',
                 'ea.fecha_solicitud_ht',
                 'ea.fecha_ingreso_ht',
                 'ea.distrito_id',
+                'ea.recibo_pago', 'ea.archivo_solicitud_ht', 'ea.ht',
+
+                'ee.nombre as estado_expediente', 'ee.id as estado_id',
+                'eee.fecha_entrega',
+
+                \DB::raw(
+                    "CONCAT( u.nombres, ' ', u.apellido_paterno, ' ', u.apellido_materno) as administrado_full_name"
+                ),
+                'u.id as administrado_id',
+
+                \DB::raw(
+                    "CONCAT( adhoc.nombres, ' ', adhoc.apellido_paterno, ' ', adhoc.apellido_materno) as adhoc_full_name"
+                ),
+                'adhoc.id as adhoc_id',
+
+                \DB::raw(
+                    "CONCAT( cenepred.nombres, ' ', cenepred.apellido_paterno, ' ', cenepred.apellido_materno) as cenepred_full_name"
+                ),
+                'cenepred.id as cenepred_id',
+
                 'departamentos.ubigeo',
                 'distritos.provincia_id',
                 'provincias.departamento_id',
-                'departamentos.nombre as departamento_nombre',
-                'cenepred.nombres as cenepred_nombres',
-                'cenepred.apellido_paterno as cenepred_apellido_paterno',
-                'cenepred.apellido_materno as cenepred_apellido_materno',
-                'cenepred.id as cenepred_id'
+                'departamentos.nombre as departamento_nombre'
             );
         
         return new $this->collectionNamePath(
