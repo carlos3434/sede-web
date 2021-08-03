@@ -107,6 +107,7 @@ Route::prefix('v1')->group(function(){
         Route::get('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@index');
         Route::get('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@show');
         Route::put('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@store');
+        Route::post('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@update');
         //Route::apiResource('diligencia','Api\DiligenciaVerificador\DiligenciaController');
 
 

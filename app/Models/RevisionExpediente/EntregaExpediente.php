@@ -37,6 +37,11 @@ class EntregaExpediente extends Model
         return $this->belongsTo('App\Models\ExpedienteAdhoc\User', 'usuario_asignador_id');
     }
 
+    public function diligencia()
+    {
+        return $this->hasMany('App\Models\DiligenciaVerificador\Diligencia', 'diligencia_id');
+    }
+
     //acreditacion
     public function acreditacion()
     {

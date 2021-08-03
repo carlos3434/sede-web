@@ -11,7 +11,7 @@ use App\Jobs\ProcessSentEmail;
 
 use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterface;
 
-use App\Http\Requests\DiligenciaVerificador\DiligenciaRequest;
+use App\Http\Requests\DiligenciaVerificador\DiligenciaAddRequest;
 use App\Models\Settings\EstadoExpedienteAdhoc;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Models\Settings\Convocatoria;
@@ -67,17 +67,17 @@ class DiligenciaVerificadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DiligenciaRequest $request)
+    public function store(DiligenciaAddRequest $request)
     {
-        $all = $request->all();
-        $all['usuario_asignador_id'] = Auth::id();
-        $all['fecha_entrega'] = date("Y-m-d");
-        $expedienteAdhocId = $request->get('expediente_adhoc_id');
-        $entregaExpediente = $this->repository->create( $all );
+        //update expediente
+        $expedienteAdhoc = ExpedienteAdhoc::find($request->expediente_adhoc_id);
+        $expedienteAdhoc->update([
+            'estado_expediente_id' => EstadoExpedienteAdhoc::RECIBIDO,
+            'fecha_recepcion' => date("Y-m-d"),
+        ]);
 
-        //cambiar el estado del expediente a Entregado
-        $expedienteAdhoc = ExpedienteAdhoc::find($expedienteAdhocId);
-        $expedienteAdhoc->update(['estado_expediente_id' => EstadoExpedienteAdhoc::ENTREGADO]);
+        //create diligencia
+        $diligencia = $this->repository->create( $request->all() );
          
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
         if (!$convocatoriaId) {
@@ -85,7 +85,7 @@ class DiligenciaVerificadorController extends Controller
         }
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
-        return response()->json( new DiligenciaResource( $result , $revisiones ) , 201 );
+        return response()->json( new DiligenciaResource( $result , $revisiones) , 201 );
     }
 
     /**
@@ -102,7 +102,6 @@ class DiligenciaVerificadorController extends Controller
         }
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
-       //return $result;
         return response()->json( new DiligenciaResource( $result , $revisiones) , 200 );
     }
     /**
@@ -112,7 +111,7 @@ class DiligenciaVerificadorController extends Controller
      * @param  \App\EntregaExpediente  $entregaExpediente
      * @return \Illuminate\Http\Response
      */
-    /*public function update(EntregaExpedienteRequest $request, EntregaExpediente $entregaExpediente)
+    public function update(EntregaExpedienteRequest $request, EntregaExpediente $entregaExpediente)
     {
         $all = $request->all();
         if ($request->has('archivo')) {
@@ -134,7 +133,7 @@ class DiligenciaVerificadorController extends Controller
 
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $entregaExpediente->id );
         return response()->json( new EntregaExpedienteArchivoResource( $result ) , 200 );
-    }*/
+    }
 
     /**
      * Remove the specified resource from storage.

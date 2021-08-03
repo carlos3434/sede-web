@@ -41,7 +41,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
             ->leftJoin('users as adhoc', 'c.usuario_id', '=', 'adhoc.id')
             ->leftJoin('users as cenepred', 'eee.usuario_asignador_id', '=', 'cenepred.id')
             ->select(
-                'ea.id' , 'ea.nombre_comercial' , 'ea.direccion', 'ea.area',
+                'eee.id' , 'ea.nombre_comercial' , 'ea.direccion', 'ea.area',
                 'ea.numero_operacion', 'ea.nombre_banco','ea.agencia',
                 'ea.fecha_operacion', 'ea.monto',
                 'ea.fecha_solicitud_ht',
@@ -49,7 +49,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                 'ea.distrito_id',
                 'ea.recibo_pago', 'ea.archivo_solicitud_ht', 'ea.ht',
 
-                'ee.nombre as estado_expediente', 'ee.id as estado_id',
+                'ee.nombre as estado_expediente_nombre', 'ee.id as estado_expediente_id',
                 'eee.fecha_entrega',
 
                 \DB::raw(
@@ -76,7 +76,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                 'd.anexo9',
                 'd.anexo10'
             );
-
+         //   return $query->get();
         return new $this->collectionNamePath(
             $query->filter($request)
             ->sort()
@@ -104,7 +104,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
     public function getByConvocatoriaAndExpediente($convocatoriaId , $expedienteAdhocId ){
 
         return \DB::select("
-            SELECT eaa.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
+            SELECT eee.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
                    eaa.monto , eaa.nombre_banco , eaa.numero_operacion  ,
                    eaa.fecha_operacion , eaa.agencia ,  eaa.distrito_id ,
                    eaa.recibo_pago, eaa.archivo_solicitud_ht,
