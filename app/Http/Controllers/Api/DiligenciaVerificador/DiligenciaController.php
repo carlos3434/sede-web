@@ -12,14 +12,13 @@ use App\Jobs\ProcessSentEmail;
 //use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
 use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterface;
 
-use App\Models\RevisionExpediente\EntregaExpediente;
-use App\Http\Requests\RevisionExpediente\EntregaExpedienteRequest;
+use App\Http\Requests\DiligenciaVerificador\DiligenciaRequest;
 use App\Models\Settings\EstadoExpedienteAdhoc;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Models\Settings\Convocatoria;
-use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteResource;
+use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaResource;
 
-use App\Http\Resources\RevisionExpediente\EntregaExpediente\EntregaExpedienteCollection;
+use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaCollection;
 
 class DiligenciaController extends Controller
 {
@@ -86,7 +85,7 @@ class DiligenciaController extends Controller
         }
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
-        return response()->json( new EntregaExpedienteResource( $result , $revisiones ) , 201 );
+        return response()->json( new DiligenciaResource( $result , $revisiones ) , 201 );
     }
 
     /**
@@ -103,7 +102,8 @@ class DiligenciaController extends Controller
         }
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
-        return response()->json( new EntregaExpedienteResource( $result , $revisiones) , 200 );
+        return $result;
+        return response()->json( new DiligenciaResource( $result , $revisiones) , 200 );
     }
     /**
      * Update the specified resource in storage.

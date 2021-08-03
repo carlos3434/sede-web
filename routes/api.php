@@ -105,9 +105,9 @@ Route::prefix('v1')->group(function(){
         PUT  actualizar diligencia con el anexo 10 (estado de diligencia entregado_informe_vah )
 */
         Route::get('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@index');
-        Route::get('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@index');
-        Route::put('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@index');
-        Route::apiResource('diligencia','Api\DiligenciaVerificador\DiligenciaController');
+        Route::get('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@show');
+        Route::put('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@store');
+        //Route::apiResource('diligencia','Api\DiligenciaVerificador\DiligenciaController');
 
 
         //8 Notificación del informe Adhoc 

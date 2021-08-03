@@ -11,11 +11,13 @@ use App\Jobs\ProcessSentEmail;
 
 use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterface;
 
-use App\Models\RevisionExpediente\EntregaExpediente;
-use App\Http\Requests\RevisionExpediente\EntregaExpedienteRequest;
+use App\Http\Requests\DiligenciaVerificador\DiligenciaRequest;
 use App\Models\Settings\EstadoExpedienteAdhoc;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Models\Settings\Convocatoria;
+use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaResource;
+
+use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaCollection;
 
 class DiligenciaVerificadorController extends Controller
 {
@@ -65,7 +67,7 @@ class DiligenciaVerificadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EntregaExpedienteRequest $request)
+    public function store(DiligenciaRequest $request)
     {
         $all = $request->all();
         $all['usuario_asignador_id'] = Auth::id();
@@ -83,7 +85,7 @@ class DiligenciaVerificadorController extends Controller
         }
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
-        return response()->json( new EntregaExpedienteResource( $result , $revisiones ) , 201 );
+        return response()->json( new DiligenciaResource( $result , $revisiones ) , 201 );
     }
 
     /**
@@ -100,7 +102,8 @@ class DiligenciaVerificadorController extends Controller
         }
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
-        return response()->json( new EntregaExpedienteResource( $result , $revisiones) , 200 );
+       //return $result;
+        return response()->json( new DiligenciaResource( $result , $revisiones) , 200 );
     }
     /**
      * Update the specified resource in storage.
