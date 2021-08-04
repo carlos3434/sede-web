@@ -108,7 +108,6 @@ Route::prefix('v1')->group(function(){
         Route::get('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@show');
         Route::put('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@store');
         Route::post('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@update');
-        //Route::apiResource('diligencia','Api\DiligenciaVerificador\DiligenciaController');
 
 
         //8 Notificación del informe Adhoc 
@@ -193,6 +192,18 @@ Route::prefix('v1')->group(function(){
         });
         Route::get('files/expediente_adhoc_archivos/{path}', function ($path) {
             return response()->file( storage_path('app/uploads/files/expediente_adhoc_archivos/'.$path) );
+        });
+
+        Route::get('files/anexo8/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/anexo8/'.$path) );
+        });
+
+        Route::get('files/anexo9/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/anexo9/'.$path) );
+        });
+
+        Route::get('files/anexo10/{path}', function ($path) {
+            return response()->file( storage_path('app/uploads/files/anexo10/'.$path) );
         });
 
     });

@@ -23,11 +23,12 @@ use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaCollection;
 class DiligenciaVerificadorController extends Controller
 {
     private $repository;
+    private $fileUploader;
 
-    public function __construct( DiligenciaRepositoryInterface $repository)
+    public function __construct( DiligenciaRepositoryInterface $repository, FileUploader $fileUploader)
     {
         $this->repository = $repository;
-        //$this->fileUploader = $fileUploader;
+        $this->fileUploader = $fileUploader;
         /*
         $this->middleware(['role_or_permission:ADMINISTRADOR|EXPEDIENTE_ADHOC_CREATE'])->only(['create','store']);
         $this->middleware(['role_or_permission:ADMINISTRADOR|EXPEDIENTE_ADHOC_INDEX'])->only('index');
@@ -69,6 +70,14 @@ class DiligenciaVerificadorController extends Controller
      */
     public function store(DiligenciaAddRequest $request)
     {
+        //validar si ya se registro diligencia
+        $diligenciaDB = $this->repository->countDiligenciaByEntregaId( $request->entrega_expediente_id );
+        if ($diligenciaDB>0) {
+            return response()->json(['message' => "Ya se encuentra registrado una diligencia para este expediente entregado" ], 422);
+        }
+        $all = $request->all();
+        $all = $this->storeFile($request, $all, 'anexo8', 'anexo8');
+
         //update expediente
         $entregaExpediente = EntregaExpediente::find($request->entrega_expediente_id);
         $entregaExpediente->update(['fecha_recepcion' => date("Y-m-d H:i:s")]);
@@ -77,7 +86,7 @@ class DiligenciaVerificadorController extends Controller
         ]);
 
         //create diligencia
-        $diligencia = $this->repository->create( $request->all() );
+        $diligencia = $this->repository->create( $all );
          
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
         if (!$convocatoriaId) {
@@ -150,4 +159,14 @@ class DiligenciaVerificadorController extends Controller
         return response()->json(null, 204);
     }*/
 
+    private function storeFile( $request , $all , $folder, $fieldName ){
+        if ( $request->hasFile($fieldName) ) {
+            $fileValue = $this->fileUploader->upload(
+                $request->file($fieldName),
+                'files/'.$folder
+            );
+            $all[$fieldName] = $folder.'/'.$fileValue;
+        }
+        return $all;
+    }
 }

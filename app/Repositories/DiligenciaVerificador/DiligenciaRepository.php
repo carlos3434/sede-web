@@ -159,4 +159,8 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
             [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
         );
     }
+    public function countDiligenciaByEntregaId( $entrega_expediente_id )
+    {
+        return Diligencia::where('entrega_expediente_id', $entrega_expediente_id)->count();
+    }
 }
