@@ -29,19 +29,19 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
     {
         $query = Diligencia::from('diligencias as d')
             ->rightJoin('entregas_expedientes as eee', 'd.entrega_expediente_id', '=', 'eee.id')
-            ->join('expedientes_adhocs as ea','eee.expediente_adhoc_id','=','ea.id')
-            ->join('distritos','ea.distrito_id','=','distritos.id')
-            ->join('provincias','distritos.provincia_id','=','provincias.id')
-            ->join('departamentos','provincias.departamento_id','=','departamentos.id')
-            ->join('estado_expediente as ee', 'ea.estado_expediente_id', '=', 'ee.id')
-            ->join('users as u', 'ea.usuario_id', '=', 'u.id')
+            ->leftJoin('expedientes_adhocs as ea','eee.expediente_adhoc_id','=','ea.id')
+            ->leftJoin('distritos','ea.distrito_id','=','distritos.id')
+            ->leftJoin('provincias','distritos.provincia_id','=','provincias.id')
+            ->leftJoin('departamentos','provincias.departamento_id','=','departamentos.id')
+            ->leftJoin('estado_expediente as ee', 'ea.estado_expediente_id', '=', 'ee.id')
+            ->leftJoin('users as u', 'ea.usuario_id', '=', 'u.id')
 
             ->leftJoin('acreditaciones as a', 'eee.acreditacion_id', '=', 'a.id')
             ->leftJoin('calificaciones as c', 'a.calificacion_id', '=', 'c.id')
             ->leftJoin('users as adhoc', 'c.usuario_id', '=', 'adhoc.id')
             ->leftJoin('users as cenepred', 'eee.usuario_asignador_id', '=', 'cenepred.id')
             ->select(
-                'eee.id' , 'ea.nombre_comercial' , 'ea.direccion', 'ea.area',
+                'ea.id' , 'ea.nombre_comercial' , 'ea.direccion', 'ea.area',
                 'ea.numero_operacion', 'ea.nombre_banco','ea.agencia',
                 'ea.fecha_operacion', 'ea.monto',
                 'ea.fecha_solicitud_ht',
@@ -50,6 +50,8 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                 'ea.recibo_pago', 'ea.archivo_solicitud_ht', 'ea.ht',
 
                 'ee.nombre as estado_expediente_nombre', 'ee.id as estado_expediente_id',
+                'eee.id as entrega_expediente_id',
+                'eee.fecha_recepcion',
                 'eee.fecha_entrega',
 
                 \DB::raw(
@@ -76,7 +78,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                 'd.anexo9',
                 'd.anexo10'
             );
-         //   return $query->get();
+
         return new $this->collectionNamePath(
             $query->filter($request)
             ->sort()
@@ -130,6 +132,8 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                        FROM expedienteadhoc_archivo 
                        WHERE expedienteadhoc_id = ? 
                     )   AS completados,
+                    eee.id as entrega_expediente_id,
+                    eee.fecha_recepcion,
                     eee.fecha_entrega,
                     d.fecha as fecha_diligencia,
                     d.anexo8,
@@ -138,16 +142,16 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                     
             FROM diligencias as d
             RIGHT JOIN entregas_expedientes as eee ON d.entrega_expediente_id = eee.id
-            JOIN expedientes_adhocs as eaa ON eee.expediente_adhoc_id = eaa.id
+            LEFT JOIN expedientes_adhocs as eaa ON eee.expediente_adhoc_id = eaa.id
 
-            JOIN distritos ON eaa.distrito_id = distritos.id
-            JOIN provincias ON distritos.provincia_id = provincias.id
-            JOIN departamentos ON provincias.departamento_id = departamentos.id
-            JOIN estado_expediente ee on eaa.estado_expediente_id = ee.id
-            JOIN users as u ON eaa.usuario_id = u.id
+            LEFT JOIN distritos ON eaa.distrito_id = distritos.id
+            LEFT JOIN provincias ON distritos.provincia_id = provincias.id
+            LEFT JOIN departamentos ON provincias.departamento_id = departamentos.id
+            LEFT JOIN estado_expediente ee on eaa.estado_expediente_id = ee.id
+            LEFT JOIN users as u ON eaa.usuario_id = u.id
             LEFT JOIN expedienteadhoc_archivo ea on eaa.id = ea.expedienteadhoc_id 
             RIGHT JOIN archivos a on ea.archivo_id = a.id
-            JOIN archivos AS padre on a.parent_id = padre.id 
+            LEFT JOIN archivos AS padre on a.parent_id = padre.id 
             WHERE eaa.id = ? and a.convocatoria_id = ?
 
             GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, departamentos.id, d.id, eee.id, u.id

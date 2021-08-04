@@ -50,7 +50,7 @@ class PostulacionController extends Controller
         //validar que un usuario no pueda registrarse mas de dos veces a una convocatoria
         $calificacionDB = $this->repository->countByUserIdAndConvocatoria($all['usuario_id'],$all['convocatoria_id']);
         if ($calificacionDB==0) {
-            $all['fecha'] = date("Y-m-d");
+            $all['fecha'] = date("Y-m-d H:i:s");
             $calificacion = $this->repository->create( $all );
         } else {
             return response()->json(['message' => "Ya se han registrado calificacion para este usuario en la actual convocatoria" ], 422);

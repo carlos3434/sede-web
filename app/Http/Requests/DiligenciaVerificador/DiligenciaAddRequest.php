@@ -26,7 +26,7 @@ class DiligenciaAddRequest extends FormRequest
     public function rules()
     {
         return [
-            'expediente_adhoc_id'    => 'required|exists:App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc,id',
+            'entrega_expediente_id'  => 'required|exists:App\Models\RevisionExpediente\EntregaExpediente,id',
             'anexo8'                 => 'required|file|max:3072'
         ];
     }

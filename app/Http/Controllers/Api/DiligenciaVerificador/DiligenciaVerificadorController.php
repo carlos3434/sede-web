@@ -14,6 +14,7 @@ use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterf
 use App\Http\Requests\DiligenciaVerificador\DiligenciaAddRequest;
 use App\Models\Settings\EstadoExpedienteAdhoc;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
+use App\Models\RevisionExpediente\EntregaExpediente;
 use App\Models\Settings\Convocatoria;
 use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaResource;
 
@@ -56,7 +57,6 @@ class DiligenciaVerificadorController extends Controller
             $request->request->add(['estado_expediente_id' => [5,6,7] ]);
         }
         $request->request->add(['verificador_id' => Auth::id() ]);//usuario verificador adhoc
-        //$request->request->add(['acreditacion_id' => 2 ]);//usuario verificador adhoc
 
         return $this->repository->expedientes($request);
     }
@@ -70,10 +70,10 @@ class DiligenciaVerificadorController extends Controller
     public function store(DiligenciaAddRequest $request)
     {
         //update expediente
-        $expedienteAdhoc = ExpedienteAdhoc::find($request->expediente_adhoc_id);
-        $expedienteAdhoc->update([
-            'estado_expediente_id' => EstadoExpedienteAdhoc::RECIBIDO,
-            'fecha_recepcion' => date("Y-m-d"),
+        $entregaExpediente = EntregaExpediente::find($request->entrega_expediente_id);
+        $entregaExpediente->update(['fecha_recepcion' => date("Y-m-d H:i:s")]);
+        $entregaExpediente->expediente()->update([
+            'estado_expediente_id' => EstadoExpedienteAdhoc::RECIBIDO
         ]);
 
         //create diligencia
@@ -83,8 +83,9 @@ class DiligenciaVerificadorController extends Controller
         if (!$convocatoriaId) {
             return [];
         }
-        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
-        $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
+
+        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $entregaExpediente->expediente->id );
+        $revisiones = $this->repository->getRevisiones( $entregaExpediente->expediente->id );
         return response()->json( new DiligenciaResource( $result , $revisiones) , 201 );
     }
 

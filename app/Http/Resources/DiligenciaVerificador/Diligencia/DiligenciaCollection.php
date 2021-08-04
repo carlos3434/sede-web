@@ -42,12 +42,14 @@ class DiligenciaCollection extends ResourceCollection
                 'estado_expediente_id'        => $expedienteAdhoc->estado_expediente_id,
                 'estado_expediente_nombre'    => $expedienteAdhoc->estado_expediente_nombre,
 
+                'entrega_expediente_id'       => $expedienteAdhoc->entrega_expediente_id,
                 'fecha_entrega'               => $expedienteAdhoc->fecha_entrega,
                 'administrado_full_name'      => $expedienteAdhoc->administrado_full_name,
                 'administrado_id'             => $expedienteAdhoc->administrado_id,
 
                 'departamento_nombre'         => $expedienteAdhoc->departamento_nombre,
 
+                'fecha_recepcion'             => $expedienteAdhoc->fecha_recepcion,
                 'fecha_diligencia'            => $expedienteAdhoc->fecha_diligencia,
                 'anexo8'                      => $expedienteAdhoc->anexo8,
                 'anexo9'                      => $expedienteAdhoc->anexo9,

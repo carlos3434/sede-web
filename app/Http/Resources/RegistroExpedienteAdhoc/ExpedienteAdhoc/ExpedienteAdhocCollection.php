@@ -20,31 +20,7 @@ class ExpedienteAdhocCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        /*
-        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
-        if ($convocatoriaId) {
-            //traer todos los archivos de la actual convocatoria
-            $archivos = Archivo::GetArchivosCategoriaByConvocatoriaId( $convocatoriaId );
-        }
-        $archivos = Archivo::GetArchivosCategoriaByConvocatoriaId( $convocatoriaId );
-
-        foreach ($archivos as $key => $value) {
-
-            $archivosParent[$value->slug] = [
-                'nombre' => $value->nombre,
-                'estadisticas' => [
-                    //ir a los expedientes completados
-                    'completados' => $value->expedienteadhoc_archivo->filter(function($item)
-                        {
-                            if($item['valor']) return $item;
-                        })->count(),
-
-                    'total' => $value->hijos->count(),
-                ],
-            ];
-        }*/
-
-        return $this->collection->transform(function ($expedienteAdhoc) /*use ($archivosParent)*/ {
+        return $this->collection->transform(function ($expedienteAdhoc) {
 
             return [
                 'id'                         => $expedienteAdhoc->id,
@@ -80,8 +56,6 @@ class ExpedienteAdhocCollection extends ResourceCollection
                             })->count(),
                     "total" => $expedienteAdhoc->expedienteAdhocArchivos->count(),
                 ],
-
-                //'expedienteadhoc_archivo'    => $archivosParent,
 
                 'created_at'                 => $expedienteAdhoc->created_at->toDateTimeString(),
                 'updated_at'                 => $expedienteAdhoc->updated_at->toDateTimeString(),

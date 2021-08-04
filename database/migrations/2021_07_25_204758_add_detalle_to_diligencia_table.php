@@ -19,6 +19,7 @@ class AddDetalleToDiligenciaTable extends Migration
             $table->dropColumn('observaciones_subsanables');
             $table->dropColumn('atendido_por');
 
+            $table->dateTime('fecha')->nullable();
             $table->string('anexo8')->nullable();
             $table->string('anexo9')->nullable();
             $table->string('anexo10')->nullable();
@@ -38,6 +39,7 @@ class AddDetalleToDiligenciaTable extends Migration
             $table->text('observaciones_subsanables');
             $table->string('atendido_por');
 
+            $table->dateTime('fecha');
             $table->dropColumn('anexo8')->nullable();
             $table->dropColumn('anexo9')->nullable();
             $table->dropColumn('anexo10')->nullable();

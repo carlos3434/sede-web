@@ -69,7 +69,7 @@ class EntregaExpedienteController extends Controller
     {
         $all = $request->all();
         $all['usuario_asignador_id'] = Auth::id();
-        $all['fecha_entrega'] = date("Y-m-d");
+        $all['fecha_entrega'] = date("Y-m-d H:i:s");
         $expedienteAdhocId = $request->get('expediente_adhoc_id');
         $entregaExpediente = $this->repository->create( $all );
 

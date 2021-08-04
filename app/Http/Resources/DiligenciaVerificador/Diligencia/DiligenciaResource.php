@@ -45,12 +45,14 @@ class DiligenciaResource extends JsonResource
             'estado_expediente_id'        => $this->result[0]->estado_expediente_id,
             'estado_expediente_nombre'    => $this->result[0]->estado_expediente_nombre,
 
+            'entrega_expediente_id'       => $this->result[0]->entrega_expediente_id,
             'fecha_entrega'               => $this->result[0]->fecha_entrega,
             'administrado_full_name'      => $this->result[0]->administrado_full_name,
             'administrado_id'             => $this->result[0]->administrado_id,
 
             'departamento_nombre'         => $this->result[0]->departamento_nombre,
 
+            'fecha_recepcion'             => $this->result[0]->fecha_recepcion,
             'fecha_diligencia'            => $this->result[0]->fecha_diligencia,
             'anexo8'                      => $this->result[0]->anexo8,
             'anexo9'                      => $this->result[0]->anexo9,

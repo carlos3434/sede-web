@@ -44,10 +44,10 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
                     )   AS completados
                    
             FROM expedientes_adhocs eaa 
-            JOIN distritos ON eaa.distrito_id = distritos.id
-            JOIN provincias ON distritos.provincia_id = provincias.id
-            JOIN departamentos ON provincias.departamento_id = departamentos.id
-            JOIN estado_expediente ee on eaa.estado_expediente_id = ee.id
+            LEFT JOIN distritos ON eaa.distrito_id = distritos.id
+            LEFT JOIN provincias ON distritos.provincia_id = provincias.id
+            LEFT JOIN departamentos ON provincias.departamento_id = departamentos.id
+            LEFT JOIN estado_expediente ee on eaa.estado_expediente_id = ee.id
             LEFT JOIN expedienteadhoc_archivo ea on eaa.id = ea.expedienteadhoc_id 
             RIGHT JOIN archivos a on ea.archivo_id = a.id
             JOIN archivos AS padre on a.parent_id = padre.id 

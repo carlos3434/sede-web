@@ -28,13 +28,13 @@ class EntregaExpediente extends Model
     }
     public function expediente()
     {
-        return $this->belongsTo('App\Models\ExpedienteAdhoc\ExpedienteAdhoc', 'expediente_adhoc_id');
+        return $this->belongsTo('App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc', 'expediente_adhoc_id');
     }
 
     //usuario asignador
     public function usuarioAsignador()
     {
-        return $this->belongsTo('App\Models\ExpedienteAdhoc\User', 'usuario_asignador_id');
+        return $this->belongsTo('App\Models\Auth\User', 'usuario_asignador_id');
     }
 
     public function diligencia()

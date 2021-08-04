@@ -74,13 +74,13 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
                     )   AS completados
                    
             FROM expedientes_adhocs AS eaa
-            JOIN distritos ON eaa.distrito_id = distritos.id
-            JOIN provincias ON distritos.provincia_id = provincias.id
-            JOIN departamentos ON provincias.departamento_id = departamentos.id
-            JOIN estado_expediente AS ee on eaa.estado_expediente_id = ee.id
+            LEFT JOIN distritos ON eaa.distrito_id = distritos.id
+            LEFT JOIN provincias ON distritos.provincia_id = provincias.id
+            LEFT JOIN departamentos ON provincias.departamento_id = departamentos.id
+            LEFT JOIN estado_expediente AS ee on eaa.estado_expediente_id = ee.id
             LEFT JOIN expedienteadhoc_archivo AS ea on eaa.id = ea.expedienteadhoc_id
 
-            left join (
+            LEFT JOIN (
                 select max(r.id) as revision_id , r.expedienteadhoc_archivo_id 
                 from revisiones r
                 group by r.expedienteadhoc_archivo_id 
@@ -128,11 +128,11 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
     {
         $query = ExpedienteAdhoc::from('expedientes_adhocs as ea')
 
-            ->join('distritos','ea.distrito_id','=','distritos.id')
-            ->join('provincias','distritos.provincia_id','=','provincias.id')
-            ->join('departamentos','provincias.departamento_id','=','departamentos.id')
-            ->join('estado_expediente as ee', 'ea.estado_expediente_id', '=', 'ee.id')
-            ->join('users as u', 'ea.usuario_id', '=', 'u.id')
+            ->leftJoin('distritos','ea.distrito_id','=','distritos.id')
+            ->leftJoin('provincias','distritos.provincia_id','=','provincias.id')
+            ->leftJoin('departamentos','provincias.departamento_id','=','departamentos.id')
+            ->leftJoin('estado_expediente as ee', 'ea.estado_expediente_id', '=', 'ee.id')
+            ->leftJoin('users as u', 'ea.usuario_id', '=', 'u.id')
             ->leftJoin('entregas_expedientes as eee', 'ea.id', '=', 'eee.expediente_adhoc_id')
             ->leftJoin('acreditaciones as a', 'eee.acreditacion_id', '=', 'a.id')
             ->leftJoin('calificaciones as c', 'a.calificacion_id', '=', 'c.id')
