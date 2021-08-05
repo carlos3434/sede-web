@@ -132,12 +132,13 @@ class DiligenciaVerificadorController extends Controller
         $all = $this->storeFile($request, $all, 'anexo10', 'anexo10');
         $this->repository->updateOne($all, $diligencia);
         $diligencia->entrega->expediente()->update(['estado_expediente_id' => EstadoExpedienteAdhoc::INFORMEENTREGADO]);
+
+        dispatch( new ProcessEnviarAnexo10( Auth::user(), [] ) );
         //sent an email
         $adjuntos = [
            Storage::path("uploads/files/".$all['anexo10']),
         ];
 
-        dispatch( new ProcessEnviarAnexo10( Auth::user(), $adjuntos ) );
         \Illuminate\Support\Facades\Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new \App\Mail\EnviarAnexo10(Auth::user(), $adjuntos));
         return response()->json($diligencia, 200);
     }
