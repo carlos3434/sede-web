@@ -49,6 +49,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('expedienteadhoc', \App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc::class);
         //Route::model('entregaexpediente', \App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc::class);
         //oute::model('calificacio', \App\Models\SeleccionAdhoc\Calificacion::class);
+        Route::model('diligencia', \App\Models\DiligenciaVerificador\Diligencia::class);
 
         parent::boot();
     }

@@ -50,6 +50,7 @@ class DiligenciaCollection extends ResourceCollection
                 'departamento_nombre'         => $expedienteAdhoc->departamento_nombre,
 
                 'fecha_recepcion'             => $expedienteAdhoc->fecha_recepcion,
+                'diligencia_id'               => $expedienteAdhoc->diligencia_id,
                 'fecha_diligencia'            => $expedienteAdhoc->fecha_diligencia,
                 'anexo8'                      => $expedienteAdhoc->anexo8,
                 'anexo9'                      => $expedienteAdhoc->anexo9,

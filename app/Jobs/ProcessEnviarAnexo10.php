@@ -7,11 +7,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Mail\SolicitarHojaTramite;
+use App\Mail\EnviarAnexo10;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Auth\User;
 
-class ProcessSentEmail implements ShouldQueue
+class ProcessEnviarAnexo10 implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,8 +35,7 @@ class ProcessSentEmail implements ShouldQueue
      */
     public function handle()
     {
-       //$email = new ReportSent( $this->report, $this->adjuntos );
-        $email = new SolicitarHojaTramite( $this->user, $this->adjuntos );
-        Mail::to( $this->user->email )->send( $email );
+        $email = new EnviarAnexo10( $this->user, $this->adjuntos );
+        Mail::to( env('MAIL_MESADEPARTES_ADDRESS', 'mesadepartes@cenepred.gob.pe') )->send( $email );
     }
 }

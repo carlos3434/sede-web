@@ -7,7 +7,6 @@ use App\Helpers\FileUploader;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Jobs\ProcessSentEmail;
 
 use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
 

@@ -107,8 +107,9 @@ Route::prefix('v1')->group(function(){
         Route::get('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@index');
         Route::get('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@show');
         Route::put('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@store');
-        Route::post('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@update');
-
+       // Route::post('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@update');
+        Route::post('diligenciaverificador/{diligencia}/updateAnexo9','Api\DiligenciaVerificador\DiligenciaVerificadorController@updateAnexo9');
+        Route::post('diligenciaverificador/{diligencia}/updateAnexo10','Api\DiligenciaVerificador\DiligenciaVerificadorController@updateAnexo10');
 
         //8 Notificación del informe Adhoc 
 

@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
 use App\Helpers\FileUploader;
 use Carbon\Carbon;
-use App\Mail\SolicitarHojaTramite;
-use Illuminate\Support\Facades\Mail;
-use App\Jobs\ProcessSentEmail;
+use App\Jobs\SolicitarHojaTramite;
 use App\Models\RegistroExpedienteAdhoc\Archivo;
 
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\ExpedienteAdhocArchivoCollection;
@@ -127,7 +125,7 @@ class ExpedienteAdhocController extends Controller
             Storage::path("uploads/files/".$fields['archivo_solicitud_ht']),
         ];
 
-        dispatch( new ProcessSentEmail( Auth::user(), $adjuntos ) );
+        dispatch( new SolicitarHojaTramite( Auth::user(), $adjuntos ) );
 
         return $expedienteAdhoc;
     }

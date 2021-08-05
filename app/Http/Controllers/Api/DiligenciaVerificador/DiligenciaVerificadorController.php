@@ -6,19 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Helpers\FileUploader;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Jobs\ProcessSentEmail;
+use App\Jobs\ProcessEnviarAnexo10;
 
 use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterface;
 
 use App\Http\Requests\DiligenciaVerificador\DiligenciaAddRequest;
+use App\Http\Requests\DiligenciaVerificador\DiligenciaUpdate9Request;
+use App\Http\Requests\DiligenciaVerificador\DiligenciaUpdate10Request;
 use App\Models\Settings\EstadoExpedienteAdhoc;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Models\RevisionExpediente\EntregaExpediente;
 use App\Models\Settings\Convocatoria;
 use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaResource;
-
+use App\Models\DiligenciaVerificador\Diligencia;
 use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaCollection;
+use Illuminate\Support\Facades\Storage;
 
 class DiligenciaVerificadorController extends Controller
 {
@@ -104,7 +106,7 @@ class DiligenciaVerificadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( $expedienteAdhocId )
+    public function show( DiligenciaAddRequest $expedienteAdhocId )
     {
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
         if (!$convocatoriaId) {
@@ -113,6 +115,31 @@ class DiligenciaVerificadorController extends Controller
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
         return response()->json( new DiligenciaResource( $result , $revisiones) , 200 );
+    }
+    public function updateAnexo9(DiligenciaUpdate9Request $request , Diligencia $diligencia )
+    {
+        $all = $request->all();
+        $all['fecha_diligencia'] = date("Y-m-d H:i:s");
+        //estado de expediente => PROGRAMADO
+        $all = $this->storeFile($request, $all, 'anexo9', 'anexo9');
+        $this->repository->updateOne($all, $diligencia);
+        $diligencia->entrega->expediente()->update(['estado_expediente_id' => EstadoExpedienteAdhoc::PROGRAMADO]);
+        return response()->json($diligencia, 200);
+    }
+    public function updateAnexo10(DiligenciaUpdate10Request $request , Diligencia $diligencia )
+    {
+        $all = $request->all();
+        $all = $this->storeFile($request, $all, 'anexo10', 'anexo10');
+        $this->repository->updateOne($all, $diligencia);
+        $diligencia->entrega->expediente()->update(['estado_expediente_id' => EstadoExpedienteAdhoc::INFORMEENTREGADO]);
+        //sent an email
+        $adjuntos = [
+           //Storage::path("uploads/files/".$all['anexo10']),
+        ];
+
+        //dispatch( new ProcessEnviarAnexo10( Auth::user(), $adjuntos ) );
+        \Illuminate\Support\Facades\Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new \App\Mail\EnviarAnexo10(Auth::user(), $adjuntos));
+        return response()->json($diligencia, 200);
     }
     /**
      * Update the specified resource in storage.
@@ -144,20 +171,6 @@ class DiligenciaVerificadorController extends Controller
         $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $entregaExpediente->id );
         return response()->json( new EntregaExpedienteArchivoResource( $result ) , 200 );
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\EntregaExpediente  $entregaExpediente
-     * @return \Illuminate\Http\Response
-     */
-    /*public function destroy(EntregaExpediente $entregaExpediente)
-    {
-        //primero eliminar los archivos relacionados EntregaExpedienteArchivos
-        $entregaExpediente->archivos()->detach();
-        $this->repository->deleteOne($entregaExpediente);
-        return response()->json(null, 204);
-    }*/
 
     private function storeFile( $request , $all , $folder, $fieldName ){
         if ( $request->hasFile($fieldName) ) {

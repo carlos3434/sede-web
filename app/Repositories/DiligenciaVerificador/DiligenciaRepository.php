@@ -73,6 +73,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                 'distritos.provincia_id',
                 'provincias.departamento_id',
                 'departamentos.nombre as departamento_nombre',
+                'd.id as diligencia_id',
                 'd.fecha as fecha_diligencia',
                 'd.anexo8',
                 'd.anexo9',

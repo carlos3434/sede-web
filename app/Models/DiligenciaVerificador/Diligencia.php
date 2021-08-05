@@ -27,14 +27,8 @@ class Diligencia extends Model
         return (new DiligenciaFilter($request))->filter($builder);
     }
 
-/*
-    public static function traerDescargaCENEPRED()
-    {
-        return DB::select('SELECT * FROM diligencias_traer_descargas_cenepred()');
-    }
-*/
     public function entrega()
     {
-        return $this->belongsTo('App\Models\RegistroAdhoc\EntregaExpediente', 'entrega_expediente_id');
+        return $this->belongsTo('App\Models\RevisionExpediente\EntregaExpediente', 'entrega_expediente_id');
     }
 }
