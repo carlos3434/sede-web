@@ -136,6 +136,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                     eee.id as entrega_expediente_id,
                     eee.fecha_recepcion,
                     eee.fecha_entrega,
+                    d.id as diligencia_id,
                     d.fecha as fecha_diligencia,
                     d.anexo8,
                     d.anexo9,

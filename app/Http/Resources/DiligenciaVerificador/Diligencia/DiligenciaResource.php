@@ -53,6 +53,7 @@ class DiligenciaResource extends JsonResource
             'departamento_nombre'         => $this->result[0]->departamento_nombre,
 
             'fecha_recepcion'             => $this->result[0]->fecha_recepcion,
+            'diligencia_id'               => $this->result[0]->diligencia_id,
             'fecha_diligencia'            => $this->result[0]->fecha_diligencia,
             'anexo8'                      => $this->result[0]->anexo8,
             'anexo9'                      => $this->result[0]->anexo9,
