@@ -106,7 +106,7 @@ class DiligenciaVerificadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( DiligenciaAddRequest $expedienteAdhocId )
+    public function show( $expedienteAdhocId )
     {
         $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
         if (!$convocatoriaId) {
