@@ -51,5 +51,24 @@ class NotificacionController extends Controller
         Mail::to(['mesadepartes@cenepred.gob.pe'])
         ->send(new EnviarAnexo10( $diligencia ));
     }
+    /**
+     * expedientesNotificados
+     * @return \Illuminate\Http\Response
+     *
+     */
+    public function expedientesNotificados(Request $request)
+    {
+        if ( !empty($request->excel) ){
+            return $this->repository->allToExport($request)
+            ->downloadExcel(
+                'EntregaExpediente_'.date('m-d-Y_hia').'.xlsx',
+                $writerType = null,
+                $headings = true
+            );
+        }
+        //filtrar expedientes por adminstrado
+        $request->request->add(['administrado_id' => Auth::id() ]);
+        return $this->repository->expedientesInformados($request);
+    }
 
 }

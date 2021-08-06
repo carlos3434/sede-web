@@ -21,6 +21,7 @@ class ExpedientesInformadosCollection extends ResourceCollection
                 'expediente_adhoc_id'         => $expedienteAdhoc->expediente_adhoc_id,
                 'estado_expediente_nombre'    => $expedienteAdhoc->entrega->expediente->estadoExpedienteAdhoc->nombre,
                 'administrado_full_name'      => $expedienteAdhoc->entrega->expediente->usuario->full_name,
+                'administrado_id'             => $expedienteAdhoc->entrega->expediente->usuario->id,
                 'numero_hoja_tramite'         => $expedienteAdhoc->ht,
                 'fecha_diligencia'            => $expedienteAdhoc->fecha,
                 'nombre_comercial'            => $expedienteAdhoc->nombre_comercial,

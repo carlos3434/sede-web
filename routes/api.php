@@ -108,6 +108,7 @@ Route::prefix('v1')->group(function(){
         Route::post('notificaciones/{diligencia}','Api\DiligenciaVerificador\NotificacionController@update');
 
         //9 Recepcion y descarga del informe Adhoc
+        Route::get('expedientesNotificados','Api\DiligenciaVerificador\NotificacionController@expedientesNotificados');
 
         //10 Reportes
         Route::get('listasParaPostulantesAdhoc','Api\Reportes\PostulantesAdhocController@listas');
