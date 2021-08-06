@@ -14,24 +14,25 @@ class ExpedientesInformadosCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->transform(function ($expedienteAdhoc) {
+        return $this->collection->transform(function ($diligencia) {
 
             return [
 
-                'expediente_adhoc_id'         => $expedienteAdhoc->expediente_adhoc_id,
-                'estado_expediente_nombre'    => $expedienteAdhoc->entrega->expediente->estadoExpedienteAdhoc->nombre,
-                'administrado_full_name'      => $expedienteAdhoc->entrega->expediente->usuario->full_name,
-                'administrado_id'             => $expedienteAdhoc->entrega->expediente->usuario->id,
-                'numero_hoja_tramite'         => $expedienteAdhoc->ht,
-                'fecha_diligencia'            => $expedienteAdhoc->fecha,
-                'nombre_comercial'            => $expedienteAdhoc->nombre_comercial,
-                'direccion'                   => $expedienteAdhoc->direccion,
-                'area'                        => $expedienteAdhoc->area,
-                'fecha_recepcion'             => $expedienteAdhoc->fecha_recepcion,
-                'fecha_entrega'               => $expedienteAdhoc->fecha_entrega,
-                'anexo8'                      => $expedienteAdhoc->anexo8,
-                'anexo9'                      => $expedienteAdhoc->anexo9,
-                'anexo10'                     => $expedienteAdhoc->anexo10,
+                'diligencia_id'               => $diligencia->id,
+                'expediente_adhoc_id'         => $diligencia->expediente_adhoc_id,
+                'estado_expediente_nombre'    => $diligencia->entrega->expediente->estadoExpedienteAdhoc->nombre,
+                'administrado_full_name'      => $diligencia->entrega->expediente->usuario->full_name,
+                'administrado_id'             => $diligencia->entrega->expediente->usuario->id,
+                'numero_hoja_tramite'         => $diligencia->ht,
+                'fecha_diligencia'            => $diligencia->fecha,
+                'nombre_comercial'            => $diligencia->nombre_comercial,
+                'direccion'                   => $diligencia->direccion,
+                'area'                        => $diligencia->area,
+                'fecha_recepcion'             => $diligencia->fecha_recepcion,
+                'fecha_entrega'               => $diligencia->fecha_entrega,
+                'anexo8'                      => $diligencia->anexo8,
+                'anexo9'                      => $diligencia->anexo9,
+                'anexo10'                     => $diligencia->anexo10,
             ];
         });
 
