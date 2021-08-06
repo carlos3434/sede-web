@@ -97,21 +97,15 @@ Route::prefix('v1')->group(function(){
         Route::apiResource('revision','Api\RevisionExpediente\RevisionController');
 
         //7 Diligencia y formulación del informe Adhoc ( Usuario adhoc)
-        /*
-        GET expedientes asignados a adhoc ( estado asignado )
-        GET Expedientepor ID (recibir expediente) traer el listado de archivos
-        PUT  actualizar anexo 8 en la tabla expediente_adhoc ( estado => Recibido, fecha_recepcion )
-        POST nuevo diligencia al enviar anexo 9 ( estado de diligencia => acta_diligencia )
-        PUT  actualizar diligencia con el anexo 10 (estado de diligencia entregado_informe_vah )
-*/
         Route::get('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@index');
         Route::get('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@show');
         Route::put('diligenciaverificador','Api\DiligenciaVerificador\DiligenciaVerificadorController@store');
-       // Route::post('diligenciaverificador/{id}','Api\DiligenciaVerificador\DiligenciaVerificadorController@update');
         Route::post('diligenciaverificador/{diligencia}/updateAnexo9','Api\DiligenciaVerificador\DiligenciaVerificadorController@updateAnexo9');
         Route::post('diligenciaverificador/{diligencia}/updateAnexo10','Api\DiligenciaVerificador\DiligenciaVerificadorController@updateAnexo10');
 
         //8 Notificación del informe Adhoc 
+        Route::get('notificaciones','Api\DiligenciaVerificador\NotificacionController@index');
+        Route::post('notificaciones/{diligencia}','Api\DiligenciaVerificador\NotificacionController@update');
 
         //9 Recepcion y descarga del informe Adhoc
 

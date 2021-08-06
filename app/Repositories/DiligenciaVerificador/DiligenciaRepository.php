@@ -5,8 +5,10 @@ use App\Repositories\AbstractRepository;
 use App\Models\DiligenciaVerificador\Diligencia;
 use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterface;
 use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaCollection;
+use App\Http\Resources\DiligenciaVerificador\Diligencia\ExpedientesInformadosCollection;
 use App\Models\RevisionExpediente\Revision;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos;
+use App\Models\Settings\EstadoExpedienteAdhoc;
 /**
  * 
  */
@@ -164,5 +166,32 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
     public function countDiligenciaByEntregaId( $entrega_expediente_id )
     {
         return Diligencia::where('entrega_expediente_id', $entrega_expediente_id)->count();
+    }
+    public function expedientesInformados($request)
+    {
+        return new ExpedientesInformadosCollection(
+            $this->getFilter($request)
+            ->sort( 'ea.id', 'DESC')
+            /*->select(
+                'ea.id as expedientes_adhocs_id',
+                'ea.ht as numero_hoja_tramite',
+                'ea.nombre_comercial',
+                \DB::raw(
+                    "CONCAT( u.nombres, ' ', u.apellido_paterno, ' ', u.apellido_materno) as administrado_full_name"
+                ),
+                'u.id as user_id',
+                'ee2.nombre as estado_expediente',
+                'd.anexo8',
+                'd.anexo9',
+                'd.anexo10',
+                'ee.id as entrega_expediente_id'
+            )*/
+            ->rightJoin('entregas_expedientes as ee','diligencias.entrega_expediente_id','=','ee.id')
+            ->rightJoin('expedientes_adhocs as ea','ee.expediente_adhoc_id','=','ea.id')
+            //->rightJoin('users as u','ea.usuario_id','=','u.id')
+            //->rightJoin('estado_expediente as ee2','ea.estado_expediente_id','=','ee2.id')
+            ->where('ea.estado_expediente_id',EstadoExpedienteAdhoc::INFORMEENTREGADO)
+            ->paginate()
+        );
     }
 }

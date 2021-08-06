@@ -42,9 +42,9 @@ abstract class AbstractFilter
     {
         return $this->builder->orderBy($sortBy,$direction);
     }
-    public function sort()
+    public function sort($sortBy = 'id', $direction ='DESC' )
     {
-        $sortBy = $this->request->input('sortBy', 'id');
+        $sortBy = $this->request->input('sortBy', $sortBy);
         $direction = $this->request->input('direction', 'DESC');
         $this->builder->orderBy($sortBy,$direction);
         return $this;
@@ -61,6 +61,14 @@ abstract class AbstractFilter
     public function join($table, $alias, $operation, $aliasJoin)
     {
         return $this->builder->join($table, $alias, $operation, $aliasJoin);
+    }
+    public function rightJoin($table, $alias, $operation, $aliasJoin)
+    {
+        return $this->builder->rightJoin($table, $alias, $operation, $aliasJoin);
+    }
+    public function select($select)
+    {
+        return $this->builder->select($select);
     }
     public function leftJoin($table, $alias, $operation, $aliasJoin)
     {
