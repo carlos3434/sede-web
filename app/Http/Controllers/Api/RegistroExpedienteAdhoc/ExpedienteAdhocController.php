@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
 use App\Helpers\FileUploader;
 use Carbon\Carbon;
-use App\Jobs\SolicitarHojaTramite;
+use App\Mail\SolicitarHojaTramite;
 use App\Models\RegistroExpedienteAdhoc\Archivo;
 
 use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhocArchivo\ExpedienteAdhocArchivoCollection;

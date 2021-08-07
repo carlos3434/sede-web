@@ -6,6 +6,12 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CalificacionFormacionCollection extends ResourceCollection
 {
+    private $calificacionId;
+    public function __construct( $formaciones, $calificacionId)
+    {
+        parent::__construct($formaciones);
+        $this->calificacionId = $calificacionId;
+    }
     /**
      * Transform the resource collection into an array.
      *
@@ -15,8 +21,13 @@ class CalificacionFormacionCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->collection->transform(function ($calificacion) {
+            //buscar puntaje de categoria 1 (formaciones) y calificacion_id
+            $puntajes = $calificacion->puntaje( $this->calificacionId );
+            $puntaje = isset($puntajes)? $puntajes->puntaje: null;
+
             return [
-                'id'                     => $calificacion->id,
+                'id'               => $calificacion->id,
+                'puntaje'          => $puntaje,
 
                 'especialidad'     => $calificacion->especialidad,
                 'fecha_expedicion' => $calificacion->fecha_expedicion,

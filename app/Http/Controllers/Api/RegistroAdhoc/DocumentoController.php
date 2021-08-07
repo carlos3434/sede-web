@@ -43,8 +43,12 @@ class DocumentoController extends Controller
         $all = $request->all();
         $all = $this->storeFile($request, $all, 'declaraciones', 'declaracion_jurada');
         $all = $this->storeFile($request, $all, 'dni', 'copia_dni');
-        $all = $this->storeFile($request, $all, 'rj_itse', 'rj_itse');
-        $all = $this->storeFile($request, $all, 'rj_verificador', 'rj_verificador');
+        if ( $request->has('rj_itse') ) {
+            $all = $this->storeFile($request, $all, 'rj_itse', 'rj_itse');
+        }
+        if ( $request->has('rj_verificador') ) {
+            $all = $this->storeFile($request, $all, 'rj_verificador', 'rj_verificador');
+        }
         $all = $this->storeFile($request, $all, 'anexo_1', 'anexo_1');
         $all = $this->storeFile($request, $all, 'fotos', 'foto');
         $user = $this->repository->updateOne($all, $user);

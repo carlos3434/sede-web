@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Filters\RegistroAdhoc\VerificacionRealizadaFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Traits\LogsActivity;
+use App\Models\SeleccionAdhoc\Puntaje;
 
 class VerificacionRealizada extends Model
 {
@@ -29,5 +30,11 @@ class VerificacionRealizada extends Model
     public function institucion()
     {
         return $this->belongsTo('App\Models\Settings\Institucion', 'institucion_id');
+    }
+    public function puntaje( $calificacionId )
+    {
+        return Puntaje::where('categoria_id',5)
+            ->where('calificacion_id',$calificacionId)
+            ->first('puntaje');
     }
 }
