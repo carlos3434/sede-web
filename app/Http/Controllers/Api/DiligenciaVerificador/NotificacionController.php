@@ -50,11 +50,11 @@ class NotificacionController extends Controller
     public function update(Diligencia $diligencia)
     {
         $diligencia->entrega->expediente()->update(['estado_expediente_id' => EstadoExpedienteAdhoc::ADMINISTRADONOTIFICADO]);
-        $adjuntos = [
+        /*$adjuntos = [
            Storage::path("uploads/files/".$diligencia->anexo10 ),
-        ];
-        Mail::to(['mesadepartes@cenepred.gob.pe'])
-        ->send(new NotificarAnexo10( $diligencia , $adjuntos ));
+        ];*/
+        $email = $diligencia->entrega->expediente->usuario->email;
+        Mail::to([ $email ])->send(new NotificarAnexo10( $diligencia , [] ));
 
         return response()->json(['message' => "Se envio Notificacion al administrado" ], 201);
     }

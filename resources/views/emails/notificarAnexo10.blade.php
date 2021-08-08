@@ -12,7 +12,9 @@
         {{$diligencia->entrega->expediente->usuario->full_name}}. <br>
         <br>
         Mediante la presente ponemos de su conocimiento que ya se encuentra listo el informe de VAH correspondiente al expediente HT {{$diligencia->entrega->expediente->ht}}.
-        El cual se adjunta en el presente email.
+        El cual estara disponible en el siguiente link.
+
+        <a href="{{url('/')}}">Sede Electrónica</a>
 
         <br>
         <br>

@@ -22,6 +22,7 @@ use App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocCo
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Settings\EstadoExpedienteAdhoc;
+use Illuminate\Support\Facades\Mail;
 
 class ExpedienteAdhocController extends Controller
 {
@@ -119,15 +120,15 @@ class ExpedienteAdhocController extends Controller
         $fields['estado_expediente_id'] = EstadoExpedienteAdhoc::HOJATRAMITE;
 
         $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);
-
+/*
         $adjuntos = [
             Storage::path("uploads/files/".$fields['recibo_pago']),
             Storage::path("uploads/files/".$fields['archivo_solicitud_ht']),
         ];
-
+*/
         //dispatch( new SolicitarHojaTramite( Auth::user(), [] ) );
 
-        \Illuminate\Support\Facades\Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new \App\Mail\EnviarAnexo10(Auth::user(), $adjuntos));
+        Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new SolicitarHojaTramite(Auth::user(), [] ));
         return $expedienteAdhoc;
     }
     public function solicitarVerificacionAdhoc(ExpedienteAdhocAddVerificacionAdhocRequest $request, ExpedienteAdhoc $expedienteAdhoc)

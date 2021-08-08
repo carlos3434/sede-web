@@ -21,6 +21,8 @@ use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaResource;
 use App\Models\DiligenciaVerificador\Diligencia;
 use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaCollection;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EnviarAnexo10;
 
 class DiligenciaVerificadorController extends Controller
 {
@@ -135,11 +137,11 @@ class DiligenciaVerificadorController extends Controller
 
         //dispatch( new ProcessEnviarAnexo10( Auth::user(), [] ) );
         //sent an email
-        $adjuntos = [
+        /*$adjuntos = [
            Storage::path("uploads/files/".$all['anexo10']),
-        ];
+        ];*/
 
-        \Illuminate\Support\Facades\Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new \App\Mail\EnviarAnexo10(Auth::user(), $adjuntos));
+        Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new EnviarAnexo10(Auth::user(), []));
         return response()->json($diligencia, 200);
     }
     /**
