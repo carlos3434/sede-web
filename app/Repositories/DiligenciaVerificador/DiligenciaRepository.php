@@ -191,7 +191,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
             ->rightJoin('expedientes_adhocs as ea','ee.expediente_adhoc_id','=','ea.id')
             //->rightJoin('users as u','ea.usuario_id','=','u.id')
             //->rightJoin('estado_expediente as ee2','ea.estado_expediente_id','=','ee2.id')
-            ->where('ea.estado_expediente_id',EstadoExpedienteAdhoc::INFORMEENTREGADO)
+            ->where('ea.estado_expediente_id',EstadoExpedienteAdhoc::ADMINISTRADONOTIFICADO)
             ->paginate()
         );
     }

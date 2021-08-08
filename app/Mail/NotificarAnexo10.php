@@ -13,15 +13,17 @@ class NotificarAnexo10 extends Mailable
     use Queueable, SerializesModels;
 
     public $diligencia;
+    public $adjuntos;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct( Diligencia $diligencia )
+    public function __construct( Diligencia $diligencia, $adjuntos = array() )
     {
         $this->diligencia = $diligencia;
+        $this->adjuntos = $adjuntos;
     }
 
     /**
@@ -31,7 +33,15 @@ class NotificarAnexo10 extends Mailable
      */
     public function build()
     {
-        return $this->subject('Entrega Informe VAH')
-        ->view('emails.notificarAnexo10');
+        $mailable = $this->subject( 'Entrega Informe VAH' )
+                 ->view('emails.notificarAnexo10');
+
+        if ( count( $this->adjuntos ) > 0 ) {
+            foreach ( $this->adjuntos as $adjunto ) {
+                $mailable->attach( $adjunto );
+            }
+        }
+
+        return $mailable;
     }
 }

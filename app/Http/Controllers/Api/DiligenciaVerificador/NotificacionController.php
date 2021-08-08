@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\DiligenciaVerificador\Diligencia;
 use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterface;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\EnviarAnexo10;
+use App\Mail\NotificarAnexo10;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Settings\EstadoExpedienteAdhoc;
+use Illuminate\Support\Facades\Storage;
 
 class NotificacionController extends Controller
 {
@@ -47,9 +49,14 @@ class NotificacionController extends Controller
      */
     public function update(Diligencia $diligencia)
     {
-
+        $diligencia->entrega->expediente()->update(['estado_expediente_id' => EstadoExpedienteAdhoc::ADMINISTRADONOTIFICADO]);
+        $adjuntos = [
+           Storage::path("uploads/files/".$diligencia->anexo10 ),
+        ];
         Mail::to(['mesadepartes@cenepred.gob.pe'])
-        ->send(new EnviarAnexo10( $diligencia ));
+        ->send(new NotificarAnexo10( $diligencia , $adjuntos ));
+
+        return response()->json(['message' => "Se envio Notificacion al administrado" ], 201);
     }
     /**
      * expedientesNotificados

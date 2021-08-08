@@ -13,7 +13,8 @@ class EstadoExpedienteAdhoc extends Model
     const ENTREGADO = 5;
     const RECIBIDO = 6;
     const PROGRAMADO = 7;//cuando se programa diligencia
-    const INFORMEENTREGADO = 8;//cuando se programa diligencia
+    const INFORMEENTREGADO = 8;//cuando se actualiza el anexo 10
+    const ADMINISTRADONOTIFICADO = 9;//despues de notificar al administrado
 
     protected $table="estado_expediente";
 }

@@ -46,3 +46,10 @@ Observaciones encontradas con la arquitecta
 
 18: cambiar la forma de llamar a las categoria y item, 
     debe ser una sola ves y se podria agregar o desactivar pero no eliminar.
+
+
+20Ï diligencia_id al hacer la notificacion
+    fecha_dilignecia
+21  sorting en notificacion
+22
+
