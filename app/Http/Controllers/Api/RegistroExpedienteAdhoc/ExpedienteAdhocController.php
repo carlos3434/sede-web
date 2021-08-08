@@ -125,7 +125,7 @@ class ExpedienteAdhocController extends Controller
             Storage::path("uploads/files/".$fields['archivo_solicitud_ht']),
         ];
 
-        dispatch( new SolicitarHojaTramite( Auth::user(), [] ) );
+        //dispatch( new SolicitarHojaTramite( Auth::user(), [] ) );
 
         \Illuminate\Support\Facades\Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new \App\Mail\EnviarAnexo10(Auth::user(), $adjuntos));
         return $expedienteAdhoc;

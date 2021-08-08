@@ -171,8 +171,9 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
     {
         return new ExpedientesInformadosCollection(
             $this->getFilter($request)
-            ->sort( 'ea.id', 'DESC')
-            /*->select(
+            ->sort( 'ea.id', 'DESC' )
+            ->select( 'diligencias.*'
+                /*'diligencias.id as id',
                 'ea.id as expedientes_adhocs_id',
                 'ea.ht as numero_hoja_tramite',
                 'ea.nombre_comercial',
@@ -184,8 +185,8 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
                 'd.anexo8',
                 'd.anexo9',
                 'd.anexo10',
-                'ee.id as entrega_expediente_id'
-            )*/
+                'ee.id as entrega_expediente_id'*/
+            )
             ->rightJoin('entregas_expedientes as ee','diligencias.entrega_expediente_id','=','ee.id')
             ->rightJoin('expedientes_adhocs as ea','ee.expediente_adhoc_id','=','ea.id')
             //->rightJoin('users as u','ea.usuario_id','=','u.id')

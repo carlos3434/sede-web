@@ -119,7 +119,7 @@ class DiligenciaVerificadorController extends Controller
     public function updateAnexo9(DiligenciaUpdate9Request $request , Diligencia $diligencia )
     {
         $all = $request->all();
-        $all['fecha_diligencia'] = date("Y-m-d H:i:s");
+        $all['fecha'] = date("Y-m-d H:i:s");
         //estado de expediente => PROGRAMADO
         $all = $this->storeFile($request, $all, 'anexo9', 'anexo9');
         $this->repository->updateOne($all, $diligencia);
@@ -133,7 +133,7 @@ class DiligenciaVerificadorController extends Controller
         $this->repository->updateOne($all, $diligencia);
         $diligencia->entrega->expediente()->update(['estado_expediente_id' => EstadoExpedienteAdhoc::INFORMEENTREGADO]);
 
-        dispatch( new ProcessEnviarAnexo10( Auth::user(), [] ) );
+        //dispatch( new ProcessEnviarAnexo10( Auth::user(), [] ) );
         //sent an email
         $adjuntos = [
            Storage::path("uploads/files/".$all['anexo10']),
