@@ -9,6 +9,7 @@ use App\Repositories\RevisionExpediente\Interfaces\RevisionRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
 use App\Models\Settings\EstadoRevision;
+use App\Models\Settings\EstadoExpedienteAdhoc;
 
 class RevisionController extends Controller
 {
@@ -69,8 +70,16 @@ class RevisionController extends Controller
                 return response()->json(['message' => "No se puede subsanar un archivo admitido" ], 422);
             }
         }
-
+        //fecha_revision
+        $all['fecha_revision'] = $request->get('fecha_revision',date("Y-m-d H:i:s") );
         $revision = $this->repository->create( $all );
+        //si se registra una observacion el estado del expediente sera Observado
+        if ($request->estado_revision_id == EstadoRevision::OBSERVADO) {
+            $revision->expedienteAdhocArchivos->expedienteAdhoc()->update([
+                'estado_expediente_id' => EstadoExpedienteAdhoc::OBSERVADO
+            ]);
+        }
+        
         return response()->json($revision, 201);
     }
     /**
