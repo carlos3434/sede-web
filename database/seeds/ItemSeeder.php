@@ -24,6 +24,12 @@ class ItemSeeder extends Seeder
         }
         //Formacion
         Item::create([
+            'nombre' => 'Sin requisitos (0 Puntos)',
+            'puntaje' => '0',
+            'categoria_id' => 1,
+            'convocatoria_id' => $convId,
+        ]);
+        Item::create([
             'nombre' => 'Titulado (03 Puntos)',
             'puntaje' => '3',
             'categoria_id' => 1,
@@ -44,6 +50,12 @@ class ItemSeeder extends Seeder
 
         //Capacitacion
         Item::create([
+            'nombre' => 'Sin requisitos (0 Puntos)',
+            'puntaje' => '0',
+            'categoria_id' => 2,
+            'convocatoria_id' => $convId,
+        ]);
+        Item::create([
             'nombre' => '20 horas lectivas (1 punto)',
             'puntaje' => $convId,
             'categoria_id' => 2,
@@ -57,6 +69,12 @@ class ItemSeeder extends Seeder
         ]);
 
         //ExperienciaGeneral
+        Item::create([
+            'nombre' => 'Sin requisitos (0 Puntos)',
+            'puntaje' => '0',
+            'categoria_id' => 3,
+            'convocatoria_id' => $convId,
+        ]);
         Item::create([
             'nombre' => '06 a 07 años (03 Puntos)',
             'puntaje' => '3',
@@ -78,6 +96,12 @@ class ItemSeeder extends Seeder
 
         //ExperienciaInspector
         Item::create([
+            'nombre' => 'Sin requisitos (0 Puntos)',
+            'puntaje' => '0',
+            'categoria_id' => 4,
+            'convocatoria_id' => $convId,
+        ]);
+        Item::create([
             'nombre' => '05 a 10 años (01 Punto)',
             'puntaje' => $convId,
             'categoria_id' => 4,
@@ -91,6 +115,12 @@ class ItemSeeder extends Seeder
         ]);
 
         //VerificacionesRealizadas
+        Item::create([
+            'nombre' => 'Sin requisitos (0 Puntos)',
+            'puntaje' => '0',
+            'categoria_id' => 5,
+            'convocatoria_id' => $convId,
+        ]);
         Item::create([
             'nombre' => '1 a 10 verificaciones (02 Punto)',
             'puntaje' => '2',
