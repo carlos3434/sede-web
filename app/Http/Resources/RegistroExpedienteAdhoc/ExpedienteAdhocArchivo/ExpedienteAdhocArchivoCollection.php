@@ -23,6 +23,12 @@ class ExpedienteAdhocArchivoCollection extends ResourceCollection
                     "nombre_archivo"  => $archivo->nombre_archivo,
                     "slug_archivo"    => $archivo->slug_archivo,
                     "nombre_padre"    => $archivo->nombre_padre,
+                    "revision_id"                => $archivo->revision_id,
+                    "observacion"                => $archivo->observacion,
+                    "fecha_revision"             => $archivo->fecha_revision,
+                    "fecha_subsanacion"          => $archivo->fecha_subsanacion,
+                    "estado_revision_id"         => $archivo->estado_revision_id,
+                    "estado_revision_nombre"     => $archivo->estado_revision_nombre,
                 ]
             ];
         });

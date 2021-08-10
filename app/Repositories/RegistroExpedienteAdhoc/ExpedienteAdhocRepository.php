@@ -34,6 +34,13 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
                    a.id AS archivo_id, a.nombre AS nombre_archivo, a.slug AS slug_archivo,
                    padre.id id_padre, padre.nombre AS nombre_padre , padre.slug AS slug_padre,
 
+                   r.id as revision_id,
+                   r.observacion,
+                   r.fecha_revision,
+                   r.fecha_subsanacion,
+                   er.id as estado_revision_id,
+                   er.nombre as estado_revision_nombre, 
+
                    ( SELECT count(id) AS total 
                        FROM archivos 
                        WHERE convocatoria_id = ? and level = 2 
@@ -49,11 +56,22 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
             LEFT JOIN departamentos ON provincias.departamento_id = departamentos.id
             LEFT JOIN estado_expediente ee on eaa.estado_expediente_id = ee.id
             LEFT JOIN expedienteadhoc_archivo ea on eaa.id = ea.expedienteadhoc_id 
+            
+            LEFT JOIN (
+                select max(r.id) as revision_id , r.expedienteadhoc_archivo_id 
+                from revisiones r
+                group by r.expedienteadhoc_archivo_id 
+            ) rr on ea.id = rr.expedienteadhoc_archivo_id
+
+            LEFT JOIN revisiones AS r ON rr.revision_id = r.id
+            LEFT JOIN estado_revision AS er ON r.estado_revision_id = er.id
+
             RIGHT JOIN archivos a on ea.archivo_id = a.id
             JOIN archivos AS padre on a.parent_id = padre.id 
             WHERE eaa.id = ? and a.convocatoria_id = ?
 
-            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, departamentos.id
+            GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, departamentos.id,
+                    r.id, er.id
             ORDER BY padre.id;",
             [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
         );
