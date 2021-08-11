@@ -22,6 +22,8 @@ use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhocArchivos;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Settings\EstadoExpedienteAdhoc;
 use Illuminate\Support\Facades\Mail;
+use App\Models\RevisionExpediente\Revision;
+use App\Models\Settings\EstadoRevision;
 
 class ExpedienteAdhocController extends Controller
 {
@@ -153,6 +155,23 @@ class ExpedienteAdhocController extends Controller
                         'valor' =>  $fileValue,
                     ]
                 );
+                //buscar si tiene revision el archivo_id y actualizarlo en la tabla revisiones
+                $expedienteadhoc_archivo_id = ExpedienteAdhocArchivos::where('archivo_id',$archivo['id'])
+                ->where('expedienteadhoc_id', $expedienteAdhoc->id )
+                ->first('id');
+
+                $revision = Revision::where('expedienteadhoc_archivo_id', $expedienteadhoc_archivo_id['id'] )
+                ->orderBy('id','DESC')
+                ->first();
+                
+                if (isset($revision) && $revision['estado_revision_id'] == EstadoRevision::OBSERVADO) {
+                    Revision::create([
+                        'estado_revision_id' => EstadoRevision::SUBSANADO,
+                        'fecha_subsanacion' => date("Y-m-d H:i:s"),
+                        'expedienteadhoc_archivo_id' => $expedienteadhoc_archivo_id['id'],
+                    ]);
+                }
+
             }
         }
 
