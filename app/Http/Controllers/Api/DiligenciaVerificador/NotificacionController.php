@@ -54,8 +54,11 @@ class NotificacionController extends Controller
            Storage::path("uploads/files/".$diligencia->anexo10 ),
         ];*/
         $email = $diligencia->entrega->expediente->usuario->email;
-        Mail::to([ $email ])->send(new NotificarAnexo10( $diligencia , [] ));
-
+        try {
+            Mail::to([ $email ])->send(new NotificarAnexo10( $diligencia , [] ));
+        } catch (\Throwable $ex) {
+            \Log::error($ex);
+        }
         return response()->json(['message' => "Se envio Notificacion al administrado" ], 201);
     }
     /**

@@ -171,7 +171,11 @@ class ExpedienteAdhocController extends Controller
                         'expedienteadhoc_archivo_id' => $expedienteadhoc_archivo_id['id'],
                     ]);
                 }
+                //SOLICITUDVERIFICACION
+                //validar que no haya ninguna revision en estado pendiente
+                //y validar que el estado de expediente sea observado    EstadoExpedienteAdhoc::OBSERVADO
 
+                //es decir si es observado y no tiene ninuna revision se deberia de actualizar a SOLICITUDVERIFICACION
             }
         }
 
