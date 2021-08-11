@@ -41,6 +41,21 @@ class ConvocatoriaController extends Controller
      */
     public function store(ConvocatoriaRequest $request)
     {
+        //validar  fechas no deberian intersectarse fecha_inicio fecha_final
+        //Convocatoria::all();
+        $count = Convocatoria::where('fecha_inicio','<=',$request->fecha_inicio)
+        ->where('fecha_final','>=',$request->fecha_final)
+        ->count();
+
+        if ($count>0) {
+            return response()->json(['message' => "No es posible crear una convocatoria en este rango de fechas" ], 422);
+        }
+        $count = Convocatoria::where('activo',true)->count();
+        if ($count>0) {
+            //valildar solo una convocatoria activa
+            return response()->json(['message' => "No es posible crear una convocatoria activa mientras hay otra activa" ], 422);
+        }
+
         $convocatoria = $this->repository->create($request->all());
         return response()->json($convocatoria, 201);
     }
@@ -74,7 +89,11 @@ class ConvocatoriaController extends Controller
      */
     public function destroy(Convocatoria $convocatoria)
     {
-        $this->repository->deleteOne($convocatoria);
+        try {
+            $this->repository->deleteOne($convocatoria);
+        } catch (\Exception $e) { 
+            return response()->json(['message' => "No es posible borrar esta convocatoria" ], 422);
+        }
         return response()->json(null, 204);
     }
 }

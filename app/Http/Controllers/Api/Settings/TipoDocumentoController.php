@@ -73,7 +73,11 @@ class TipoDocumentoController extends Controller
      */
     public function destroy(TipoDocumento $tipoDocumento)
     {
-        $this->repository->deleteOne($tipoDocumento);
+        try {
+            $this->repository->deleteOne($tipoDocumento);
+        } catch (\Exception $e) { 
+            return response()->json(['message' => "No es posible borrar este tipo documento" ], 422);
+        }
         return response()->json(null, 204);
     }
 }
