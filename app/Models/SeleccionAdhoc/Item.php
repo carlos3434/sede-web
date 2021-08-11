@@ -17,17 +17,12 @@ class Item extends Model
     protected $fillable = [
         'nombre',
         'puntaje',
-        'categoria_id',
-        'convocatoria_id',
+        'activo',
+        'categoria_id'
     ];
 
     public function scopeFilter(Builder $builder, $request)
     {
         return (new ItemFilter($request))->filter($builder);
-    }
-
-    public function convocatoria()
-    {
-        return $this->belongsTo('App\Models\Settings\Convocatoria', 'convocatoria_id');
     }
 }

@@ -19,8 +19,8 @@ class ItemResource extends JsonResource
             'id'                   => $this->id,
             'nombre'               => $this->nombre,
             'puntaje'              => $this->puntaje,
+            'activo'               => $this->activo,
             'categoria_id'         => $this->categoria_id,
-            'convocatoria_id'      => $this->convocatoria_id,
 
             'created_at'           => $this->created_at->toDateTimeString(),
             'updated_at'           => $this->updated_at->toDateTimeString(),

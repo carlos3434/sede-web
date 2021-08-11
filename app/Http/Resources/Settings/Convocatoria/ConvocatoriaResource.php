@@ -17,6 +17,7 @@ class ConvocatoriaResource extends JsonResource
         return [
             'id' => $this->id,
             'nombre' => $this->nombre,
+            'activo' => $this->activo,
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_final' => $this->fecha_final,
             'created_at' => $this->created_at->toDateTimeString(),

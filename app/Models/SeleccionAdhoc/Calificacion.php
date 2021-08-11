@@ -81,16 +81,4 @@ class Calificacion extends Model
         return $this->hasOne('App\Models\SeleccionAdhoc\Acreditacion','calificacion_id');
     }
 
-    public static function resultados($p_convocatoria_id,$p_sede_registral_id)
-    {
-        return DB::select('select * from calificaciones_resultados('.$p_convocatoria_id.','.$p_sede_registral_id.')');
-    }
-
-    public static function pendientes($p_convocatoria_id)
-    {
-        return DB::select('select * from calificaciones_pendientes('.$p_convocatoria_id.')');
-    }
-
-
-
 }

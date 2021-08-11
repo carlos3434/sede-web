@@ -39,7 +39,7 @@ class EntregaExpediente extends Model
 
     public function diligencia()
     {
-        return $this->hasMany('App\Models\DiligenciaVerificador\Diligencia', 'diligencia_id');
+        return $this->hasOne('App\Models\DiligenciaVerificador\Diligencia', 'entrega_expediente_id','id');
     }
 
     //acreditacion

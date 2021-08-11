@@ -13,67 +13,50 @@ class ArchivoSeeder extends Seeder
      */
     public function run()
     {
-        $convId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
-        if ( !$convId ) {
-            $conv = Convocatoria::create([
-                'nombre'      => 'CONVOCATORIA_2021_ACTUAL',
-                'fecha_inicio'     => '2021-01-01',
-                'fecha_final'     => '2021-12-30',
-            ]);
-            $convId = $conv->id;
-        }
-
         $docPrinc  = Archivo::create([
             'nombre' => 'Documentos principales',
             'slug' => 'documentos_principales',
             'level' => '1',
-            'parent_id' => null,
-            'convocatoria_id' => $convId
+            'parent_id' => null
         ]);
 
         $arquit = Archivo::create([
             'nombre' => 'Planos de arquitectura',
             'slug' => 'planos_arquitectura',
             'level' => '1',
-            'parent_id' => null,
-            'convocatoria_id' => $convId
+            'parent_id' => null
         ]);
         
         $fabrica = Archivo::create([
             'nombre' => 'Planos de fábrica inscrita',
             'slug' => 'plans_fabrica_inscrita',
             'level' => '1',
-            'parent_id' => null,
-            'convocatoria_id' => $convId
+            'parent_id' => null
         ]);
         
         $remodela = Archivo::create([
             'nombre' => 'Planos de remodelación',
             'slug' => 'planos_remodelacion',
             'level' => '1',
-            'parent_id' => null,
-            'convocatoria_id' => $convId
+            'parent_id' => null
         ]);
         $ampli = Archivo::create([
             'nombre' => 'Planos de ampliación',
             'slug' => 'planos_ampliacion',
             'level' => '1',
-            'parent_id' => null,
-            'convocatoria_id' => $convId
+            'parent_id' => null
         ]);
         $evac = Archivo::create([
             'nombre' => 'Planos de rutas de evacuación',
             'slug' => 'planos_rutas_evacuacion',
             'level' => '1',
-            'parent_id' => null,
-            'convocatoria_id' => $convId
+            'parent_id' => null
         ]);
         $senal = Archivo::create([
             'nombre' => 'Planos de señalización',
             'slug' => 'planos_senalizacion',
             'level' => '1',
-            'parent_id' => null,
-            'convocatoria_id' => $convId
+            'parent_id' => null
         ]);
 
         $child = [
@@ -97,8 +80,7 @@ class ArchivoSeeder extends Seeder
                 'nombre' => $value,
                 'slug' => $key,
                 'level' => '2',
-                'parent_id' => $docPrinc->id,
-                'convocatoria_id' => $convId
+                'parent_id' => $docPrinc->id
             ]);
         }
 
@@ -120,8 +102,7 @@ class ArchivoSeeder extends Seeder
                 'nombre' => $value,
                 'slug' => $key,
                 'level' => '2',
-                'parent_id' => $arquit->id,
-                'convocatoria_id' => $convId
+                'parent_id' => $arquit->id
             ]);
         }
 
@@ -142,8 +123,7 @@ class ArchivoSeeder extends Seeder
                 'nombre' => $value,
                 'slug' => $key,
                 'level' => '2',
-                'parent_id' => $fabrica->id,
-                'convocatoria_id' => $convId
+                'parent_id' => $fabrica->id
             ]);
         }
 
@@ -164,8 +144,7 @@ class ArchivoSeeder extends Seeder
                 'nombre' => $value,
                 'slug' => $key,
                 'level' => '2',
-                'parent_id' => $remodela->id,
-                'convocatoria_id' => $convId
+                'parent_id' => $remodela->id
             ]);
         }
 
@@ -186,8 +165,7 @@ class ArchivoSeeder extends Seeder
                 'nombre' => $value,
                 'slug' => $key,
                 'level' => '2',
-                'parent_id' => $ampli->id,
-                'convocatoria_id' => $convId
+                'parent_id' => $ampli->id
             ]);
         }
 
@@ -208,8 +186,7 @@ class ArchivoSeeder extends Seeder
                 'nombre' => $value,
                 'slug' => $key,
                 'level' => '2',
-                'parent_id' => $evac->id,
-                'convocatoria_id' => $convId
+                'parent_id' => $evac->id
             ]);
         }
 
@@ -230,8 +207,7 @@ class ArchivoSeeder extends Seeder
                 'nombre' => $value,
                 'slug' => $key,
                 'level' => '2',
-                'parent_id' => $senal->id,
-                'convocatoria_id' => $convId
+                'parent_id' => $senal->id
             ]);
         }
 

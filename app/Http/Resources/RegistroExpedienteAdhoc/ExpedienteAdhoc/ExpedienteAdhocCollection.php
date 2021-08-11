@@ -21,6 +21,7 @@ class ExpedienteAdhocCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->collection->transform(function ($expedienteAdhoc) {
+            $diligencia = isset($expedienteAdhoc->entrega->diligencia)? $expedienteAdhoc->entrega->diligencia : null;
 
             return [
                 'id'                         => $expedienteAdhoc->id,
@@ -49,6 +50,13 @@ class ExpedienteAdhocCollection extends ResourceCollection
                 'usuario_revisor_id'         => $expedienteAdhoc->usuario_revisor_id,
                 'usuario_revisor_full_name'  => (isset($expedienteAdhoc->usuarioRevisor))?
                                                 $expedienteAdhoc->usuarioRevisor->full_name:null,
+
+                'diligencia_id'              => isset($diligencia->id)? $diligencia->id:null,
+                'fecha_diligencia'           => isset($diligencia->fecha)? $diligencia->fecha:null,
+                'anexo8'                     => isset($diligencia->anexo8)? $diligencia->anexo8:null,
+                'anexo9'                     => isset($diligencia->anexo9)? $diligencia->anexo9:null,
+                'anexo10'                    => isset($diligencia->anexo10)? $diligencia->anexo10:null,
+                
                 'estadisticas'               => [
                     "completados" => $expedienteAdhoc->expedienteAdhocArchivos->filter(function($item)
                             {

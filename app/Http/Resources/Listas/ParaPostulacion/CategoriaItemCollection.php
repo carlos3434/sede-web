@@ -16,18 +16,9 @@ class CategoriaItemCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $convocatoriaActualId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
-
-        return $this->collection->transform(function ($categoria) use ($convocatoriaActualId) {
+        return $this->collection->transform(function ($categoria) {
             return [
-                
-               // 'id' => $categoria->id,
-              //  'nombre' => $categoria->nombre,
-
-                $categoria->slug => new ItemCollection( 
-                    $categoria->items->where('convocatoria_id',$convocatoriaActualId)
-                ),
-
+                $categoria->slug => new ItemCollection(  $categoria->items )
             ];
         });
     }

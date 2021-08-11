@@ -26,31 +26,26 @@ class ParaPuntajeController extends Controller
         $convocatoriaActualId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
         $categoria1 = Categoria::from('categorias as c')->select('i.*')
                 ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
                 ->where('c.id',1)
                 ->orderBy('i.puntaje','ASC')
                 ->get();
         $categoria2 = Categoria::from('categorias as c')->select('i.*')
                 ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
                 ->where('c.id',2)
                 ->orderBy('i.puntaje','ASC')
                 ->get();
         $categoria3 = Categoria::from('categorias as c')->select('i.*')
                 ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
                 ->where('c.id',3)
                 ->orderBy('i.puntaje','ASC')
                 ->get();
         $categoria4 = Categoria::from('categorias as c')->select('i.*')
                 ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
                 ->where('c.id',4)
                 ->orderBy('i.puntaje','ASC')
                 ->get();
         $categoria5 = Categoria::from('categorias as c')->select('i.*')
                 ->join('items as i','c.id','=','i.categoria_id')
-                ->where('convocatoria_id',$convocatoriaActualId)
                 ->where('c.id',5)
                 ->orderBy('i.puntaje','ASC')
                 ->get();

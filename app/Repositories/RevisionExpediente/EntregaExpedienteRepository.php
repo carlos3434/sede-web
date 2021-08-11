@@ -30,7 +30,7 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
     /**
      * Retorna informacion del un determinado expediente
      */
-    public function getByConvocatoriaAndExpediente($convocatoriaId , $expedienteAdhocId ){
+    public function getByExpedienteId( $expedienteAdhocId ){
         return \DB::select("
             SELECT eaa.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
                    eaa.monto , eaa.nombre_banco , eaa.numero_operacion  ,
@@ -65,7 +65,7 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
 
                    ( SELECT count(id) AS total 
                        FROM archivos 
-                       WHERE convocatoria_id = ? and level = 2 
+                       WHERE level = 2 AND activo = true
                     )   AS total,
 
                    ( SELECT count(id) AS completados 
@@ -98,13 +98,13 @@ class EntregaExpedienteRepository extends AbstractRepository implements EntregaE
             LEFT JOIN users AS adhoc ON c.usuario_id = adhoc.id
             LEFT JOIN users as cenepred ON eee.usuario_asignador_id = cenepred.id
 
-            WHERE eaa.id = ? and a.convocatoria_id = ?
+            WHERE eaa.id = ?  AND a.activo = true  AND padre.activo = true
 
             GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, adhoc.id,
                      r.id, er.id, eee.id, cenepred.id, administrado.id,
                      departamentos.id
             ORDER BY padre.id;",
-            [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
+            [$expedienteAdhocId,$expedienteAdhocId]
         );
     }
     public function getRevisiones($expedienteAdhocId)

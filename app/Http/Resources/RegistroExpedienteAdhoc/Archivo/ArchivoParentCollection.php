@@ -19,12 +19,9 @@ class ArchivoParentCollection extends ResourceCollection
                 'id'             => $archivo->id,
                 'nombre'         => $archivo->nombre,
                 'slug'           => $archivo->slug,
-                'estadisticas'   => ['completados'=> 0, 'total'=> 13],
-                'archivos'       => new ArchivoCollection($archivo->hijos),
-                ///'s' => $archivo->GetChild(),
-
-               // 'created_at'                 => $archivo->created_at->toDateTimeString(),
-               // 'updated_at'                 => $archivo->updated_at->toDateTimeString(),
+                'activo'         => $archivo->activo,
+                //'estadisticas'   => ['completados'=> 0, 'total'=> 13],
+                'archivos'       => new ArchivoCollection($archivo->hijos)
             ];
         });
     }

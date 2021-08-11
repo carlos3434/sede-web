@@ -86,12 +86,7 @@ class ExpedienteAdhoc extends Model
 
     public function entrega()
     {
-        return $this->hasOne('App\Models\RegistroAdhoc\EntregaExpediente', 'expediente_adhoc_id');
+        return $this->hasOne('App\Models\RevisionExpediente\EntregaExpediente','expediente_adhoc_id','id');//foreign_key
     }
 
-    public function estaEntregado()
-    {
-        $resultado = DB::select('SELECT * FROM entregas_expedientes WHERE expediente_adhoc_id='.$this->id);
-        return count($resultado)>0;
-    }
 }

@@ -18,7 +18,7 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
     protected $collectionNamePath = "App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocCollection";
     protected $resourceNamePath = "App\Http\Resources\RegistroExpedienteAdhoc\ExpedienteAdhoc\ExpedienteAdhocResource";
 
-    public function getByConvocatoriaAndExpediente($convocatoriaId , $expedienteAdhocId ){
+    public function getByExpedienteId($expedienteAdhocId ){
         return \DB::select("
             SELECT eaa.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
                    eaa.monto , eaa.nombre_banco , eaa.numero_operacion  ,
@@ -43,12 +43,17 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
 
                    ( SELECT count(id) AS total 
                        FROM archivos 
-                       WHERE convocatoria_id = ? and level = 2 
+                       WHERE level = 2 AND activo = true
                     )   AS total,
                    ( SELECT count(id) AS completados 
                        FROM expedienteadhoc_archivo 
                        WHERE expedienteadhoc_id = ? 
-                    )   AS completados
+                    )   AS completados,
+                    dd.id as diligencia_id,
+                    dd.fecha as fecha_diligencia,
+                    dd.anexo8,
+                    dd.anexo9,
+                    dd.anexo10
                    
             FROM expedientes_adhocs eaa 
             LEFT JOIN distritos ON eaa.distrito_id = distritos.id
@@ -68,12 +73,15 @@ class ExpedienteAdhocRepository extends AbstractRepository implements Expediente
 
             RIGHT JOIN archivos a on ea.archivo_id = a.id
             JOIN archivos AS padre on a.parent_id = padre.id 
-            WHERE eaa.id = ? and a.convocatoria_id = ?
+
+            LEFT JOIN entregas_expedientes eee ON eaa.id = eee.expediente_adhoc_id
+            LEFT JOIN diligencias dd ON eee.id = dd.entrega_expediente_id
+            WHERE eaa.id = ? AND a.activo = true AND padre.activo = true
 
             GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, departamentos.id,
-                    r.id, er.id
+                    r.id, er.id, dd.id
             ORDER BY padre.id;",
-            [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
+            [$expedienteAdhocId,$expedienteAdhocId]
         );
     }
 }

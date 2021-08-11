@@ -16,7 +16,6 @@ use App\Http\Requests\DiligenciaVerificador\DiligenciaUpdate10Request;
 use App\Models\Settings\EstadoExpedienteAdhoc;
 use App\Models\RegistroExpedienteAdhoc\ExpedienteAdhoc;
 use App\Models\RevisionExpediente\EntregaExpediente;
-use App\Models\Settings\Convocatoria;
 use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaResource;
 use App\Models\DiligenciaVerificador\Diligencia;
 use App\Http\Resources\DiligenciaVerificador\Diligencia\DiligenciaCollection;
@@ -59,7 +58,7 @@ class DiligenciaVerificadorController extends Controller
         }
 
         if (!$request->has('estado_expediente_id')) {
-            $request->request->add(['estado_expediente_id' => [5,6,7] ]);
+            $request->request->add(['estado_expediente_id' => [5,6,7,8,9] ]);
         }
         $request->request->add(['verificador_id' => Auth::id() ]);//usuario verificador adhoc
 
@@ -91,13 +90,8 @@ class DiligenciaVerificadorController extends Controller
 
         //create diligencia
         $diligencia = $this->repository->create( $all );
-         
-        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
-        if (!$convocatoriaId) {
-            return [];
-        }
 
-        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $entregaExpediente->expediente->id );
+        $result = $this->repository->getByExpedienteId( $entregaExpediente->expediente->id );
         $revisiones = $this->repository->getRevisiones( $entregaExpediente->expediente->id );
         return response()->json( new DiligenciaResource( $result , $revisiones) , 201 );
     }
@@ -110,11 +104,7 @@ class DiligenciaVerificadorController extends Controller
      */
     public function show( $expedienteAdhocId )
     {
-        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
-        if (!$convocatoriaId) {
-            return [];
-        }
-        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhocId );
+        $result = $this->repository->getByExpedienteId( $expedienteAdhocId );
         $revisiones = $this->repository->getRevisiones( $expedienteAdhocId );
         return response()->json( new DiligenciaResource( $result , $revisiones) , 200 );
     }
@@ -169,9 +159,8 @@ class DiligenciaVerificadorController extends Controller
         }
 
         $entregaExpediente = $this->repository->updateOne($all, $entregaExpediente);
-        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
 
-        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $entregaExpediente->id );
+        $result = $this->repository->getByExpedienteId( $entregaExpediente->id );
         return response()->json( new EntregaExpedienteArchivoResource( $result ) , 200 );
     }
 

@@ -106,7 +106,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
         ->groupBy('r.estado_revision_id','er.id' )
         ->get();
     }
-    public function getByConvocatoriaAndExpediente($convocatoriaId , $expedienteAdhocId ){
+    public function getByExpedienteId( $expedienteAdhocId ){
 
         return \DB::select("
             SELECT eee.id, eaa.nombre_comercial , eaa.direccion , eaa.area,
@@ -129,7 +129,7 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
 
                    ( SELECT count(id) AS total 
                        FROM archivos 
-                       WHERE convocatoria_id = ? and level = 2 
+                       WHERE level = 2 AND activo = true
                     )   AS total,
                    ( SELECT count(id) AS completados 
                        FROM expedienteadhoc_archivo 
@@ -156,11 +156,11 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
             LEFT JOIN expedienteadhoc_archivo ea on eaa.id = ea.expedienteadhoc_id 
             RIGHT JOIN archivos a on ea.archivo_id = a.id
             LEFT JOIN archivos AS padre on a.parent_id = padre.id 
-            WHERE eaa.id = ? and a.convocatoria_id = ?
+            WHERE eaa.id = ? AND a.activo = true AND padre.activo = true
 
             GROUP BY eaa.id , ea.id , a.id, padre.id , ee.id, departamentos.id, d.id, eee.id, u.id
             ORDER BY padre.id;",
-            [$convocatoriaId,$expedienteAdhocId,$expedienteAdhocId,$convocatoriaId]
+            [$expedienteAdhocId,$expedienteAdhocId]
         );
     }
     public function countDiligenciaByEntregaId( $entrega_expediente_id )
@@ -172,26 +172,18 @@ class DiligenciaRepository extends AbstractRepository implements DiligenciaRepos
         return new ExpedientesInformadosCollection(
             $this->getFilter($request)
             ->sort( 'ea.id', 'DESC' )
-            ->select( 'diligencias.*'
-                /*'diligencias.id as id',
-                'ea.id as expedientes_adhocs_id',
-                'ea.ht as numero_hoja_tramite',
-                'ea.nombre_comercial',
-                \DB::raw(
-                    "CONCAT( u.nombres, ' ', u.apellido_paterno, ' ', u.apellido_materno) as administrado_full_name"
-                ),
-                'u.id as user_id',
-                'ee2.nombre as estado_expediente',
-                'd.anexo8',
-                'd.anexo9',
-                'd.anexo10',
-                'ee.id as entrega_expediente_id'*/
-            )
+            ->select( 'diligencias.*' )
             ->rightJoin('entregas_expedientes as ee','diligencias.entrega_expediente_id','=','ee.id')
             ->rightJoin('expedientes_adhocs as ea','ee.expediente_adhoc_id','=','ea.id')
             //->rightJoin('users as u','ea.usuario_id','=','u.id')
             //->rightJoin('estado_expediente as ee2','ea.estado_expediente_id','=','ee2.id')
-            ->where('ea.estado_expediente_id',EstadoExpedienteAdhoc::ADMINISTRADONOTIFICADO)
+            ->whereIn(
+                'ea.estado_expediente_id',
+                [
+                    EstadoExpedienteAdhoc::INFORMEENTREGADO,
+                    EstadoExpedienteAdhoc::ADMINISTRADONOTIFICADO,
+                ]
+            )
             ->paginate()
         );
     }

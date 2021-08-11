@@ -10,7 +10,6 @@ use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddHojaTramiteReque
 use App\Http\Requests\RegistroExpedienteAdhoc\ExpedienteAdhocAddVerificacionAdhocRequest;
 use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Settings\Convocatoria;
 use App\Helpers\FileUploader;
 use Carbon\Carbon;
 use App\Mail\SolicitarHojaTramite;
@@ -61,9 +60,6 @@ class ExpedienteAdhocController extends Controller
             );
         }
         //por defecto traer todos las ExpedienteAdhoces del usuario logueado
-        //$request->request->add( ['puntaje' => $request->input('puntaje', 0) ]);
-        //$request->request->add( ['filtro'  => $request->input('filtro', '>=') ]);
-        //solo de la convocatoria actual
         $request->request->add(['usuario_id' => Auth::id() ]);
         return $this->repository->all($request);
     }
@@ -81,14 +77,13 @@ class ExpedienteAdhocController extends Controller
         $all['estado_expediente_id'] = EstadoExpedienteAdhoc::CREADO;
 
         $expedienteAdhoc = $this->repository->create( $all );
-        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
-        if ($convocatoriaId) {
-            //traer todos los archivos de la actual convocatoria
-            $archivos = Archivo::GetArchivosByConvocatoriaId( $convocatoriaId );
-            $expedienteAdhoc->expedienteAdhocArchivos()->createMany( $archivos->toArray() );
-        }
+
+        //traer todos los archivos de la actual convocatoria
+        $archivos = Archivo::GetArchivosParent( );
+        $expedienteAdhoc->expedienteAdhocArchivos()->createMany( $archivos->toArray() );
+
         //consultar los archivos y sus observaciones
-        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhoc->id );
+        $result = $this->repository->getByExpedienteId( $expedienteAdhoc->id );
 
         return response()->json( new ExpedienteAdhocArchivoResource( $result ) , 201 );
     }
@@ -101,11 +96,7 @@ class ExpedienteAdhocController extends Controller
      */
     public function show(ExpedienteAdhoc $expedienteAdhoc)
     {
-        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
-        if (!$convocatoriaId) {
-            return [];
-        }
-        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhoc->id );
+        $result = $this->repository->getByExpedienteId( $expedienteAdhoc->id );
 
         return response()->json( new ExpedienteAdhocArchivoResource( $result ) , 200 );
     }
@@ -166,9 +157,8 @@ class ExpedienteAdhocController extends Controller
         }
 
         $expedienteAdhoc = $this->repository->updateOne($all, $expedienteAdhoc);
-        $convocatoriaId = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id: false;
 
-        $result = $this->repository->getByConvocatoriaAndExpediente( $convocatoriaId , $expedienteAdhoc->id );
+        $result = $this->repository->getByExpedienteId( $expedienteAdhoc->id );
         return response()->json( new ExpedienteAdhocArchivoResource( $result ) , 200 );
     }
 
