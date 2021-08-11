@@ -14,25 +14,25 @@ class ConvocatoriaSeeder extends Seeder
     {
         Convocatoria::create([
             'nombre'        => 'CONVOCATORIA_2020',
-            'activo'        => 0,
+            'activo'        => false,
             'fecha_inicio'  => '2020-12-01',
             'fecha_final'   => '2020-12-30',
         ]);
         Convocatoria::create([
             'nombre'        => 'CONVOCATORIA_2021',
-            'activo'        => 1,
+            'activo'        => true,
             'fecha_inicio'  => '2021-01-01',
             'fecha_final'   => '2021-12-30',
         ]);
         Convocatoria::create([
             'nombre'        => 'CONVOCATORIA_2022',
-            'activo'        => 0,
+            'activo'        => false,
             'fecha_inicio'  => '2022-12-01',
             'fecha_final'   => '2022-12-30',
         ]);
         Convocatoria::create([
             'nombre'        => 'CONVOCATORIA_2023',
-            'activo'        => 0,
+            'activo'        => false,
             'fecha_inicio'  => '2023-12-01',
             'fecha_final'   => '2023-12-30',
         ]);

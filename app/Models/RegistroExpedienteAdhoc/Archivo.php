@@ -48,7 +48,7 @@ class Archivo extends Model
     public function scopeGetArchivosParent( $query )
     {
         return $this->where('level',2)//level 2
-        ->where('activo',1)
+        ->where('activo', true)
         ->select('id as archivo_id')
         ->get();
     }

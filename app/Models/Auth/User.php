@@ -126,8 +126,14 @@ class User extends Authenticatable //implements MustVerifyEmail
     {
         return (bool) Calificacion::from('calificaciones as ca')
         ->join('convocatorias as c', 'ca.convocatoria_id', '=', 'c.id')
-        ->where('c.fecha_inicio', '<=', date("Y-m-d") )
-        ->where('c.fecha_final', '>=', date("Y-m-d") )
+        ->where('activo', true)
+        ->where('usuario_id',$this->id)
+        ->count();
+    }
+    public function scopeEstaAcreditado()
+    {
+        return (bool) Calificacion::from('calificaciones as ca')
+        ->join('acreditaciones as a', 'ca.id', '=', 'a.calificacion_id')
         ->where('usuario_id',$this->id)
         ->count();
     }

@@ -28,7 +28,6 @@ class ParaEntregaExpedienteController extends Controller
 
         $response = [
             'hay_convocatoria_actual' =>  (isset( Convocatoria::GetActual()->id )) ? true : false,
-            //'esta_postulando' => Auth::user()->estaPostulando(),
 
             'acreditaciones' => new AcreditacionCollection(Acreditacion::all()),//Acreditacion
             'estado_expediente' => new EstadoExpedienteAdhocCollection(EstadoExpedienteAdhoc::all()),//EstadoExpedienteAdhoc

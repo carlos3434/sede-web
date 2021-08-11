@@ -22,7 +22,6 @@ class ParaEstadosExpedienteAdhocController extends Controller
     public function hojaTramite()
     {
         $response = [
-            //'esta_postulando' => Auth::user()->estaPostulando(),
             'expedientes' => new ParaSolicitarExpedienteCollection(
                 ExpedienteAdhoc::where('usuario_id', Auth::id() )
                 ->where('estado_expediente_id',EstadoExpedienteAdhoc::CREADO)
@@ -35,7 +34,6 @@ class ParaEstadosExpedienteAdhocController extends Controller
     public function verificacion()
     {
         $response = [
-            //'esta_postulando' => Auth::user()->estaPostulando(),
             'expedientes' => new ParaSolicitarExpedienteCollection(
                 ExpedienteAdhoc::where('usuario_id', Auth::id() )
                 ->where('estado_expediente_id',EstadoExpedienteAdhoc::HOJATRAMITE)

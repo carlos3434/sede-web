@@ -44,6 +44,7 @@ class UserResource extends JsonResource
             'anexo_1' => $this->anexo_1,
             'foto' => $this->foto,
             'esta_postulando' => $this->estaPostulando(),
+            'esta_acreditado' => $this->estaAcreditado(),
 
             'created_at' => $this->created_at->toDateTimeString(),
             'roles' => $this->getRoleNames(),

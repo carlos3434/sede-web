@@ -28,9 +28,7 @@ class Convocatoria extends Model
 
     public function scopeGetActual()
     {
-        return $this->where('activo',1)
-        //->where('fecha_inicio', '<=', date("Y-m-d") )
-        //->where('fecha_final', '>=', date("Y-m-d") )
+        return $this->where('activo', true)
         ->select('id','nombre','fecha_inicio','fecha_final')
         ->first();
     }

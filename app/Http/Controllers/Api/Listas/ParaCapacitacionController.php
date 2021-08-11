@@ -23,6 +23,7 @@ class ParaCapacitacionController extends Controller
     {
         $response = [
             'esta_postulando' => Auth::user()->estaPostulando(),
+            'esta_acreditado' => Auth::user()->estaAcreditado(),
             'tipo_capacitacion' => new TipoCapacitacionCollection(TipoCapacitacion::all()),
             'institutiones' => new InstitucionCollection(
                 Institucion::where('tipo_institucion_id', Institucion::INSTITUCION_ACADEMICA )
