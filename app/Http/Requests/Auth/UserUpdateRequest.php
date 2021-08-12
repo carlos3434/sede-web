@@ -4,7 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,8 @@ class UserRequest extends FormRequest
         //return false;
         return true;
     }
-    public function getFillableForAdd()
+
+    public function getFillable()
     {
         return [
             'tipo_documento_id',
@@ -25,29 +26,7 @@ class UserRequest extends FormRequest
             'apellido_materno',
             'nombres',
             'sexo',
-            'pais_id',
-            'distrito_id',
             'telefono_fijo',
-            'celular',
-            'celular',
-            'estado_civil_id',
-            'direccion',
-            'password',
-        ];
-    }
-    public function getFillableForUpdate()
-    {
-        return [
-            'tipo_documento_id',
-            'numero_documento',
-            'apellido_paterno',
-            'apellido_materno',
-            'nombres',
-            'sexo',
-            'pais_id',
-            'distrito_id',
-            'telefono_fijo',
-            'celular',
             'celular',
             'estado_civil_id',
             'direccion',
@@ -69,14 +48,11 @@ class UserRequest extends FormRequest
             'apellido_materno'          => 'required|string',
             'nombres'                   => 'required|string',
             'sexo'                      => 'required|boolean',
-            'pais_id'                   => 'required|exists:paises,id',
-            'distrito_id'               => 'required|exists:distritos,id',
             'telefono_fijo'             => 'required|string',
-            'celular'                   => 'required|string',
             'celular'                   => 'required|string',
             'estado_civil_id'           => 'exists:estado_civil,id',
             'direccion'                 => 'string',
-            'password'                  => 'required|min:8',
+            'password'                  => 'min:8',
         ];
     }
     public function messages()

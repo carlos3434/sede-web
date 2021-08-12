@@ -167,3 +167,7 @@ observaciones
   para que Miguel realize su conformidad
 
 - 
+Drupal en laradock
+
+drush si --db-url=pgsql://default:secret@postgres:5432/drupal8
+

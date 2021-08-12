@@ -71,6 +71,9 @@ class Handler extends ExceptionHandler
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException ) {
             return response()->json(['message' => $e->getMessage()], 405);
         }
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            return response()->json(['message' => 'El usuario no tiene ninguno necesarios accesos.'], 403);
+        }
         return parent::render($request, $exception);
     }
     /**

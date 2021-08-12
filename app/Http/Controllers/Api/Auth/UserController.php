@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
-use App\Http\Requests\Auth\UserRequest;
+use App\Http\Requests\Auth\UserAddRequest;
+use App\Http\Requests\Auth\UserUpdateRequest;
 use App\Repositories\Auth\Interfaces\UserRepositoryInterface;
 use App\Helpers\FileUploader;
+
 class UserController extends Controller
 {
     private $userRepository;
@@ -17,9 +19,6 @@ class UserController extends Controller
         $this->fileUploader = $fileUploader;
         $this->userRepository = $userRepository;
 
-       // $this->middleware(['can:ACREDITACION_SHOW'])->only('show');
-       // $this->middleware('permission:ACREDITACION_SHOW|ACREDITACION_SHOW')->only('show');
-       // $this->middleware('role:ADMINISTRADOR')->only('show');
         $this->middleware(['role_or_permission:ADMINISTRADOR|USER_CREATE'])->only(['create','store']);
         $this->middleware(['role_or_permission:ADMINISTRADOR|USER_INDEX'])->only('index');
         $this->middleware(['role_or_permission:ADMINISTRADOR|USER_EDIT'])->only(['edit','update']);
@@ -45,19 +44,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(UserAddRequest $request)
     {
-        $all = $request->all();
-        $all = $this->storeFile($request, $all, 'constancias', 'constancia_habilidad');
-        $all = $this->storeFile($request, $all, 'declaraciones', 'declaracion_jurada');
-        $all = $this->storeFile($request, $all, 'dni', 'copia_dni');
-        $all = $this->storeFile($request, $all, 'rj_itse', 'rj_itse');
-        $all = $this->storeFile($request, $all, 'rj_verificador', 'rj_verificador');
-        $all = $this->storeFile($request, $all, 'anexo_1', 'anexo_1');
-        $all = $this->storeFile($request, $all, 'fotos', 'foto');
-        $all['password'] = bcrypt( $request->get('password') );
-        $user = $this->userRepository->create( $all );
-        $this->userRepository->syncRolesAndPermissions($request, $user);
+        $fields = $request->only($request->getFillable());
+        $fields['password'] = bcrypt( $request->get('password') );
+        $user = $this->userRepository->create( $fields );
+        $this->userRepository->syncRolesCenepred( $user);
         return response()->json($user, 201);
     }
     /**
@@ -77,19 +69,13 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user )
+    public function update(UserUpdateRequest $request, User $user )
     {
-        $all = $request->all();
-        $all = $this->storeFile($request, $all, 'constancias', 'constancia_habilidad');
-        $all = $this->storeFile($request, $all, 'declaraciones', 'declaracion_jurada');
-        $all = $this->storeFile($request, $all, 'dni', 'copia_dni');
-        $all = $this->storeFile($request, $all, 'rj_itse', 'rj_itse');
-        $all = $this->storeFile($request, $all, 'rj_verificador', 'rj_verificador');
-        $all = $this->storeFile($request, $all, 'anexo_1', 'anexo_1');
-        $all = $this->storeFile($request, $all, 'fotos', 'foto');
-        $all['password'] = bcrypt( $request->get('password') );
-        $user = $this->userRepository->updateOne($all, $user);
-        $this->userRepository->syncRolesAndPermissions($request, $user);
+        $fields = $request->only($request->getFillable());
+        if ($request->has('password')) {
+            $fields['password'] = bcrypt( $request->get('password') );
+        }
+        $user = $this->userRepository->updateOne($fields, $user);
         return response()->json($user, 200);
     }
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class UserAddRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,45 +13,23 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        //return false;
         return true;
     }
-    public function getFillableForAdd()
+    public function getFillable()
     {
         return [
+            'email',
             'tipo_documento_id',
             'numero_documento',
             'apellido_paterno',
             'apellido_materno',
             'nombres',
             'sexo',
-            'pais_id',
-            'distrito_id',
             'telefono_fijo',
-            'celular',
             'celular',
             'estado_civil_id',
             'direccion',
             'password',
-        ];
-    }
-    public function getFillableForUpdate()
-    {
-        return [
-            'tipo_documento_id',
-            'numero_documento',
-            'apellido_paterno',
-            'apellido_materno',
-            'nombres',
-            'sexo',
-            'pais_id',
-            'distrito_id',
-            'telefono_fijo',
-            'celular',
-            'celular',
-            'estado_civil_id',
-            'direccion',
-            //'password',
         ];
     }
     /**
@@ -69,13 +47,11 @@ class UserRequest extends FormRequest
             'apellido_materno'          => 'required|string',
             'nombres'                   => 'required|string',
             'sexo'                      => 'required|boolean',
-            'pais_id'                   => 'required|exists:paises,id',
-            'distrito_id'               => 'required|exists:distritos,id',
             'telefono_fijo'             => 'required|string',
-            'celular'                   => 'required|string',
             'celular'                   => 'required|string',
             'estado_civil_id'           => 'exists:estado_civil,id',
             'direccion'                 => 'string',
+            'email'                     => 'required|unique:users,email,'. (isset($this->user->id) ? $this->user->id : 0),
             'password'                  => 'required|min:8',
         ];
     }

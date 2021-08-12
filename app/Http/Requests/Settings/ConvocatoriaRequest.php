@@ -26,7 +26,7 @@ class ConvocatoriaRequest extends FormRequest
     {
         return [
             'nombre' => 'required|alpha_num_spaces',
-            //'activo' => 'required|boolean',
+            'activo' => 'required',
             'fecha_inicio' => 'required|date_format:Y-m-d',
             'fecha_final' => 'required|date_format:Y-m-d',
         ];

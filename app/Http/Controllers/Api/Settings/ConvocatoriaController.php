@@ -78,6 +78,20 @@ class ConvocatoriaController extends Controller
      */
     public function update(ConvocatoriaRequest $request, Convocatoria $convocatoria)
     {
+        $count = Convocatoria::where('fecha_inicio','<=',$request->fecha_inicio)
+        ->where('fecha_final','>=',$request->fecha_final)
+        ->where('id', '<>', $request->id )
+        ->count();
+
+        if ($count>0) {
+            return response()->json(['message' => "No es posible modificar una convocatoria en este rango de fechas" ], 422);
+        }
+        $count = Convocatoria::where('activo', true)->where('id', '<>', $request->id )->count();
+        if ($count>0) {
+            //valildar solo una convocatoria activa
+            return response()->json(['message' => "No es posible modificar una convocatoria activa mientras hay otra activa" ], 422);
+        }
+
         $convocatoria = $this->repository->updateOne($request->all(), $convocatoria);
         return response()->json($convocatoria, 200);
     }

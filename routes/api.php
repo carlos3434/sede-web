@@ -115,6 +115,7 @@ Route::prefix('v1')->group(function(){
         Route::get('reporte/postulantesadhoc','Api\Reportes\PostulantesAdhocController@reporte');
 
         //listas
+        Route::get('listasParaUsuario','Api\Listas\ParaUsuarioController@index');
         Route::get('listasParaInstitucion','Api\Listas\ParaInstitucionController@index');
         Route::get('listasParaFormacion','Api\Listas\ParaFormacionController@index');
         Route::get('listasParaCapacitacion','Api\Listas\ParaCapacitacionController@index');
