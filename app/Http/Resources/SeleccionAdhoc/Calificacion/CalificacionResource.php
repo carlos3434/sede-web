@@ -18,6 +18,7 @@ class CalificacionResource extends JsonResource
         return [
             'id'                     => $this->id,
             'fecha'                  => Carbon::parse($this->fecha)->toDateString(),
+            'usuario_id'             => $this->usuario_id,
             'convocatoria_id'        => $this->convocatoria_id,
             'convocatoria_nombre'    => $this->convocatoria->nombre,
             'sede_registral_id'      => $this->sede_registral_id,

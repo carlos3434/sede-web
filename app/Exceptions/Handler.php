@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Auth\AuthenticationException;
 
 class Handler extends ExceptionHandler
 {
@@ -50,14 +51,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
-            return response()->json(['message' => 'Recurso no encontrado!'], 404);
+        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException)
+        {
+            return response()->json(['message' => 'Recurso para '.str_replace('App\\', '', $exception->getModel()).' no encontrado'], 404);
         }
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            \Log::error('NotFoundHttpException Route: ' . \Request::url() );
             return response()->json(['message' => 'Ruta no encontrada!'], 404);
         }
-        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
-            return response()->json(['message' => 'No tienes la autorización requerida.'], 403);
+        if ($exception instanceof TokenMismatchException) {
+            return response()->json(['message' => 'Falta el token CSRF.'], 419);
         }
         if ($exception instanceof \Illuminate\Validation\ValidationException) {
             return response()->json([
@@ -65,7 +68,27 @@ class Handler extends ExceptionHandler
                 'errors' => $exception->validator->getMessageBag()
             ], 422);
         }
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException ) {
+            return response()->json(['message' => $e->getMessage()], 405);
+        }
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            return response()->json(['message' => 'El usuario no tiene ninguno necesarios accesos.'], 403);
+        }
         return parent::render($request, $exception);
     }
-
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return \Illuminate\Http\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response()->json([
+                "errors" =>  "Solicitud no válida",
+                "message" => "El token de acceso no es válido.",
+                "hint" => "El token ha caducado"
+        ], 401);
+    }
 }

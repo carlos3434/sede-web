@@ -1,0 +1,55 @@
+Observaciones encontradas con la arquitecta
+
+1: Registrar nuevo usuario
+   al momento de registrar a un usuario se autocompleto el email y no se pudo cambiar.
+   esto se presento dos veces en una pc windows
+2: Inicio de sesion
+   al ingresar con una contrasena incorrecta no mensiona el error
+3: CV > Documentos 
+   no deberian de ser obligatorios los siguientes dodumentos
+   - Resolución como inspector técnico
+   - Resolución que lo acredita como
+4: Calificaciones
+   deberia mostrarse el puntaje por cada archivo, en caso haya sido calificado
+5: Calificaciones 
+   en la categoria *Experiencia General* en la columna *Tiempo Total* se deberia indicar que
+   el tiempo es en meses
+6: Calificaciones
+   agregar una opcion de cero puntos en caso el Ad hoc no cumpla con los requisitos minimos
+7: Calificaciones
+   al momento de calificar con puntaje, al seleccionar un puntaje en un archivo se esta cruzando
+   las categorias, es decir el checkbox no esta funcionando bien
+8: Registro de nuevo administrado
+   no deberia ser obligatorio el campo profesion
+9: Revision de expediente
+   cambiar el texto del combo *nombre comercial* por *estado expediente*
+
+11: Expediente Ad hoc
+    al momento de agregar demoro 10 segundos aprox, y mientras se pudo hacer click 
+    nuevamente en el boton azul agregar y se envio nuevamente y al final se agrego dos veces
+12: Expediente Ad hoc
+    mostrar un mensage en la parte superior, en la cinta de color mostaza
+    en que casos se puede editar el expediente
+13: Expediente Ad hoc
+    agregar una opcion para visualizar los archivos subidos por cada expediente
+    sin editarlos.
+14: REVISIÓN EXPEDIENTE ADHOC
+    al ingresar a un expediente mostrar el archivo de pago
+    y en el modal de detalle
+
+15: Revision expediente adhoc
+    al registrar observaciones no se esta cambiando de estado al expedinete
+16: Revision expediente adhoc
+    enviar un correo con el detalle de las observaciones
+17: Expediente adhoc
+    mostrar las observaciones por cada archivo
+
+18: cambiar la forma de llamar a las categoria y item, 
+    debe ser una sola ves y se podria agregar o desactivar pero no eliminar.
+
+
+20Ï diligencia_id al hacer la notificacion
+    fecha_dilignecia
+21  sorting en notificacion
+22
+

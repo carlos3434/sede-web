@@ -30,6 +30,7 @@ class UserResource extends JsonResource
             'colegio_profesional' => $this->colegio_profesional,
             'numero_colegiatura' => $this->numero_colegiatura,
             'esta_habilitado' => $this->esta_habilitado,
+            'profesion' => $this->profesion,
             'tipo_documento_id' => $this->tipo_documento_id,
             'estado_civil_id' => $this->estado_civil_id,
             'pais_id' => $this->pais_id,
@@ -43,6 +44,7 @@ class UserResource extends JsonResource
             'anexo_1' => $this->anexo_1,
             'foto' => $this->foto,
             'esta_postulando' => $this->estaPostulando(),
+            'esta_acreditado' => $this->estaAcreditado(),
 
             'created_at' => $this->created_at->toDateTimeString(),
             'roles' => $this->getRoleNames(),

@@ -73,7 +73,11 @@ class InstitucionController extends Controller
      */
     public function destroy(Institucion $institucion)
     {
-        $this->repository->deleteOne($institucion);
+        try {
+            $this->repository->deleteOne($institucion);
+        } catch (\Exception $e) { 
+            return response()->json(['message' => "No es posible borrar esta institucion" ], 422);
+        }
         return response()->json(null, 204);
     }
 }

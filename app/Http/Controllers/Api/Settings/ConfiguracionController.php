@@ -82,7 +82,11 @@ class ConfiguracionController extends Controller
      */
     public function destroy(Configuracion $configuracion)
     {
-        $this->repository->deleteOne($configuracion);
+        try {
+            $this->repository->deleteOne($configuracion);
+        } catch (\Exception $e) { 
+            return response()->json(['message' => "No es posible borrar esta configuracion" ], 422);
+        }
         return response()->json(null, 204);
     }
 }

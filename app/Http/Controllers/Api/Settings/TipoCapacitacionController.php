@@ -73,7 +73,11 @@ class TipoCapacitacionController extends Controller
      */
     public function destroy(TipoCapacitacion $tipoCapacitacion)
     {
-        $this->repository->deleteOne($tipoCapacitacion);
+        try {
+            $this->repository->deleteOne($tipoCapacitacion);
+        } catch (\Exception $e) { 
+            return response()->json(['message' => "No es posible borrar este tipo capacitacion" ], 422);
+        }
         return response()->json(null, 204);
     }
 }

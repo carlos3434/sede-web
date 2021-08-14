@@ -73,7 +73,11 @@ class TipoInstitucionController extends Controller
      */
     public function destroy(TipoInstitucion $tipoInstitucion)
     {
-        $this->repository->deleteOne($tipoInstitucion);
+        try {
+            $this->repository->deleteOne($tipoInstitucion);
+        } catch (\Exception $e) { 
+            return response()->json(['message' => "No es posible borrar este tipo institucion" ], 422);
+        }
         return response()->json(null, 204);
     }
 }

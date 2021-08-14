@@ -15,11 +15,11 @@ class TipoDocumentoController extends Controller
     {
         $this->repository = $repository;
         
-        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_CAPACITACION_CREATE'])->only(['create','store']);
-        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_CAPACITACION_INDEX'])->only('index');
-        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_CAPACITACION_EDIT'])->only(['edit','update']);
-        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_CAPACITACION_SHOW'])->only('show');
-        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_CAPACITACION_DESTROY'])->only('destroy');
+        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_DOCUMENTO_CREATE'])->only(['create','store']);
+        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_DOCUMENTO_INDEX'])->only('index');
+        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_DOCUMENTO_EDIT'])->only(['edit','update']);
+        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_DOCUMENTO_SHOW'])->only('show');
+        $this->middleware(['role_or_permission:ADMINISTRADOR|TIPO_DOCUMENTO_DESTROY'])->only('destroy');
         
     }
 
@@ -73,7 +73,11 @@ class TipoDocumentoController extends Controller
      */
     public function destroy(TipoDocumento $tipoDocumento)
     {
-        $this->repository->deleteOne($tipoDocumento);
+        try {
+            $this->repository->deleteOne($tipoDocumento);
+        } catch (\Exception $e) { 
+            return response()->json(['message' => "No es posible borrar este tipo documento" ], 422);
+        }
         return response()->json(null, 204);
     }
 }

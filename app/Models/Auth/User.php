@@ -25,7 +25,6 @@ class User extends Authenticatable //implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'email',
         'nombres',
         'email',
         'password',
@@ -43,6 +42,7 @@ class User extends Authenticatable //implements MustVerifyEmail
         'colegio_profesional',
         'numero_colegiatura',
         'esta_habilitado',
+        'profesion',
 
         'constancia_habilidad',
         'declaracion_jurada',
@@ -125,8 +125,14 @@ class User extends Authenticatable //implements MustVerifyEmail
     {
         return (bool) Calificacion::from('calificaciones as ca')
         ->join('convocatorias as c', 'ca.convocatoria_id', '=', 'c.id')
-        ->where('c.fecha_inicio', '<=', date("Y-m-d") )
-        ->where('c.fecha_final', '>=', date("Y-m-d") )
+        ->where('activo', true)
+        ->where('usuario_id',$this->id)
+        ->count();
+    }
+    public function scopeEstaAcreditado()
+    {
+        return (bool) Calificacion::from('calificaciones as ca')
+        ->join('acreditaciones as a', 'ca.id', '=', 'a.calificacion_id')
         ->where('usuario_id',$this->id)
         ->count();
     }
@@ -160,7 +166,15 @@ class User extends Authenticatable //implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\RegistroAdhoc\VerificacionRealizada','usuario_id');
     }
-
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->apellido_paterno} {$this->apellido_materno} {$this->nombres}";
+    }
     public function sendEmailVerificationNotification()
     {
         $this->notify(new \App\Notifications\VerifyEmailQueued);

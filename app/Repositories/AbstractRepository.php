@@ -20,12 +20,12 @@ abstract class AbstractRepository implements RepositoryInterface {
     {
         return call_user_func_array("{$this->modelClassNamePath}::find", array($id));
     }
-    public function create(array $attributes)
+    public function create(array $attributes, $extraInfo = [])
     {
         return $this->getOne(
             call_user_func_array(
                 "{$this->modelClassNamePath}::create", array($attributes)
-            )
+            ), $extraInfo
         );
     }
     public function destroy($ids)
@@ -51,9 +51,9 @@ abstract class AbstractRepository implements RepositoryInterface {
         );
     }
 
-    public function getOne($model)
+    public function getOne($model, $extraInfo = [])
     {
-        return new $this->resourceNamePath($model);
+        return new $this->resourceNamePath($model, $extraInfo);
     }
 
     public function updateOne($request, $model)

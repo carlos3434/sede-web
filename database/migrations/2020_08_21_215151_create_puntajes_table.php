@@ -17,11 +17,13 @@ class CreatePuntajesTable extends Migration
             $table->id();
             $table->foreignId('calificacion_id');
             $table->foreignId('item_id');
+            $table->foreignId('categoria_id');
             $table->unsignedFloat('puntaje');
             $table->timestamps();
 
             $table->foreign('calificacion_id')->references('id')->on('calificaciones');
             $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
         });
     }
 

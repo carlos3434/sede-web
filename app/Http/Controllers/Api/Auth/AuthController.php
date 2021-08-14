@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\UserRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -17,13 +18,19 @@ class AuthController extends Controller
     {
         $this->userRepository = $userRepository;
     }
-    public function register(UserRequest $request) {
+    public function register(RegisterRequest $request) {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = $this->userRepository->create($input);
         $this->userRepository->syncRolesAndPermissions($request, $user);
-        $user['token'] =  $user->createToken('AppName')->accessToken;
-        return response()->json(['success'=>$user], $this->successStatus);
+        $tokenResult =  $user->createToken('AppName');
+
+        $user['token'] =  $tokenResult->accessToken;
+        $user['token_type'] =  'Bearer';
+        $user['expires_at'] = Carbon::parse($tokenResult->token->expires_at)
+                                ->toDateTimeString();
+        $success = $this->userRepository->getOneForLogin($user);
+        return response()->json(['success'=>$success], $this->successStatus);
     }
 
     protected function validateLogin(Request $request){
@@ -35,8 +42,7 @@ class AuthController extends Controller
     public function login(Request $request){
         $this->validateLogin($request);
         if (!Auth::attempt( request(['email', 'password']) )) {
-            return response()->json([
-                'message' => 'Unauthorized'], $this->unauthorizedStatus);
+            return $this->unauthorized();
         }
         $user = Auth::user();
         $tokenResult =  $user->createToken('AppName');
@@ -52,7 +58,7 @@ class AuthController extends Controller
 
     public function logout( Request $request ) {
         $request->user()->token()->revoke();
-        return response()->json(['message' =>'Successfully logged out']);
+        return response()->json(['message' =>'Cerrar sesión correctamente']);
     }
     public function getUser() {
         $user = Auth::user();
@@ -60,6 +66,6 @@ class AuthController extends Controller
         return response()->json(['success' => $success], $this->successStatus);
     }
     public function unauthorized() { 
-        return response()->json("unauthorized", $this->unauthorizedStatus); 
+        return response()->json(['message' =>"No autorizado"], $this->unauthorizedStatus); 
     }
 }

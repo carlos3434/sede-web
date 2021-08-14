@@ -73,7 +73,11 @@ class GradoController extends Controller
      */
     public function destroy(Grado $grado)
     {
-        $this->repository->deleteOne($grado);
+        try {
+            $this->repository->deleteOne($grado);
+        } catch (\Exception $e) { 
+            return response()->json(['message' => "No es posible borrar este grado" ], 422);
+        }
         return response()->json(null, 204);
     }
 }

@@ -18,21 +18,21 @@ class PostulacionController extends Controller
     {
         $this->repository = $repository;
         $this->middleware(['role_or_permission:ADMINISTRADOR|POSTULACION_SHOW'])->only('index');
-        $this->middleware(['role_or_permission:ADMINISTRADOR|POSTULACION_CREATE'])->only('index');
+        $this->middleware(['role_or_permission:ADMINISTRADOR|CALIFICACION_CREATE'])->only('index');
     }
 
     /**
-     * Display the specified resource.
+     * retorna la postulacion del usuario logueado
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return $this->repository->getOneForDocumento(Auth::id());
+        return $this->repository->getByUserId(Auth::id());
     }
     /**
-     * Store a newly created resource in storage.
+     * guarda en la tabla calificaciones cuando el usuario adhoc postula a una convocatoria
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -40,16 +40,22 @@ class PostulacionController extends Controller
     public function store(PostulacionRequest $request)
     {
         $all = $request->all();
-        $all['convocatoria_id'] = Convocatoria::GetActual();
-
+        $all['usuario_id'] = Auth::id();
+        $all['convocatoria_id'] = (isset( Convocatoria::GetActual()->id )) ? Convocatoria::GetActual()->id : false;
+        //validar que exista convocatoria actual en curso
         $validator = \Validator::make(
             $all,['convocatoria_id' => [new ConvocatoriaActualRule ]]
         )->validate();
 
-        $all['usuario_id'] = Auth::id();
-        $all['fecha'] = date("Y-m-d");
+        //validar que un usuario no pueda registrarse mas de dos veces a una convocatoria
+        $calificacionDB = $this->repository->countByUserIdAndConvocatoria($all['usuario_id'],$all['convocatoria_id']);
+        if ($calificacionDB==0) {
+            $all['fecha'] = date("Y-m-d H:i:s");
+            $calificacion = $this->repository->create( $all );
+        } else {
+            return response()->json(['message' => "Ya se han registrado calificacion para este usuario en la actual convocatoria" ], 422);
+        }
 
-        $calificacion = $this->repository->create( $all );
         return response()->json($calificacion, 201);
     }
 
