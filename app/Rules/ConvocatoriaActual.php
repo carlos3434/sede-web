@@ -26,7 +26,7 @@ class ConvocatoriaActual implements Rule
      */
     public function passes($attribute, $value)
     {
-        return (bool)Convocatoria::GetActual();
+        return (isset( Convocatoria::GetActual()->id )) ? true: false;
     }
 
     /**

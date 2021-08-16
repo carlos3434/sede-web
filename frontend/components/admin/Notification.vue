@@ -42,13 +42,15 @@ export default {
 </script>
 <template>
   <div class="noti-container">
-    <notifications group="noti" :duration="5000" :width="500" animation-name="v-fade-left" position="top right">
+    <notifications :duration="5000" :width="500" animation-name="v-fade-left" position="top right">
       <template slot="body" slot-scope="props">
         <div :class="`noti-cp noti-` + props.item.type">
           <div class="noti-cp-icon" v-html="notifyIcon(props.item.type)"></div>
           <div class="noti-cp-content">
             <div class="noti-cp-title" v-html="notifyTitle(props.item.type)"></div>
-            <div class="noti-cp-text" v-html="props.item.text"></div>
+            <div class="noti-cp-text">
+              <p v-html="props.item.text"></p>
+            </div>
           </div>
           <div class="noti-cp-close" @click="props.close">
             <i class="uil uil-multiply"></i>
@@ -128,13 +130,18 @@ export default {
     }
     .noti-cp-content {
       padding: 10px;
-      flex: 1 0 auto;
+      flex: auto;
       .noti-cp-title {
         letter-spacing: 1px;
         font-size: 16px;
         margin-bottom: 0.5rem;
         line-height: 1.2;
         font-weight: 600;
+      }
+      .noti-cp-text {
+        p {
+          margin: 0;
+        }
       }
     }
   }

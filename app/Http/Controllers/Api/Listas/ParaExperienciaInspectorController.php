@@ -21,6 +21,7 @@ class ParaExperienciaInspectorController extends Controller
     {
         $response = [
             'esta_postulando' => Auth::user()->estaPostulando(),
+            'esta_acreditado' => Auth::user()->estaAcreditado(),
             'institutiones' => new InstitucionCollection(
                 Institucion::where('tipo_institucion_id', Institucion::GOBIERNO_LOCAL )
                 ->orderBy('nombre', 'asc')

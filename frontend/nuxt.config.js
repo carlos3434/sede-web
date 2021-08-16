@@ -1,5 +1,11 @@
 export default {
-  // loading: "~/components/loading.vue",
+  // loading: '~/components/Loading.vue',
+  loading: {
+    color: '#82b54b',
+    height: '5px',
+    continuous: true
+  },
+
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
@@ -59,8 +65,10 @@ export default {
     '~/plugins/vue-gates.js',
     '~/plugins/vee-validate.js',
     '~/plugins/multiselect.js',
+    '~/plugins/download.js',
     { src: '~/plugins/notifications.server', mode: 'server' },
-    { src: '~/plugins/notifications.client', mode: 'client' }
+    { src: '~/plugins/notifications.client', mode: 'client' },
+    '~/plugins/axios.js'
   ],
   /*
    ** Auto import components
@@ -87,8 +95,16 @@ export default {
     '@nuxt/content',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
+    '@nuxtjs/recaptcha',
     '@nuxtjs/moment'
   ],
+  recaptcha: {
+    /* reCAPTCHA options */
+    siteKey: process.env.RECAPTCHA_SITE_KEY,
+    hideBadge: false, // Hide badge element (v3 & v2 via size=invisible)
+    version: 3,
+    size: 'normal' // Size: 'compact', 'normal', 'invisible' (v2)
+  },
   moment: {
     defaultLocale: 'es',
     locales: ['es'],

@@ -17,6 +17,7 @@ class Convocatoria extends Model
     protected $fillable = [
         'nombre',
         'fecha_inicio',
+        'activo',
         'fecha_final'
     ];
 
@@ -27,14 +28,8 @@ class Convocatoria extends Model
 
     public function scopeGetActual()
     {
-        $convocatoria = $this->where('fecha_inicio', '<=', date("Y-m-d") )
-        ->where('fecha_final', '>=', date("Y-m-d") )
-        ->first('id');
-        return ($convocatoria) ? $convocatoria->id : false;
-    }
-
-    public function items()
-    {
-        return $this->hasMany('App\Models\SeleccionAdhoc\Item','convocatoria_id');
+        return $this->where('activo', true)
+        ->select('id','nombre','fecha_inicio','fecha_final')
+        ->first();
     }
 }

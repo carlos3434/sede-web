@@ -3,24 +3,24 @@ import { required, email } from 'vuelidate/lib/validators'
 import { animateCSS } from '~/helpers/animateCSS'
 
 /**
- * Login component
+ * Login page
  */
 export default {
   layout: 'auth',
   head() {
     return {
-      title: `${this.title} - CENEPRED`
+      title: `${this.title} | CENEPRED`
     }
   },
   data() {
     return {
       title: 'Inicio de sesión',
-      email: 'kmontoya@cenepred.gob.pe',
-      password: '12345678',
-      submitted: false,
+      email: '',
+      password: '',
       showAlert: false,
       variantAlert: '',
-      messageAlert: ''
+      messageAlert: '',
+      isProcessing: false
     }
   },
   validations: {
@@ -31,7 +31,6 @@ export default {
     // Try to log the user in with the username
     // and password they provided.
     async tryToLogIn() {
-      this.submitted = true
       this.showAlert = false
 
       // stop here if form is invalid
@@ -42,7 +41,9 @@ export default {
         return
       }
 
-      let res = await this.$auth
+      this.isProcessing = true
+
+      await this.$auth
         .loginWith('local', {
           data: {
             email: this.email,
@@ -50,23 +51,21 @@ export default {
           }
         })
         .then((res) => {
-          console.log(res.data)
           let roles = res.data.success.roles
           let permissions = res.data.success.permissions
 
           this.$gates.setRoles(roles)
           this.$gates.setPermissions(permissions)
-
-          // this.$gates.setRoles(['ADMINISTRADOR'])
-          console.log(this.$gates.getRoles())
-          console.log(this.$gates.getPermissions())
-          this.$router.push('/admin/dashboard')
+          this.$router.push('/admin')
         })
         .catch((err) => {
           animateCSS('.card', 'shakeX')
           this.messageAlert = 'El correo o la contraseña no son correctos.'
           this.showAlert = true
           this.variantAlert = 'danger'
+        })
+        .finally(() => {
+          this.isProcessing = false
         })
     }
   },
@@ -97,6 +96,7 @@ export default {
                       <b-form-input
                         v-model="email"
                         type="text"
+                        placeholder="ejemplo@ejemplo.com"
                         :class="{ 'is-invalid': $v.email.$error }"
                       ></b-form-input>
                       <div v-if="$v.email.$error" class="invalid-feedback">
@@ -114,6 +114,7 @@ export default {
                       <b-form-input
                         v-model="password"
                         type="password"
+                        placeholder="••••••"
                         :class="{ 'is-invalid': $v.password.$error }"
                       ></b-form-input>
                       <div v-if="$v.password.$error" class="invalid-feedback">
@@ -125,7 +126,10 @@ export default {
                       <label class="form-check-label" for="remember-check">Recordarme</label>
                     </div>
                     <div class="mt-3 text-end">
-                      <b-button type="submit" variant="primary" class="w-sm">{{ $t('auth.login.login') }}</b-button>
+                      <b-button type="submit" variant="primary" class="w-sm" :disabled="isProcessing">
+                        <span class="spinner-border spinner-border-sm" v-show="isProcessing"></span>
+                        Iniciar sesión
+                      </b-button>
                     </div>
                     <div class="mt-4 text-center">
                       <p class="mb-0">
@@ -135,15 +139,10 @@ export default {
                     </div>
                   </b-form>
                 </div>
-                <!-- end card-body -->
               </div>
-              <!-- end card -->
             </div>
-            <!-- end row -->
           </div>
-          <!-- end col -->
         </div>
-        <!-- end row -->
       </div>
     </div>
   </div>

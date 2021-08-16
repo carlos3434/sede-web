@@ -16,8 +16,9 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->unsignedFloat('puntaje_minimo');
-            $table->unsignedFloat('puntaje_maximo');
+            $table->unsignedFloat('puntaje');
+            $table->foreignId('categoria_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->foreignId('convocatoria_id');
             $table->timestamps();
             $table->foreign('convocatoria_id')->references('id')->on('convocatorias');

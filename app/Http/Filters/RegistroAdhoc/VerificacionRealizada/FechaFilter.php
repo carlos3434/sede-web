@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Filters\RegistroAdhoc\Formacion;
+namespace App\Http\Filters\RegistroAdhoc\VerificacionRealizada;
 
 class FechaFilter
 {

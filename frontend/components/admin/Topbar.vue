@@ -4,28 +4,9 @@
  */
 export default {
   data() {
-    return {
-      languages: [
-        {
-          flag: require('~/assets/images/flags/spain.jpg'),
-          language: 'es',
-          title: 'spanish'
-        }
-      ],
-      current_language: this.$i18n.locale,
-      text: null,
-      flag: null,
-      value: null
-    }
+    return {}
   },
-  mounted() {
-    this.value = this.languages.find((x) => x.language === this.$i18n.locale)
-    this.text = this.value.title
-    this.flag = this.value.flag
-
-    console.log('AQUI')
-    console.log(this.$gates.getRoles())
-  },
+  mounted() {},
   methods: {
     /**
      * Toggle menu
@@ -85,14 +66,6 @@ export default {
         >
           <i class="fa fa-fw fa-bars"></i>
         </button>
-
-        <!-- App Search-->
-        <form class="app-search d-none d-lg-block ms-lg-5">
-          <div class="position-relative">
-            <input type="text" class="form-control" :placeholder="$t('navbar.search.text')" />
-            <span class="uil-search"></span>
-          </div>
-        </form>
       </div>
 
       <div class="d-flex">
@@ -145,7 +118,7 @@ export default {
         >
           <template v-slot:button-content>
             <i class="uil-bell"></i>
-            <span class="badge bg-danger rounded-pill">3</span>
+            <span class="badge bg-danger rounded-pill">0</span>
           </template>
 
           <div class="p-3">
@@ -161,98 +134,16 @@ export default {
             </div>
           </div>
           <simplebar style="max-height: 230px" data-simplebar>
-            <a href class="text-reset notification-item">
+            <div class="notification-item">
               <div class="media">
-                <div class="avatar-xs me-3">
-                  <span class="avatar-title bg-primary rounded-circle font-size-16">
-                    <i class="uil-shopping-basket"></i>
-                  </span>
-                </div>
                 <div class="media-body">
-                  <h6 class="mt-0 mb-1">
-                    {{ $t('navbar.dropdown.notification.order.title') }}
-                  </h6>
                   <div class="font-size-12 text-muted">
-                    <p class="mb-1">
-                      {{ $t('navbar.dropdown.notification.order.text') }}
-                    </p>
-                    <p class="mb-0">
-                      <i class="mdi mdi-clock-outline"></i>
-                      {{ $t('navbar.dropdown.notification.order.time') }}
-                    </p>
+                    <p>No tiene notificaciones.</p>
                   </div>
                 </div>
               </div>
-            </a>
-            <a href class="text-reset notification-item">
-              <div class="media">
-                <img src="~/assets/images/users/avatar-3.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic" />
-                <div class="media-body">
-                  <h6 class="mt-0 mb-1">
-                    {{ $t('navbar.dropdown.notification.james.title') }}
-                  </h6>
-                  <div class="font-size-12 text-muted">
-                    <p class="mb-1">
-                      {{ $t('navbar.dropdown.notification.james.text') }}
-                    </p>
-                    <p class="mb-0">
-                      <i class="mdi mdi-clock-outline"></i>
-                      {{ $t('navbar.dropdown.notification.james.time') }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-            <a href class="text-reset notification-item">
-              <div class="media">
-                <div class="avatar-xs me-3">
-                  <span class="avatar-title bg-success rounded-circle font-size-16">
-                    <i class="uil-truck"></i>
-                  </span>
-                </div>
-                <div class="media-body">
-                  <h6 class="mt-0 mb-1">
-                    {{ $t('navbar.dropdown.notification.item.title') }}
-                  </h6>
-                  <div class="font-size-12 text-muted">
-                    <p class="mb-1">
-                      {{ $t('navbar.dropdown.notification.item.text') }}
-                    </p>
-                    <p class="mb-0">
-                      <i class="mdi mdi-clock-outline"></i>
-                      {{ $t('navbar.dropdown.notification.item.time') }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            <a href class="text-reset notification-item">
-              <div class="media">
-                <img src="~/assets/images/users/avatar-4.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic" />
-                <div class="media-body">
-                  <h6 class="mt-0 mb-1">
-                    {{ $t('navbar.dropdown.notification.salena.title') }}
-                  </h6>
-                  <div class="font-size-12 text-muted">
-                    <p class="mb-1">
-                      {{ $t('navbar.dropdown.notification.salena.text') }}
-                    </p>
-                    <p class="mb-0">
-                      <i class="mdi mdi-clock-outline"></i>
-                      {{ $t('navbar.dropdown.notification.salena.time') }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
+            </div>
           </simplebar>
-          <div class="p-2 border-top d-grid">
-            <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
-              <i class="uil-arrow-circle-right me-1"></i>
-              {{ $t('navbar.dropdown.notification.button') }}
-            </a>
-          </div>
         </b-dropdown>
 
         <b-dropdown
@@ -263,24 +154,23 @@ export default {
           menu-class="dropdown-menu-end"
         >
           <template v-slot:button-content>
-            <span style="font-size: 24px" class="d-sm-none d-md-block d-lg-block d-xl-block d-xxl-none"
-              ><i class="uil uil-user-circle"></i
-            ></span>
+            <span style="font-size: 24px" class="d-sm-none d-md-block d-lg-block d-xl-block d-xxl-none">
+              <i class="uil uil-user-circle"></i>
+            </span>
             <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">
-              Hola, {{ $auth.user.nombres.toLowerCase() | capitalize }}
+              Hola, {{ $auth.user ? $auth.user.nombres.toLowerCase() : '' | capitalize }}
             </span>
             <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
           </template>
 
           <!-- item-->
-          <nuxt-link class="dropdown-item" to="/admin/config/perfil">
+          <nuxt-link class="dropdown-item" to="/admin?tabIndex=1">
             <i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i>
             <span class="align-middle">Perfil</span>
           </nuxt-link>
-          <nuxt-link class="dropdown-item d-block" to="/admin/config/perfil">
+          <nuxt-link class="dropdown-item d-block" to="/admin?tabIndex=2">
             <i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i>
-            <span class="align-middle">Configuraciones</span>
-            <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span>
+            <span class="align-middle">Cambiar contraseña</span>
           </nuxt-link>
           <a class="dropdown-item" @click="logoutUser" href="javascript: void(0);">
             <i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i>

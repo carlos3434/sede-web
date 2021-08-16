@@ -14,15 +14,12 @@ export default {
   },
   data() {
     return {
-      title: 'Recuperar cuenta',
+      title: 'Recuperar contraseña',
       email: '',
       documento: '',
-      submitted: false,
-      error: null,
-      isError: false,
-      tryingToReset: false,
-      isSuccess: null,
-      success: false
+      variantAlert: '',
+      messageAlert: '',
+      isProcessing: false
     }
   },
   validations: {
@@ -38,13 +35,6 @@ export default {
   },
   methods: {
     async tryToReset() {
-      this.tryingToReset = true
-      this.isError = false
-      this.error = null
-      this.submitted = true
-      this.isSuccess = false
-      this.success = null
-
       // stop here if form is invalid
       this.$v.$touch()
 
@@ -53,27 +43,27 @@ export default {
         return
       }
 
-      try {
-        let response = await this.$axios.post('/reset-password', {
-          data: {
-            email: this.email,
-            dni: this.documento
-          }
-        })
+      this.isProcessing = true
 
-        this.tryingToReset = false
-        this.isError = false
-        this.documento = ''
-        this.email = ''
-        this.isSuccess = true
-        this.success = 'Por favor revisa tu correo electrónico.'
-        this.$router.push('/admin/dashboard')
-      } catch (error) {
-        animateCSS('.card', 'shakeX')
-        this.tryingToReset = false
-        this.error = 'Por favor verifique sus datos.'
-        this.isError = true
-      }
+      await this.$axios
+        .post('/password/email', {
+          email: this.email,
+          dni: this.documento
+        })
+        .then((res) => {
+          this.documento = ''
+          this.email = ''
+          this.messageAlert = 'Enviamos más instrucciones a tu correo electrónico.'
+          this.variantAlert = 'success'
+        })
+        .catch((err) => {
+          animateCSS('.card', 'shakeX')
+          this.messageAlert = 'Verifique sus datos e inténtelo más tarde.'
+          this.variantAlert = 'danger'
+        })
+        .finally(() => {
+          this.isProcessing = false
+        })
     }
   },
   middleware: 'anonymous'
@@ -97,13 +87,15 @@ export default {
                   </p>
                 </div>
                 <div class="p-2 mt-4">
-                  <b-alert v-model="isSuccess" variant="success" dismissible fade>
-                    {{ success }}
+                  <b-alert :variant="variantAlert" dismissible fade :show="variantAlert == 'danger'">
+                    {{ messageAlert }}
                   </b-alert>
-                  <b-alert v-model="isError" variant="danger" dismissible fade>
-                    {{ error }}
+                  <b-alert :variant="variantAlert" fade class="text-center" :show="variantAlert == 'success'">
+                    <i class="fas fa-paper-plane d-block display-4 mt-2 mb-3 text-success"></i>
+                    <h5 class="text-success">{{ messageAlert }}</h5>
                   </b-alert>
-                  <form @submit.prevent="tryToReset" autocomplete="off">
+
+                  <form @submit.prevent="tryToReset" autocomplete="off" v-if="variantAlert != 'success'">
                     <div class="mb-3">
                       <label for="useremail">
                         {{ $t('auth.reset.email') }}
@@ -116,10 +108,10 @@ export default {
                         autocomplete="off"
                         :placeholder="$t('auth.reset.email')"
                         :class="{
-                          'is-invalid': submitted && $v.email.$error
+                          'is-invalid': $v.email.$error
                         }"
                       />
-                      <div v-if="submitted && $v.email.$error" class="invalid-feedback">
+                      <div v-if="$v.email.$error" class="invalid-feedback">
                         <span v-if="!$v.email.required">
                           {{ $t('auth.error_msg.email_required') }}
                         </span>
@@ -140,10 +132,10 @@ export default {
                         autocomplete="off"
                         :placeholder="$t('auth.reset.documento')"
                         :class="{
-                          'is-invalid': submitted && $v.documento.$error
+                          'is-invalid': $v.documento.$error
                         }"
                       />
-                      <div v-if="submitted && $v.documento.$error" class="invalid-feedback">
+                      <div v-if="$v.documento.$error" class="invalid-feedback">
                         <span v-if="!$v.documento.required">
                           {{ $t('auth.error_msg.nro_required') }}
                         </span>
@@ -157,17 +149,16 @@ export default {
                     </div>
                     <div class="form-group row mb-0">
                       <div class="col-12 text-end">
-                        <button class="btn btn-primary w-sm" type="submit">
-                          {{ $t('auth.reset.btn_text') }}
+                        <button class="btn btn-primary w-sm" type="submit" :disabled="isProcessing">
+                          <span class="spinner-border spinner-border-sm" v-show="isProcessing"></span>
+                          Recuperar
                         </button>
                       </div>
                     </div>
                     <div class="mt-4 text-center">
                       <p class="mb-0">
                         Ir a
-                        <nuxt-link to="/usuario/login" class="fw-medium text-primary">{{
-                          $t('auth.login.login')
-                        }}</nuxt-link>
+                        <nuxt-link to="/usuario/login" class="fw-medium text-primary"> Iniciar sesión </nuxt-link>
                       </p>
                     </div>
                   </form>

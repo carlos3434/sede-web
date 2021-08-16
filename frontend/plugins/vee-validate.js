@@ -1,6 +1,18 @@
 import Vue from 'vue'
 import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
-import { email, required, alpha, alpha_dash, ext, image, integer, numeric, size } from 'vee-validate/dist/rules'
+import {
+  email,
+  required,
+  alpha,
+  alpha_dash,
+  ext,
+  image,
+  integer,
+  numeric,
+  size,
+  max,
+  min
+} from 'vee-validate/dist/rules'
 import es from 'vee-validate/dist/locale/es.json'
 
 Vue.component('ValidationProvider', ValidationProvider)
@@ -18,10 +30,10 @@ extend('before_or_equal', {
 
 extend('alpha_num_spaces', {
   validate: (value) => {
-    let rule = /^[a-z\d\-_\s]+$/i
+    let rule = /^[a-z\d\-_,.*()\s]+$/i
     return rule.test(value)
   },
-  message: 'El campo {_field_} solo debe contener letras, números, -, _ y espacios'
+  message: 'El campo {_field_} solo debe contener letras, números, espacios y -_,.*()'
 })
 
 extend('required', {
@@ -54,6 +66,14 @@ extend('integer', {
 
 extend('size', {
   ...size
+})
+
+extend('max', {
+  ...max
+})
+
+extend('min', {
+  ...min
 })
 
 extend('alpha', {

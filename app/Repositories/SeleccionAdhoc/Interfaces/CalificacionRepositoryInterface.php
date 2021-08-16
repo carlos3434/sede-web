@@ -6,5 +6,4 @@ use  App\Repositories\RepositoryInterface;
 
 interface CalificacionRepositoryInterface extends RepositoryInterface 
 {
-    public function getOneForDocumento( $userId );
 }

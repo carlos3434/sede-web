@@ -1,54 +1,53 @@
 //MODULOS
-	Registro_ADHOC
-	1 Registro y postulación Adhoc 					USUARIO_ADHOC
-		Curriculum Vitae
-			formaciones
-			capacitaciones
-			experiencias_generales
-			experiencias_inspectores
-			verificacion_realizadas
-			documentos
+    1 Inicio
+        login
+        registro
+    2 Mantenimiento									ADMINISTRADOR
+        convocatorias
+        grados
+        instituciones
+        tipos-instituciones
+        tipos-documentos
+    3 Registro y postulación Adhoc 					USUARIO_ADHOC
+        Curriculum Vitae
+            formaciones
+            capacitaciones
+            experiencias_generales
+            experiencias_inspectores
+            verificacion_realizadas
+            documentos
+        postulacion
+    4 Selección verificadores Adhoc 				ADMINISTRADOR|USUARIO_CENEPRED
+        calificaciones
+        pendientes
+        resultados
+        acreditaciones
+    5 Registro de expediente Adhoc 					USUARIO_ADMINISTRADO
+        registrar-expediente
+        solicitar-hoja-tramite
+        solicitar-verificacion-adhoc
 
-	Seleccion_Adhoc
-	2 Selección verificadores Adhoc 				ADMINISTRADOR|USUARIO_CENEPRED
-		calificaciones.index
-		calificaciones.pendientes
-		calificaciones.resultados
-		acreditaciones.index
+    6 Revisión de expediente Adhoc 					ADMINISTRADOR|USUARIO_CENEPRED
+        expediente-pendientes
 
-	Expediente ADHOC
-	3 Registro de expediente Adhoc 					USUARIO_ADMINISTRADO
-		registrar-expediente
-		solicitar-hoja-tramite
-		solicitar-verificacion-adhoc
-
-	4 Revisión de expediente Adhoc 					ADMINISTRADOR|USUARIO_CENEPRED
-		expediente-pendientes
-
-	5 Diligencia y formulación del informe Adhoc 	USUARIO_ADHOC
+	7 Diligencia de verificador Adhoc 	            USUARIO_ADHOC
 		recibir-expedientes
 
-	//pendiente
-	6 Notificación del informe Adhoc 				ADMINISTRADOR|USUARIO_CENEPRED
+	8 Notificación del informe Adhoc 				ADMINISTRADOR|USUARIO_CENEPRED
 		Verificar informe
 
-	7 Recepcion y descarga del informe Adhoc 		ADMINISTRADOR|USUARIO_CENEPRED
+	9 Recepcion y descarga del informe Adhoc 		ADMINISTRADOR|USUARIO_CENEPRED
 		Verificar expediente
+		esta en antiguo sistemA http://sede.juan/diligencia/descarga#/
 
-	8 Reportes 										ADMINISTRADOR|USUARIO_CENEPRED
+	10 Reportes 										ADMINISTRADOR|USUARIO_CENEPRED
 		Cuadro de méritos
 		Calificación
 		Resultados
+
 	// fin pendientes
 	
-	9 Mantenimiento									ADMINISTRADOR
-		configuraciones
-		convocatorias
-		grados
-		instituciones
-		tipos-instituciones
-		tipos-documentos
-		tipos-capacitaciones
+
 
 
 //ya ubicados
@@ -102,3 +101,19 @@ oauth_auth_codes
 oauth_clients						
 oauth_personal_access_clients						
 oauth_refresh_tokens	
+
+
+ANEXO N° 1: Formato de solicitud de postulante al proceso de selección de Verificadores Ad Hoc del CENEPRED.
+ANEXO N° 2: Cuadro de postulantes al proceso de selección de Verificadores Ad Hoc del CENEPRED.
+ANEXO N° 3: Cuadro de méritos de postulantes a Verificadores Ad Hoc del CENEPRED.
+ANEXO N° 4: Condiciones para la prestación de servicio de los verificadores Ad Hoc del CENEPRED.
+ANEXO N° 5: Solicitud de informe de VAH. (el sistema debe enviar un correo con un documento a mesa de parte) al correo del mismo usuario, correo de mesa de parte y correo de usuario cenepred
+ANEXO N° 6: Requisitos para las Verificaciones Ad Hoc.
+ANEXO N° 7: Cuadro de avance de verificaciones Ad Hoc
+ANEXO N° 8: Acta de entrega N° -20 -DD
+ANEXO N° 9: Acta de diligencia de verificaciones Ad Hoc N°____
+ANEXO N°10: Estructura del Informe de Verificación Ad Hoc.
+ANEXO N°11: Requerimiento de pago de los Verificadores Ad Hoc del CENEPRED.
+ANEXO N° 12: Acta de conformidad de pago.
+ANEXO N° 13: Cuadro desempeño del Verificador Ad Hoc N° ____
+

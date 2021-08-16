@@ -12,8 +12,7 @@ export default {}
         <div class="hero-banner-text">
           <h1 class="title">Sede electrónica</h1>
           <h2 class="subtitle">
-            Sistema para el servicio de verificaciones AD HOC y proceso
-            administrativo sancionador PA
+            Sistema para el servicio de verificaciones AD HOC y proceso administrativo sancionador PA
           </h2>
         </div>
       </div>
@@ -21,7 +20,7 @@ export default {}
   </section>
 </template>
 
-<style>
+<style lang="scss">
 .hero-banner .container {
   z-index: 1;
 }
@@ -58,5 +57,11 @@ export default {}
   color: #fff;
   font-size: 2rem;
   font-weight: 400;
+}
+
+@media (max-width: 767.98px) {
+  .hero-banner-text h1 {
+    font-size: 4rem;
+  }
 }
 </style>

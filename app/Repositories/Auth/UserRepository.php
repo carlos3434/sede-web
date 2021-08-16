@@ -40,4 +40,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             $user->givePermissionTo( $request->get('permissions') );
         }
     }
+    public function syncRolesCenepred( &$user)
+    {
+        $user->syncRoles( 'USUARIO_CENEPRED' );
+    }
 }

@@ -153,27 +153,39 @@ a.text-decoration:hover{
     text-decoration: underline !important
 }
 // Tables
-.bs-date-col {
-    max-width: 160px !important;
-    width: 160px !important;
-    text-align: center !important;
-}
-
 .bs-nro-document-col {
     max-width: 200px !important;
     width: 200px !important;
     text-align: center !important;
 }
-
-.bs-option-col {
-    text-align: center;
+.bs-date-col {
+    max-width: 160px !important;
+    width: 160px !important;
+    text-align: center !important;
 }
-  
+.bs-date-col-left {
+    max-width: 160px !important;
+    width: 160px !important;
+    text-align: left !important;
+}
 .bs-option-col-header {
     max-width: 160px !important;
     width: 160px !important;
+    text-align: center;
 }
-
+.bs-option-col {
+    text-align: center;
+    width: 160px !important;
+    ul.two-options{
+        width: 70px;
+        text-align: left !important;
+        margin: 0 auto;
+    }
+}
+.bs-option-col-left {
+    text-align: left;
+    width: 160px !important;
+}
 .btn-upload-new-file {
     padding: 0 1.5rem 0.2rem;
     i {
@@ -185,6 +197,16 @@ a.text-decoration:hover{
 // Forms
 .col-form-label {
     font-weight: 500;
+}
+
+// Badge
+td{
+    .badge {
+        padding: 0.55em;
+        font-size: 75%;
+        font-weight: 700 !important;
+    }
+
 }
 
 
@@ -208,4 +230,9 @@ a.text-decoration:hover{
     .mx-input-wrapper input {
       border: 1px solid #82b54b !important;
     }
+  }
+
+  .text-subsection {
+    font-size: 0.8rem; 
+    font-style: italic
   }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Filters\RegistroAdhoc\CapacitacionFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Traits\LogsActivity;
+use App\Models\SeleccionAdhoc\Puntaje;
 
 class Capacitacion extends Model
 {
@@ -39,5 +40,10 @@ class Capacitacion extends Model
     {
         return $this->belongsTo('App\Models\Settings\Institucion', 'institucion_id');
     }
-
+    public function puntaje( $calificacionId )
+    {
+        return Puntaje::where('categoria_id',2)
+            ->where('calificacion_id',$calificacionId)
+            ->first('puntaje');
+    }
 }

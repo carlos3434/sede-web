@@ -28,8 +28,8 @@ class UserDocumentoRequest extends FormRequest
 
             'declaracion_jurada'        => 'required|file|max:3072',
             'copia_dni'                 => 'required|file|max:3072',
-            'rj_itse'                   => 'required|file|max:3072',
-            'rj_verificador'            => 'required|file|max:3072',
+            'rj_itse'                   => 'file|max:3072',
+            'rj_verificador'            => 'file|max:3072',
             'anexo_1'                   => 'required|file|max:3072',
             'foto'                      => 'required|file|max:3072'
         ];

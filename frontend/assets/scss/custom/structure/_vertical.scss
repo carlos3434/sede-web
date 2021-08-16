@@ -8,6 +8,12 @@
     li {
         display: block;
         width: 100%;
+        a{
+            overflow: hidden;
+            .menu-item-icon{
+                float: left;
+            }
+        }
     }
 
     .mm-collapse {

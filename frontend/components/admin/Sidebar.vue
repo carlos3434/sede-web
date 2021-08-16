@@ -175,6 +175,10 @@ export default {
           }
         }
       }
+    },
+    isExternalUrl(str) {
+      let reg = /^(http|https):\/\//i
+      return reg.test(str)
     }
   }
 }
@@ -185,7 +189,7 @@ export default {
   <div class="vertical-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box">
-      <nuxt-link to="/" class="logo logo-dark">
+      <nuxt-link to="/admin" class="logo logo-dark">
         <span class="logo-sm">&nbsp;&nbsp;</span>
         <span class="logo-lg"> CENEPRED </span>
       </nuxt-link>
@@ -214,20 +218,31 @@ export default {
                   'has-dropdown': item.badge
                 }"
               >
-                <i :class="`${item.icon}`" v-if="item.icon"></i>
+                <div class="menu-item-icon"><i :class="`${item.icon}`" v-if="item.icon"></i></div>
                 <span>{{ item.label }}</span>
                 <span :class="`badge badge-pill badge-${item.badge.variant} float-end`" v-if="item.badge">
                   {{ item.badge.text }}
                 </span>
               </a>
-
-              <nuxt-link :to="item.link" v-if="!hasItems(item)" class="side-nav-link-ref">
-                <i :class="`${item.icon}`" v-if="item.icon"></i>
+              <nuxt-link :to="item.link" v-if="!hasItems(item) && !isExternalUrl(item.link)" class="side-nav-link-ref">
+                <div class="menu-item-icon"><i :class="`${item.icon}`" v-if="item.icon"></i></div>
                 <span>{{ item.label }}</span>
                 <span :class="`badge badge-pill badge-${item.badge.variant} float-end`" v-if="item.badge">
                   {{ item.badge.text }}
                 </span>
               </nuxt-link>
+              <a
+                :href="item.link"
+                v-if="!hasItems(item) && isExternalUrl(item.link)"
+                class="side-nav-link-ref"
+                target="_blank"
+              >
+                <div class="menu-item-icon"><i :class="`${item.icon}`" v-if="item.icon"></i></div>
+                <span>{{ item.label }}</span>
+                <span :class="`badge badge-pill badge-${item.badge.variant} float-end`" v-if="item.badge">
+                  {{ item.badge.text }}
+                </span>
+              </a>
 
               <ul v-if="hasItems(item)" class="sub-menu" aria-expanded="false">
                 <li v-for="(subitem, index) of item.subItems" :key="index" v-role:any="subitem.roles">
@@ -255,7 +270,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import url('https://unicons.iconscout.com/release/v3.0.0/css/line.css');
+// @import url('https://unicons.iconscout.com/release/v3.0.0/css/line.css');
 .navbar-brand-box {
   background: #00839b;
   a {

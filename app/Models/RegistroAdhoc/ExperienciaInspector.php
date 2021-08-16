@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Filters\RegistroAdhoc\ExperienciaInspectorFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Traits\LogsActivity;
+use App\Models\SeleccionAdhoc\Puntaje;
 
 class ExperienciaInspector extends Model
 {
@@ -32,4 +33,10 @@ class ExperienciaInspector extends Model
         return $this->belongsTo('App\Models\Settings\Institucion', 'institucion_id');
     }
 
+    public function puntaje( $calificacionId )
+    {
+        return Puntaje::where('categoria_id',4)
+            ->where('calificacion_id',$calificacionId)
+            ->first('puntaje');
+    }
 }

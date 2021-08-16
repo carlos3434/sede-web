@@ -16,7 +16,44 @@ class UserRequest extends FormRequest
         //return false;
         return true;
     }
-
+    public function getFillableForAdd()
+    {
+        return [
+            'tipo_documento_id',
+            'numero_documento',
+            'apellido_paterno',
+            'apellido_materno',
+            'nombres',
+            'sexo',
+            'pais_id',
+            'distrito_id',
+            'telefono_fijo',
+            'celular',
+            'celular',
+            'estado_civil_id',
+            'direccion',
+            'password',
+        ];
+    }
+    public function getFillableForUpdate()
+    {
+        return [
+            'tipo_documento_id',
+            'numero_documento',
+            'apellido_paterno',
+            'apellido_materno',
+            'nombres',
+            'sexo',
+            'pais_id',
+            'distrito_id',
+            'telefono_fijo',
+            'celular',
+            'celular',
+            'estado_civil_id',
+            'direccion',
+            //'password',
+        ];
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,34 +62,21 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombres'                   => 'required|string',
-            'email'                     => 'required|unique:users,email,'. (isset($this->user->id) ? $this->user->id : 0),
-
-            'apellido_paterno'          => 'required|string',
-            'apellido_materno'          => 'required|string',
-            'pais_id'                   => 'required|exists:paises,id',
-            'sexo'                      => 'required|boolean',
-            'estado_civil_id'           => 'exists:estado_civil,id',
+            //campos editables
             'tipo_documento_id'         => 'required|exists:tipos_documentos,id',
             'numero_documento'          => 'required|unique:users,numero_documento,'. (isset($this->user->id) ? $this->user->id : 0),
-            'direccion'                 => 'string',
+            'apellido_paterno'          => 'required|string',
+            'apellido_materno'          => 'required|string',
+            'nombres'                   => 'required|string',
+            'sexo'                      => 'required|boolean',
+            'pais_id'                   => 'required|exists:paises,id',
             'distrito_id'               => 'required|exists:distritos,id',
             'telefono_fijo'             => 'required|string',
             'celular'                   => 'required|string',
-            'password'                  => 'required|confirmed|min:6',
-            'colegio_profesional'       => 'string',
-            'numero_colegiatura'        => 'string',
-            'esta_habilitado'           => 'boolean',
-            'constancia_habilidad'      => 'file|max:3072',//2048
-            'declaracion_jurada'        => 'file|max:3072',
-            'copia_dni'                 => 'file|max:3072',
-            'rj_itse'                   => 'file|max:3072',
-            'rj_verificador'            => 'file|max:3072',
-            'anexo_1'                   => 'file|max:3072',
-            'foto'                      => 'file|max:3072',
-
-            'roles'                     => 'string|exists:roles,name',
-            'permissions'               => 'string|exists:permissions,name'
+            'celular'                   => 'required|string',
+            'estado_civil_id'           => 'exists:estado_civil,id',
+            'direccion'                 => 'string',
+            'password'                  => 'required|min:8',
         ];
     }
     public function messages()

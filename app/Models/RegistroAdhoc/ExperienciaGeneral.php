@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Filters\RegistroAdhoc\ExperienciaGeneralFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Traits\LogsActivity;
+use App\Models\SeleccionAdhoc\Puntaje;
 
 class ExperienciaGeneral extends Model
 {
@@ -32,5 +33,11 @@ class ExperienciaGeneral extends Model
     public function institucion()
     {
         return $this->belongsTo('App\Models\Settings\Institucion', 'institucion_id');
+    }
+    public function puntaje( $calificacionId )
+    {
+        return Puntaje::where('categoria_id',3)
+            ->where('calificacion_id',$calificacionId)
+            ->first('puntaje');
     }
 }

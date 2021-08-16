@@ -39,8 +39,31 @@ use App\Repositories\RegistroAdhoc\Interfaces\ExperienciaInspectorRepositoryInte
 use App\Repositories\RegistroAdhoc\VerificacionRealizadaRepository;
 use App\Repositories\RegistroAdhoc\Interfaces\VerificacionRealizadaRepositoryInterface;
 
+//SeleccionAdhoc
 use App\Repositories\SeleccionAdhoc\CalificacionRepository;
 use App\Repositories\SeleccionAdhoc\Interfaces\CalificacionRepositoryInterface;
+use App\Repositories\SeleccionAdhoc\PuntajeRepository;
+use App\Repositories\SeleccionAdhoc\Interfaces\PuntajeRepositoryInterface;
+use App\Repositories\SeleccionAdhoc\AcreditacionRepository;
+use App\Repositories\SeleccionAdhoc\Interfaces\AcreditacionRepositoryInterface;
+
+//Registro Expediente Ad Hoc
+use App\Repositories\RegistroExpedienteAdhoc\ExpedienteAdhocRepository;
+use App\Repositories\RegistroExpedienteAdhoc\Interfaces\ExpedienteAdhocRepositoryInterface;
+
+//Revision expediente adhoc
+use App\Repositories\RevisionExpediente\EntregaExpedienteRepository;
+use App\Repositories\RevisionExpediente\Interfaces\EntregaExpedienteRepositoryInterface;
+use App\Repositories\RevisionExpediente\RevisionRepository;
+use App\Repositories\RevisionExpediente\Interfaces\RevisionRepositoryInterface;
+
+//Diligencia
+use App\Repositories\DiligenciaVerificador\DiligenciaRepository;
+use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterface;
+
+//Reportes
+use App\Repositories\Reportes\ReporteRepository;
+use App\Repositories\Reportes\Interfaces\ReporteRepositoryInterface;
 
 use App\Repositories\AbstractRepository;
 use App\Repositories\RepositoryInterface;
@@ -77,18 +100,24 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind( CalificacionRepositoryInterface::class, CalificacionRepository::class );
 
         //Selección verificadores Adhoc
-        
+        $this->app->bind( PuntajeRepositoryInterface::class, PuntajeRepository::class );
+        $this->app->bind( AcreditacionRepositoryInterface::class, AcreditacionRepository::class );
         //Registro de expediente Adhoc
+        $this->app->bind( ExpedienteAdhocRepositoryInterface::class, ExpedienteAdhocRepository::class );
 
         //Revisión de expediente Adhoc
+        $this->app->bind( EntregaExpedienteRepositoryInterface::class, EntregaExpedienteRepository::class );
+        $this->app->bind( RevisionRepositoryInterface::class, RevisionRepository::class );
 
         //Diligencia y formulación del informe Adhoc
+        $this->app->bind( DiligenciaRepositoryInterface::class, DiligenciaRepository::class );
 
         //Notificación del informe Adhoc
 
         //Recepcion y descarga del informe Adhoc
 
         //Reportes
+        $this->app->bind( ReporteRepositoryInterface::class, ReporteRepository::class );
 
         //abstract
         $this->app->bind( RepositoryInterface::class, AbstractRepository::class );
