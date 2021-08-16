@@ -16,6 +16,29 @@ class UserSeeder extends Seeder
         $items =
         [
             [
+                'nombres' =>'JOSE LUIS',
+                'apellido_paterno'=>'CODARLUPO',
+                'apellido_materno'=>'ALEJOS',
+                'pais_id'=>133,
+                'sexo'=>FALSE,
+                'estado_civil_id'=>1,
+                'tipo_documento_id'=>2,
+                'numero_documento'=>'41930191',
+                'direccion'=>'CALLE DIAGONAL 123',
+                'distrito_id'=>1685,
+                'telefono_fijo'=>'234534',
+                'celular'=>'984257856',
+                'email'=>'jcodarlupo@cenepred.gob.pe',
+                'password'=>bcrypt('12345678'),
+                'colegio_profesional'=>'CIP',
+                'profesion'=>'Ingeniero',
+                'numero_colegiatura'=>'2345',
+                'esta_habilitado'=>TRUE,
+                'constancia_habilidad'=>'',
+                'role_id'=>'1'//ADMINISTRADOR
+            ],
+
+            [
                 'nombres' =>'KELLY',
                 'apellido_paterno'=>'MONTOYA',
                 'apellido_materno'=>'JARA',
@@ -35,30 +58,7 @@ class UserSeeder extends Seeder
                 'numero_colegiatura'=>'2345',
                 'esta_habilitado'=>TRUE,
                 'constancia_habilidad'=>'',
-                'role_id'=>'1'//ADMINISTRADOR
-            ],
-
-            [
-                'nombres' =>'JOSE LUIS',
-                'apellido_paterno'=>'EPIQUIEN',
-                'apellido_materno'=>'RIVERA',
-                'pais_id'=>133,
-                'sexo'=>FALSE,
-                'estado_civil_id'=>1,
-                'tipo_documento_id'=>2,
-                'numero_documento'=>'41930191',
-                'direccion'=>'CALLE DIAGONAL 123',
-                'distrito_id'=>1685,
-                'telefono_fijo'=>'234534',
-                'celular'=>'984257856',
-                'email'=>'kobregon@cenepred.gob.pe',
-                'password'=>bcrypt('12345678'),
-                'colegio_profesional'=>'CIP',
-                'profesion'=>'Arquitecto',
-                'numero_colegiatura'=>'2345',
-                'esta_habilitado'=>TRUE,
-                'constancia_habilidad'=>'',
-                'role_id'=>'1'//ADMINISTRADOR
+                'role_id'=>'2'//ADMINISTRADOR
             ],
 
             [

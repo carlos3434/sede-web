@@ -10,7 +10,7 @@ export default {}
     <b-navbar toggleable="sm" type="dark" variant="custom">
       <b-container>
         <b-navbar-brand>
-          <nuxt-link to="/" class="navbar-brand">CENEPRED </nuxt-link>
+          <!-- <nuxt-link to="/" class="navbar-brand">CENEPRED </nuxt-link> -->
         </b-navbar-brand>
         <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 

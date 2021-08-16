@@ -14,6 +14,9 @@ Vue.component('multiselect-c', {
     selectedLabel: {
       default: 'Seleccionado'
     },
+    noOptionsLabel: {
+      default: 'Seleccionado'
+    },
     placeholder: {
       default: 'Por favor, seleccione...'
     }

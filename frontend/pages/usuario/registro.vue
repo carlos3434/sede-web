@@ -1,12 +1,6 @@
 <script>
-import { required, email, numeric, minLength, minValue } from 'vuelidate/lib/validators'
 import { animateCSS } from '~/helpers/animateCSS'
-import { countries } from '~/components/static/countries'
-import { departamentos, provincias, distritos } from '~/components/static/ubigeos'
 
-/**
- * Register component
- */
 export default {
   layout: 'auth',
   head() {
@@ -17,97 +11,141 @@ export default {
   data() {
     return {
       title: 'Registrar cuenta',
-      countries: countries,
-      departamentos: departamentos,
-      provincias: provincias,
-      distritos: distritos,
+      item: {
+        nombres: '',
+        apellido_paterno: '',
+        apellido_materno: '',
+        telefono_fijo: '',
+        celular: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        sexo: '',
+        pais_id: '',
+        tipo_documento_id: '',
+        numero_documento: '',
+        distrito_id: '',
+        roles: '',
+        profesion: ''
+      },
+      listGender: [],
+      listCountries: [],
+      listDocumentType: [],
+      listDepartamento: [],
+      listProvincia: [],
+      listDistrito: [],
+      listRoles: [],
       provinciasFiltrado: [],
       distritosFiltrado: [],
-      departamento: -1,
-      provincia: -1,
-      distrito: -1,
-      submitted: false,
-      showAlert: false,
-      variantAlert: '',
-      messageAlert: '',
-      user: {
-        nombres: 'juan carlos',
-        apellido_paterno: 'rojas',
-        apellido_materno: 'toralva',
-        email: 'juan151@gmail.com',
-        pais_id: 139,
-        sexo: '1',
-        tipo_documento_id: '1',
-        numero_documento: '455316580',
-        distrito_id: '1',
-        telefono_fijo: '964142677',
-        celular: '964142677',
-        password: '12345678',
-        password_confirmation: ''
-      }
+      genderSelected: null,
+      countrySelected: { id: 139, nombre: 'Perú' },
+      documentTypeSelected: null,
+      departamentoSelected: null,
+      provinciaSelected: null,
+      distritoSelected: null,
+      roleSelected: null,
+      isProcessing: false
     }
   },
-  validations: {
-    user: {
-      nombres: { required },
-      email: { required, email },
-      password: { required },
-      numero_documento: { required, numeric, minLength: minLength(8) },
-      telefono_fijo: { required },
-      celular: { required },
-      pais_id: { required, minValue: minValue(1) }
+  watch: {
+    distritoSelected: function (val) {
+      this.item.distrito_id = val && val.id ? val.id : null
     },
-    departamento: { required, minValue: minValue(1) },
-    provincia: { required, minValue: minValue(1) },
-    distrito: { required, minValue: minValue(1) }
+    genderSelected: function (val) {
+      // se necesita enviar 0, por ello la asignacion es diferente
+      this.item.sexo = val === null ? null : val.id
+    },
+    countrySelected: function (val) {
+      this.item.pais_id = val && val.id ? val.id : null
+    },
+    documentTypeSelected: function (val) {
+      this.item.tipo_documento_id = val && val.id ? val.id : null
+    },
+    roleSelected: function (val) {
+      this.item.roles = val && val.id ? val.name : null
+    },
+    'item.password': function (newVal, oldVal) {
+      this.item.password_confirmation = newVal
+    }
+  },
+  beforeDestroy() {
+    this.$recaptcha.destroy()
+  },
+  async mounted() {
+    try {
+      await this.$recaptcha.init()
+    } catch (e) {
+      console.error(e)
+    }
+    this.loadSelectOptions()
+
+    // Set Pais por defecto
+    this.item.pais_id = this.countrySelected ? this.countrySelected.id : ''
   },
   methods: {
     onChangeDepartamento(e) {
-      this.provincia = -1
-      this.distrito = -1
+      this.distritoSelected = null
+      this.provinciaSelected = null
       this.distritosFiltrado = []
-      this.provinciasFiltrado = this.provincias.filter((i) => i.department_id == e.target.value)
+      this.provinciasFiltrado = []
+
+      if (!e) return
+
+      this.provinciasFiltrado = this.listProvincia.filter((i) => i.departamento_id == e.id)
     },
     onChangeProvincia(e) {
-      this.distrito = -1
-      this.distritosFiltrado = this.distritos.filter((i) => i.province_id == e.target.value)
+      if (!e) return
+
+      this.distritoSelected = null
+      this.distritosFiltrado = this.listDistrito.filter((i) => i.provincia_id == e.id)
     },
-    async tryToRegister() {
-      this.submitted = true
-      this.showAlert = false
+    async onSubmit() {
+      let self = this
+      this.item.token = await this.$recaptcha.execute('register')
 
-      // stop here if form is invalid
-      this.$v.$touch()
+      this.$refs.form.validate().then((success) => {
+        if (!success) {
+          return
+        }
 
-      if (this.$v.$invalid) {
-        animateCSS('.card', 'shakeX')
-        return
-      }
+        this.isProcessing = true
+        if (!this.item.profesion) delete this.item.profesion
 
-      this.user.password_confirmation = this.user.password
+        this.$axios
+          .post('/register', this.item)
+          .then((res) => {
+            let token = res.data.success.token
 
-      await this.$axios
-        .post('/register', this.user)
-        .then((res) => {
-          let token = res.data.success.token
+            this.$auth.setUserToken(token, true).then((res) => {
+              let roles = res.data.success.roles
+              let permissions = res.data.success.permissions
 
-          this.$auth.setUserToken(token, true).then(() => {
-            this.$router.push('/admin/dashboard')
+              this.$gates.setRoles(roles)
+              this.$gates.setPermissions(permissions)
+              this.$router.push('/admin')
+            })
           })
-        })
-        .catch((err) => {
-          this.showAlert = true
-          this.variantAlert = 'danger'
-          if (err.response.data.message) {
-            this.messageAlert = err.response.data.message
-          } else {
-            this.messageAlert = 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde'
-          }
-          animateCSS('.card', 'shakeX')
-        })
-        .finally(() => {
-          this.submitted = false
-        })
+          .catch(function (e) {
+            // handle error
+            if (e.response && e.response.status == 422) {
+              self.$refs.form.setErrors(e.response.data.errors)
+            }
+          })
+          .finally(() => {
+            this.isProcessing = false
+          })
+      })
+    },
+    async loadSelectOptions() {
+      await this.$axios.get('/listasParaRegistro').then((res) => {
+        this.listCountries = res.data.paises || []
+        this.listDocumentType = res.data.tiposDocumentos || []
+        this.listDepartamento = res.data.departamentos || []
+        this.listProvincia = res.data.provincias || []
+        this.listDistrito = res.data.distritos || []
+        this.listRoles = res.data.roles || []
+        this.listGender = res.data.sexo || []
+      })
     }
   },
   middleware: 'anonymous'
@@ -116,193 +154,335 @@ export default {
 
 <template>
   <div>
-    <div class="account-pages my-5 pt-sm-5">
+    <div class="account-pages my-5">
       <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-8 col-lg-6 col-xl-6">
-            <div class="card">
-              <div class="card-body p-4">
-                <div class="text-center mt-2">
-                  <h5 class="text-primary">Registro</h5>
-                  <p class="text-muted"></p>
-                </div>
-                <div class="mt-4">
-                  <b-alert v-model="showAlert" :variant="variantAlert" dismissible fade>
-                    {{ messageAlert }}
-                  </b-alert>
-                  <form @submit.prevent="tryToRegister" autocomplete="off">
-                    <div class="form-group mb-3">
-                      <label>Nacionalidad:</label>
-                      <select
-                        v-model="user.pais_id"
-                        class="form-select"
-                        :class="{ 'is-invalid': $v.user.pais_id.$error }"
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <ValidationObserver ref="form" v-slot="{ handleSubmit }" @submit.prevent>
+                <b-form @submit.prevent="handleSubmit(onSubmit)">
+                  <div class="row">
+                    <div class="col-md-12 mb-4">
+                      <div class="text-center mt-2">
+                        <h5 class="text-primary">Registro</h5>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                      <ValidationProvider
+                        vid="nombres"
+                        rules="required|alpha_num_spaces"
+                        name="Nombres"
+                        v-slot="{ valid, errors }"
                       >
-                        <option value="-1">Elije tu país</option>
-                        <option v-for="c in countries" :key="c.id" :value="c.id">{{ c.country }}</option>
-                      </select>
-                      <div v-if="$v.user.pais_id.$error" class="invalid-feedback">
-                        <span v-if="!$v.user.pais_id.minValue">Seleccione su país.</span>
+                        <b-form-group label="Nombres:" class="mb-3">
+                          <b-form-input
+                            type="text"
+                            v-model="item.nombres"
+                            :state="errors[0] ? false : valid ? true : null"
+                          ></b-form-input>
+                          <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                        </b-form-group>
+                      </ValidationProvider>
+                      <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                          <ValidationProvider
+                            vid="apellido_paterno"
+                            rules="required|alpha_num_spaces"
+                            name="Apellido Paterno"
+                            v-slot="{ valid, errors }"
+                          >
+                            <b-form-group label="Apellido Paterno:" class="mb-3">
+                              <b-form-input
+                                type="text"
+                                v-model="item.apellido_paterno"
+                                :state="errors[0] ? false : valid ? true : null"
+                              ></b-form-input>
+                              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                          <ValidationProvider
+                            vid="apellido_materno"
+                            rules="required|alpha_num_spaces"
+                            name="Apellido Materno"
+                            v-slot="{ valid, errors }"
+                          >
+                            <b-form-group label="Apellido Materno:" class="mb-3">
+                              <b-form-input
+                                type="text"
+                                v-model="item.apellido_materno"
+                                :state="errors[0] ? false : valid ? true : null"
+                              ></b-form-input>
+                              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4 form-group mb-3">
-                        <label>Tipo de documento:</label>
-                        <select v-model="user.tipo_documento_id" class="form-select">
-                          <option value="1">DNI</option>
-                        </select>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <ValidationProvider
+                            vid="telefono_fijo"
+                            rules="required|alpha_num_spaces"
+                            name="Teléfono"
+                            v-slot="{ valid, errors }"
+                          >
+                            <b-form-group label="Teléfono fijo:" class="mb-3">
+                              <b-form-input
+                                type="number"
+                                v-model="item.telefono_fijo"
+                                :state="errors[0] ? false : valid ? true : null"
+                              ></b-form-input>
+                              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
+                        <div class="col-md-6">
+                          <ValidationProvider
+                            vid="celular"
+                            rules="required|alpha_num_spaces"
+                            name="Celular"
+                            v-slot="{ valid, errors }"
+                          >
+                            <b-form-group label="Celular:" class="mb-3">
+                              <b-form-input
+                                type="number"
+                                v-model="item.celular"
+                                :state="errors[0] ? false : valid ? true : null"
+                              ></b-form-input>
+                              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
                       </div>
-                      <div class="col-md-8 form-group mb-3">
-                        <label>Número de documento:</label>
-                        <input
-                          type="number"
-                          v-model="user.numero_documento"
-                          class="form-control"
-                          autocomplete="off"
-                          :class="{ 'is-invalid': $v.user.numero_documento.$error }"
-                        />
-                        <div v-if="$v.user.numero_documento.$error" class="invalid-feedback">
-                          <span v-if="!$v.user.numero_documento.required">Ingresa tu número de documento.</span>
-                          <span v-if="!$v.user.numero_documento.minLength">
-                            El número de documento debe tener minimo 8 digitos.
-                          </span>
+                      <ValidationProvider
+                        vid="email"
+                        rules="required|email"
+                        name="Correo electrónico"
+                        v-slot="{ valid, errors }"
+                      >
+                        <b-form-group label="Correo electrónico:" class="mb-3">
+                          <b-form-input
+                            type="text"
+                            v-model="item.email"
+                            :state="errors[0] ? false : valid ? true : null"
+                          ></b-form-input>
+                          <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                        </b-form-group>
+                      </ValidationProvider>
+                      <div class="row">
+                        <div class="col-6">
+                          <ValidationProvider
+                            vid="password"
+                            rules="required|min:8"
+                            name="Contraseña"
+                            v-slot="{ valid, errors }"
+                          >
+                            <b-form-group label="Contraseña:" class="mb-3">
+                              <b-form-input
+                                type="password"
+                                v-model="item.password"
+                                placeholder="••••••"  autocomplete="new-password"
+                                :state="errors[0] ? false : valid ? true : null"
+                              ></b-form-input>
+                              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
+                        <div class="col-6">
+                          <ValidationProvider vid="sexo" rules="required" name="Género" v-slot="{ valid, errors }">
+                            <b-form-group label="Género:" class="mb-3">
+                              <multiselect-c
+                                :options="listGender"
+                                v-model="genderSelected"
+                                label="nombre"
+                                track-by="id"
+                                :class="errors[0] ? `is-invalid` : valid ? `is-valid` : ``"
+                                placeholder="Elija un género"
+                              >
+                                <span slot="noResult">Oops! No se encontraron elementos.</span>
+                              </multiselect-c>
+                              <div class="invalid-feedback" style="display: block" v-show="errors.length">
+                                {{ errors[0] }}
+                              </div>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ValidationProvider vid="roles" rules="required" name="Rol" v-slot="{ valid, errors }">
+                            <b-form-group label="Rol:" class="mb-3">
+                              <multiselect-c
+                                :options="listRoles"
+                                v-model="roleSelected"
+                                label="nombre"
+                                track-by="id"
+                                :class="errors[0] ? `is-invalid` : valid ? `is-valid` : ``"
+                                placeholder="Elija un rol"
+                              >
+                                <span slot="noResult">Oops! No se encontraron elementos.</span>
+                              </multiselect-c>
+                              <div class="invalid-feedback" style="display: block" v-show="errors.length">
+                                {{ errors[0] }}
+                              </div>
+                            </b-form-group>
+                          </ValidationProvider>
                         </div>
                       </div>
                     </div>
-                    <div class="form-group mb-3">
-                      <label>Nombres:</label>
-                      <input
-                        type="text"
-                        v-model="user.nombres"
-                        class="form-control"
-                        autocomplete="off"
-                        :class="{ 'is-invalid': $v.user.nombres.$error }"
-                      />
-                      <div v-if="$v.user.nombres.$error" class="invalid-feedback">
-                        <span v-if="!$v.user.nombres.required">Ingresa tus nombres.</span>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 form-group mb-3">
-                        <label>Departamento:</label>
-                        <select
-                          v-model="departamento"
-                          @change="onChangeDepartamento"
-                          class="form-select"
-                          :class="{ 'is-invalid': $v.departamento.$error }"
-                        >
-                          <option value="-1" disabled>Seleccione departamento</option>
-                          <option v-for="c in departamentos" :key="c.id" :value="c.id">{{ c.name }}</option>
-                        </select>
-                        <div v-if="$v.departamento.$error" class="invalid-feedback">
-                          <span v-if="!$v.departamento.minValue">Seleccione el departamento.</span>
+                    <div class="col-md-6 col-sm-12">
+                      <ValidationProvider
+                        vid="pais_id"
+                        rules="required"
+                        name="Nacionalidad"
+                        v-slot="{ validated, valid, errors }"
+                      >
+                        <b-form-group label="Nacionalidad:" class="mb-3">
+                          <multiselect-c
+                            :options="listCountries"
+                            v-model="countrySelected"
+                            label="nombre"
+                            track-by="id"
+                            :class="validated && valid ? `is-valid` : errors[0] ? `is-invalid` : ``"
+                            placeholder="Elija un nacionalidad"
+                          >
+                            <span slot="noResult">Oops! No se encontraron elementos.</span>
+                          </multiselect-c>
+                          <div class="invalid-feedback" style="display: block" v-show="errors.length">
+                            {{ errors[0] }}
+                          </div>
+                        </b-form-group>
+                      </ValidationProvider>
+                      <div class="row">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                          <ValidationProvider
+                            vid="tipo_documento_id"
+                            rules="required"
+                            name="Tipo de Documento"
+                            v-slot="{ valid, errors }"
+                          >
+                            <b-form-group label="Tipo de Documento:" class="mb-3">
+                              <multiselect-c
+                                :options="listDocumentType"
+                                v-model="documentTypeSelected"
+                                label="nombre"
+                                track-by="id"
+                                :class="errors[0] ? `is-invalid` : valid ? `is-valid` : ``"
+                                placeholder="Elija un tipo de documento"
+                              >
+                                <span slot="noResult">Oops! No se encontraron elementos.</span>
+                              </multiselect-c>
+                              <div class="invalid-feedback" style="display: block" v-show="errors.length">
+                                {{ errors[0] }}
+                              </div>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                          <ValidationProvider
+                            vid="numero_documento"
+                            rules="required|min:6"
+                            name="Documento"
+                            v-slot="{ valid, errors }"
+                          >
+                            <b-form-group label="Número de Documento:" class="mb-3">
+                              <b-form-input
+                                type="number"
+                                v-model="item.numero_documento"
+                                :state="errors[0] ? false : valid ? true : null"
+                              ></b-form-input>
+                              <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                            </b-form-group>
+                          </ValidationProvider>
                         </div>
                       </div>
-                      <div class="col-md-6 form-group mb-3">
-                        <label>Provincia:</label>
-                        <select
-                          v-model="provincia"
-                          @change="onChangeProvincia"
-                          class="form-select"
-                          :class="{ 'is-invalid': $v.provincia.$error }"
-                        >
-                          <option value="-1" disabled>Seleccione provincia</option>
-                          <option v-for="c in provinciasFiltrado" :key="c.id" :value="c.id">{{ c.name }}</option>
-                        </select>
-                        <div v-if="$v.provincia.$error" class="invalid-feedback">
-                          <span v-if="!$v.provincia.minValue">Seleccione la provincia.</span>
+                      <div class="row">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                          <ValidationProvider rules="required" name="Departamento" v-slot="{ valid, errors }">
+                            <b-form-group label="Departamento:" class="mb-3">
+                              <multiselect-c
+                                :options="listDepartamento"
+                                v-model="departamentoSelected"
+                                label="nombre"
+                                track-by="id"
+                                :class="errors[0] ? `is-invalid` : valid ? `is-valid` : ``"
+                                placeholder="Elija un departamento"
+                                @input="onChangeDepartamento"
+                              >
+                                <span slot="noResult">Oops! No se encontraron elementos.</span>
+                                <span slot="noOptions">Lista vacia.</span>
+                              </multiselect-c>
+                              <div class="invalid-feedback" style="display: block" v-show="errors.length">
+                                {{ errors[0] }}
+                              </div>
+                            </b-form-group>
+                          </ValidationProvider>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                          <ValidationProvider rules="required" name="Provincia" v-slot="{ valid, errors }">
+                            <b-form-group label="Provincia:" class="mb-3">
+                              <multiselect-c
+                                :options="provinciasFiltrado"
+                                v-model="provinciaSelected"
+                                label="nombre"
+                                track-by="id"
+                                :class="errors[0] ? `is-invalid` : valid ? `is-valid` : ``"
+                                placeholder="Elija un provincia"
+                                @input="onChangeProvincia"
+                              >
+                                <span slot="noResult">Oops! No se encontraron elementos.</span>
+                                <span slot="noOptions">Lista vacia.</span>
+                              </multiselect-c>
+                              <div class="invalid-feedback" style="display: block" v-show="errors.length">
+                                {{ errors[0] }}
+                              </div>
+                            </b-form-group>
+                          </ValidationProvider>
                         </div>
                       </div>
+                      <ValidationProvider vid="distrito_id" rules="required" name="Distrito" v-slot="{ valid, errors }">
+                        <b-form-group label="Distrito:" class="mb-3">
+                          <multiselect-c
+                            :options="distritosFiltrado"
+                            v-model="distritoSelected"
+                            label="nombre"
+                            track-by="id"
+                            :class="errors[0] ? `is-invalid` : valid ? `is-valid` : ``"
+                            placeholder="Elija un distrito"
+                          >
+                            <span slot="noResult">Oops! No se encontraron elementos.</span>
+                            <span slot="noOptions">Lista vacia.</span>
+                          </multiselect-c>
+                          <div class="invalid-feedback" style="display: block" v-show="errors.length">
+                            {{ errors[0] }}
+                          </div>
+                        </b-form-group>
+                      </ValidationProvider>
+                      <b-form-group label="Profesión:" class="mb-3">
+                        <b-form-input type="text" v-model="item.profesion"></b-form-input>
+                      </b-form-group>
                     </div>
-                    <div class="form-group mb-3">
-                      <label>Distrito:</label>
-                      <select v-model="distrito" class="form-select" :class="{ 'is-invalid': $v.distrito.$error }">
-                        <option value="-1" disabled>Seleccione distrito</option>
-                        <option v-for="c in distritosFiltrado" :key="c.id" :value="c.id">{{ c.name }}</option>
-                      </select>
-                      <div v-if="$v.distrito.$error" class="invalid-feedback">
-                        <span v-if="!$v.distrito.minValue">Seleccione el distrito.</span>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 form-group mb-3">
-                        <label>Teléfono fijo:</label>
-                        <input
-                          type="text"
-                          v-model="user.telefono_fijo"
-                          class="form-control"
-                          autocomplete="off"
-                          :class="{ 'is-invalid': $v.user.telefono_fijo.$error }"
-                        />
-                        <div v-if="$v.user.telefono_fijo.$error" class="invalid-feedback">
-                          <span v-if="!$v.user.telefono_fijo.required">Ingresa tu teléfono fijo.</span>
-                        </div>
-                      </div>
-                      <div class="col-md-6 form-group mb-3">
-                        <label>Celular:</label>
-                        <input
-                          type="text"
-                          v-model="user.celular"
-                          class="form-control"
-                          autocomplete="off"
-                          :class="{ 'is-invalid': $v.user.celular.$error }"
-                        />
-                        <div v-if="$v.user.celular.$error" class="invalid-feedback">
-                          <span v-if="!$v.user.celular.required">Ingresa tu celular.</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group mb-3">
-                      <label>Correo electrónico:</label>
-                      <input
-                        type="text"
-                        v-model="user.email"
-                        class="form-control"
-                        autocomplete="off"
-                        :class="{ 'is-invalid': $v.user.email.$error }"
-                      />
-                      <div v-if="$v.user.email.$error" class="invalid-feedback">
-                        <span v-if="!$v.user.email.required">Ingresa tu correo electrónico.</span>
-                      </div>
-                    </div>
-                    <div class="form-group mb-3">
-                      <label>Contraseña:</label>
-                      <input
-                        type="password"
-                        v-model="user.password"
-                        class="form-control"
-                        autocomplete="off"
-                        :class="{ 'is-invalid': $v.user.password.$error }"
-                      />
-                      <div v-if="$v.user.password.$error" class="invalid-feedback">
-                        <span v-if="!$v.user.password.required">Ingresa tu contraseña.</span>
-                      </div>
-                    </div>
-                    <div class="form-group mb-0">
-                      <div class="col-12 text-end">
-                        <button class="btn btn-primary w-sm" type="submit">Registrarse</button>
-                      </div>
-                    </div>
-                  </form>
-                  <div class="mt-4 text-center">
-                    <p class="mb-0">
-                      Ir a
-                      <nuxt-link to="/usuario/login" class="fw-medium text-primary">Iniciar sesión</nuxt-link>
-                    </p>
                   </div>
+                  <div class="row">
+                    <div class="col-12 text-end">
+                      <b-button type="submit" size="md" variant="primary" :disabled="isProcessing">
+                        <span class="spinner-border spinner-border-sm" v-show="isProcessing"></span> Registrarse
+                      </b-button>
+                    </div>
+                  </div>
+                </b-form>
+                <div class="mt-4 text-center">
+                  <p class="mb-0">
+                    Ir a
+                    <nuxt-link to="/usuario/login" class="fw-medium text-primary">Iniciar sesión</nuxt-link>
+                  </p>
                 </div>
-              </div>
-              <!-- end card-body -->
+              </ValidationObserver>
             </div>
-            <!-- end card -->
           </div>
-          <!-- end col -->
         </div>
-        <!-- end row -->
       </div>
-      <!-- end container -->
     </div>
   </div>
 </template>
-
-<style lang="scss" module></style>

@@ -48,7 +48,7 @@ export default {}
   </section>
 </template>
 
-<style>
+<style lang="scss">
 .media-footer {
   margin: 30px 0 70px 0;
 }
@@ -60,25 +60,22 @@ export default {}
   font-size: 2.4rem;
   font-weight: 400;
 }
-.topfooter-about-us h1 {
-  font-size: 2rem;
-  font-weight: 400;
-  margin-bottom: 1rem;
-}
+
 .topfooter-about-us p {
   color: #232323;
   font-weight: 300;
-  font-size: 1.4rem;
-  text-align: left;
+  text-align: justify;
 }
-.topfooter-importante h1 {
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin-bottom: 1rem;
-}
+
+.topfooter-about-us h1,
+.topfooter-importante h1,
 .topfooter-registro h1 {
   font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 1rem;
+}
+
+.topfooter-importante li a:hover {
+  text-decoration: underline !important;
 }
 </style>

@@ -1,163 +1,242 @@
 export const menuItems = [
   {
     label: 'Inicio',
-    isTitle: true
+    isTitle: true,
+    roles: ''
   },
   {
     label: 'Dashboard',
-    icon: 'uil-home-alt',
-    link: '/admin/dashboard'
+    icon: 'uil-estate',
+    link: '/admin',
+    roles: ''
   },
   {
     label: 'Påginas útiles',
-    isTitle: true
+    isTitle: true,
+    roles: ''
   },
   {
     label: 'Nosotros',
     icon: 'uil-users-alt',
-    link: '/admin/utiles/nosotros'
+    link: '/admin/utiles/nosotros',
+    roles: ''
   },
   {
     label: 'Marco Legal',
     icon: 'uil-balance-scale',
-    link: '/admin/utiles/marco-legal'
+    link: 'https://www.gob.pe/cenepred#normas-legales',
+    roles: ''
   },
-  // {
-  //   label: 'Registro y Postulación Adhoc',
-  //   isTitle: true,
-  //   roles: 'USUARIO_ADHOC'
-  // },
+
+  // Paginas para el usuario usuario AdHoc
+  {
+    label: 'Registro y Postulación',
+    isTitle: true,
+    roles: 'USUARIO_ADHOC'
+  },
   {
     label: 'Curriculum Vitae',
-    icon: 'uil-clipboard-alt',
+    icon: 'uil-layers',
     roles: 'USUARIO_ADHOC',
     subItems: [
       {
         label: 'Formación Académica',
         icon: 'uil-file-plus-alt',
-        link: '/admin/cv/formacion-academica'
+        link: '/admin/adhoc/cv/formacion-academica',
+        roles: 'USUARIO_ADHOC'
       },
       {
         label: 'Capacitaciones',
         icon: 'uil-file-plus-alt',
-        link: '/admin/cv/capacitaciones'
+        link: '/admin/adhoc/cv/capacitaciones',
+        roles: 'USUARIO_ADHOC'
       },
       {
         label: 'Experiencia Profesional',
         icon: 'uil-file-plus-alt',
-        link: '/admin/cv/experiencia-profesional'
+        link: '/admin/adhoc/cv/experiencia-profesional',
+        roles: 'USUARIO_ADHOC'
       },
       {
         label: 'Experiencia Como Inspector',
         icon: 'uil-file-plus-alt',
-        link: '/admin/cv/experiencia-inspector'
+        link: '/admin/adhoc/cv/experiencia-inspector',
+        roles: 'USUARIO_ADHOC'
       },
       {
         label: 'Verificaciones Realizadas',
         icon: 'uil-file-plus-alt',
-        link: '/admin/cv/verificaciones-realizadas'
+        link: '/admin/adhoc/cv/verificaciones-realizadas',
+        roles: 'USUARIO_ADHOC'
       },
       {
         label: 'Documentos',
         icon: 'uil-file-plus-alt',
-        link: '/admin/cv/documentos'
+        link: '/admin/adhoc/cv/documentos',
+        roles: 'USUARIO_ADHOC'
       }
     ]
   },
   {
-    label: 'Selección verificadores Adhoc',
-    isTitle: true,
-    roles: 'ADMINISTRADOR|USUARIO_CENEPRED'
+    label: 'Postulación',
+    icon: 'uil-file-upload',
+    link: '/admin/adhoc/postulacion',
+    roles: 'USUARIO_ADHOC'
   },
   {
-    label: 'Registro de expediente Adhoc',
+    label: 'Diligencia y Formulación del informe AdHoc',
     isTitle: true,
-    roles: 'ADMINISTRADOR|USUARIO_CENEPRED|USUARIO_ADMINISTRADO'
-  },
-  // {
-  //   label: 'Diligencia y formulación del informe Adhoc',
-  //   isTitle: true,
-  //   roles: 'USUARIO_ADHOC'
-  // },
-  {
-    label: 'Notificación del informe Adhoc',
-    isTitle: true,
-    roles: 'ADMINISTRADOR|USUARIO_CENEPRED'
+    roles: 'USUARIO_ADHOC'
   },
   {
-    label: 'Recepcion y descarga del informe Adhoc',
-    isTitle: true,
-    roles: 'ADMINISTRADOR|USUARIO_CENEPRED'
+    label: 'Expedientes AdHoc',
+    icon: 'uil-file-plus-alt',
+    link: '/admin/adhoc/expediente',
+    roles: 'USUARIO_ADHOC'
   },
+
+  // Paginas para el usuario Cenepred
+  {
+    label: 'Selección verificadores AdHoc',
+    isTitle: true,
+    roles: 'USUARIO_CENEPRED'
+  },
+  {
+    label: 'Calificación',
+    icon: 'uil-star',
+    link: '/admin/cenepred/seleccion/calificacion',
+    roles: 'USUARIO_CENEPRED'
+  },
+  {
+    label: 'Pendientes',
+    icon: 'uil-edit',
+    link: '/admin/cenepred/seleccion/pendiente',
+    roles: 'USUARIO_CENEPRED'
+  },
+  {
+    label: 'Resultados',
+    icon: 'uil-file-graph',
+    link: '/admin/cenepred/seleccion/resultados',
+    roles: 'USUARIO_CENEPRED'
+  },
+  {
+    label: 'Acreditaciones',
+    icon: 'uil-award',
+    link: '/admin/cenepred/seleccion/acreditacion',
+    roles: 'USUARIO_CENEPRED'
+  },
+  {
+    label: 'Revisión expediente AdHoc',
+    isTitle: true,
+    roles: 'USUARIO_CENEPRED'
+  },
+  {
+    label: 'Revisión Expediente AdHoc',
+    icon: 'uil-file-plus-alt',
+    link: '/admin/cenepred/expediente',
+    roles: 'USUARIO_CENEPRED'
+  },
+  {
+    label: 'Notificaciones',
+    isTitle: true,
+    roles: 'USUARIO_CENEPRED'
+  },
+  {
+    label: 'Informe de Verificación AdHoc',
+    icon: 'uil-file-plus-alt',
+    link: '/admin/cenepred/informe-verificacion',
+    roles: 'USUARIO_CENEPRED'
+  },
+
+  // Paginas para el Usuario Administrado
+  {
+    label: 'Registro de expediente AdHoc',
+    isTitle: true,
+    roles: 'USUARIO_ADMINISTRADO'
+  },
+  {
+    label: 'Expediente AdHoc',
+    icon: 'uil-file-plus-alt',
+    link: '/admin/administrado/expediente',
+    roles: 'USUARIO_ADMINISTRADO'
+  },
+  {
+    label: 'Solicitar Nº Hoja de Trámite',
+    icon: ' uil-telegram-alt',
+    link: '/admin/administrado/solicitar-hoja-tramite',
+    roles: 'USUARIO_ADMINISTRADO'
+  },
+  {
+    label: 'Solicitar Verificación AdHoc',
+    icon: ' uil-telegram-alt',
+    link: '/admin/administrado/solicitar-verificacion-adhoc',
+    roles: 'USUARIO_ADMINISTRADO'
+  },
+
+  // Paginas para el Administrador
   {
     label: 'Reportes',
-    icon: 'uil-clipboard-alt',
-    roles: 'ADMINISTRADOR|USUARIO_CENEPRED',
-    subItems: [
-      {
-        label: 'Cuadro de Méritos',
-        icon: 'uil-file-plus-alt',
-        link: '/admin/reporte/cuadro-meritos'
-      }
-    ]
-  },
-  {
-    label: 'Mantenimiento',
     isTitle: true,
     roles: 'ADMINISTRADOR'
   },
   {
-    label: 'Configuraciones',
+    label: 'Reportes',
+    icon: 'uil-clipboard-alt',
+    roles: 'ADMINISTRADOR',
+    subItems: [
+      {
+        label: 'Listado de Reportes',
+        icon: 'uil-file-plus-alt',
+        link: '/admin/general/reporte/cuadro-meritos',
+        roles: 'ADMINISTRADOR'
+      }
+    ]
+  },
+  {
+    label: 'Configuración',
+    isTitle: true,
+    roles: 'ADMINISTRADOR'
+  },
+  {
+    label: 'Usuarios',
     icon: 'uil-setting',
-    link: '/admin/config/config',
+    link: '/admin/general/usuarios',
     roles: 'ADMINISTRADOR'
   },
   {
     label: 'Convocatorias',
     icon: 'uil-megaphone',
-    link: '/admin/config/convocatorias',
+    link: '/admin/general/convocatorias',
     roles: 'ADMINISTRADOR'
   },
   {
     label: 'Grados',
     icon: 'uil-graduation-cap',
-    link: '/admin/config/grados',
+    link: '/admin/general/grados',
     roles: 'ADMINISTRADOR'
   },
   {
     label: 'Instituciones',
     icon: 'uil-building',
-    link: '/admin/config/instituciones',
+    link: '/admin/general/instituciones',
     roles: 'ADMINISTRADOR'
   },
   {
     label: 'Tipo de Instituciones',
     icon: 'uil-cog',
-    link: '/admin/config/tipo-instituciones',
+    link: '/admin/general/tipo-instituciones',
     roles: 'ADMINISTRADOR'
   },
   {
     label: 'Tipo de Documentos',
     icon: 'uil-cog',
-    link: '/admin/config/tipo-documentos',
+    link: '/admin/general/tipo-documentos',
     roles: 'ADMINISTRADOR'
   },
   {
     label: 'Tipo de Capacitaciones',
     icon: 'uil-cog',
-    link: '/admin/config/tipo-capacitaciones',
+    link: '/admin/general/tipo-capacitaciones',
     roles: 'ADMINISTRADOR'
   }
-
-  // {
-  //   label: 'Perfil',
-  //   icon: 'uil-user',
-  //   link: '/admin/config/perfil',
-  //   permission: 'USER_IDEX'
-  // },
-  // {
-  //   label: 'CV',
-  //   icon: 'uil-user',
-  //   link: '/admin/config/perfil'
-  // }
 ]

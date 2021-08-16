@@ -110,9 +110,17 @@ Route::prefix('v1')->group(function(){
         //9 Recepcion y descarga del informe Adhoc
         Route::get('expedientesNotificados','Api\DiligenciaVerificador\NotificacionController@expedientesNotificados');
 
-        //10 Reportes
-        Route::get('listasParaPostulantesAdhoc','Api\Reportes\PostulantesAdhocController@listas');
-        Route::get('reporte/postulantesadhoc','Api\Reportes\PostulantesAdhocController@reporte');
+        //9 Reportes
+        Route::get('listasParaPostulantesAdhoc','Api\Reportes\ReporteController@listas');
+        Route::get('reporte/anexo2','Api\Reportes\ReporteController@anexo2');
+        Route::get('reporte/anexo3','Api\Reportes\ReporteController@anexo3');
+        Route::get('reporte/requerimientopago','Api\Reportes\ReporteController@requerimientopago');
+        Route::get('reporte/anexo6','Api\Reportes\ReporteController@anexo6');
+        Route::get('reporte/anexo9','Api\Reportes\ReporteController@anexo9');
+        Route::get('reporte/cuadro1','Api\Reportes\ReporteController@cuadro1');
+        Route::get('reporte/cuadro2','Api\Reportes\ReporteController@cuadro2');
+        Route::get('reporte/cuadro3','Api\Reportes\ReporteController@cuadro3');
+        Route::get('reporte/cuadro4','Api\Reportes\ReporteController@cuadro4');
 
         //listas
         Route::get('listasParaUsuario','Api\Listas\ParaUsuarioController@index');

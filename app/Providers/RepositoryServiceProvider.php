@@ -61,6 +61,9 @@ use App\Repositories\RevisionExpediente\Interfaces\RevisionRepositoryInterface;
 use App\Repositories\DiligenciaVerificador\DiligenciaRepository;
 use App\Repositories\DiligenciaVerificador\Interfaces\DiligenciaRepositoryInterface;
 
+//Reportes
+use App\Repositories\Reportes\ReporteRepository;
+use App\Repositories\Reportes\Interfaces\ReporteRepositoryInterface;
 
 use App\Repositories\AbstractRepository;
 use App\Repositories\RepositoryInterface;
@@ -114,6 +117,7 @@ class RepositoryServiceProvider extends ServiceProvider
         //Recepcion y descarga del informe Adhoc
 
         //Reportes
+        $this->app->bind( ReporteRepositoryInterface::class, ReporteRepository::class );
 
         //abstract
         $this->app->bind( RepositoryInterface::class, AbstractRepository::class );
