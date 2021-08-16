@@ -127,11 +127,14 @@ class DiligenciaVerificadorController extends Controller
 
         //dispatch( new ProcessEnviarAnexo10( Auth::user(), [] ) );
         //sent an email
-        /*$adjuntos = [
+        $adjuntos = [
            Storage::path("uploads/files/".$all['anexo10']),
-        ];*/
-
-        Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new EnviarAnexo10(Auth::user(), []));
+        ];
+        try {
+            Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new EnviarAnexo10(Auth::user(), $adjuntos ));
+        } catch (\Throwable $ex) {
+            \Log::error($ex);
+        }
         return response()->json($diligencia, 200);
     }
     /**

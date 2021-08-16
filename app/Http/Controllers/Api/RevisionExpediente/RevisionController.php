@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Convocatoria;
 use App\Models\Settings\EstadoRevision;
 use App\Models\Settings\EstadoExpedienteAdhoc;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotificarObservacion;
 
 class RevisionController extends Controller
 {
@@ -78,6 +80,13 @@ class RevisionController extends Controller
             $revision->expedienteAdhocArchivos->expedienteAdhoc()->update([
                 'estado_expediente_id' => EstadoExpedienteAdhoc::OBSERVADO
             ]);
+            //enviar email al administrado expedienteAdhocArchivos  expedienteAdhoc  usuario email
+            $expedienteAdhoc = $revision->expedienteAdhocArchivos->expedienteAdhoc;
+            try {
+                Mail::to([ $expedienteAdhoc->usuario->email ])->send(new NotificarObservacion( $expedienteAdhoc ));
+            } catch (\Throwable $ex) {
+                \Log::error($ex);
+            }
         }
         
         return response()->json($revision, 201);

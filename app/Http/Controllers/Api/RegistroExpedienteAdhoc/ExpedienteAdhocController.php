@@ -113,15 +113,19 @@ class ExpedienteAdhocController extends Controller
         $fields['estado_expediente_id'] = EstadoExpedienteAdhoc::HOJATRAMITE;
 
         $expedienteAdhoc = $this->repository->updateOne($fields, $expedienteAdhoc);
-/*
+
         $adjuntos = [
             Storage::path("uploads/files/".$fields['recibo_pago']),
             Storage::path("uploads/files/".$fields['archivo_solicitud_ht']),
         ];
-*/
-        //dispatch( new SolicitarHojaTramite( Auth::user(), [] ) );
 
-        Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new SolicitarHojaTramite(Auth::user(), [] ));
+        //dispatch( new SolicitarHojaTramite( Auth::user(), [] ) );
+        try {
+            Mail::to(['mesadepartes@cenepred.gob.pe'])->send(new SolicitarHojaTramite(Auth::user(), $adjuntos ));
+        } catch (\Throwable $ex) {
+            \Log::error($ex);
+        }
+
         return $expedienteAdhoc;
     }
     public function solicitarVerificacionAdhoc(ExpedienteAdhocAddVerificacionAdhocRequest $request, ExpedienteAdhoc $expedienteAdhoc)
