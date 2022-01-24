@@ -17,7 +17,7 @@ class User extends Authenticatable //implements MustVerifyEmail
     use HasApiTokens;
     use Notifiable;
     use HasRoles;
-    use LogsActivity;
+    //use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
